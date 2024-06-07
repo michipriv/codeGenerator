@@ -1,0 +1,115 @@
+2024-06-07 21:13:33,594 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:13:37,768 - INFO - Warten auf Verbindungen zum Ausführen von /mnt/c/tmp/test.py...
+2024-06-07 21:14:04,509 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:14:04,509 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:14:04,510 - INFO - Befehl gesendet: execute:/mnt/c/tmp/test.py
+2024-06-07 21:14:04,510 - INFO - Verbunden mit ('127.0.0.1', 56370)
+2024-06-07 21:14:04,510 - INFO - Befehl empfangen: execute:/mnt/c/tmp/test.py
+2024-06-07 21:15:25,677 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:15:27,335 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:15:27,336 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:15:27,336 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:15:27,336 - INFO - Befehl gesendet: execute:/mnt/c/tmp/test.py
+2024-06-07 21:15:27,336 - INFO - Verbunden mit ('127.0.0.1', 38866)
+2024-06-07 21:15:27,336 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:15:27,336 - INFO - Befehl empfangen: execute:/mnt/c/tmp/test.py
+2024-06-07 21:18:44,917 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:18:47,578 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:18:47,590 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:18:47,590 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:18:47,590 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:18:47,591 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:18:47,591 - INFO - Befehl gesendet: execute:/mnt/c/tmp/test.py
+2024-06-07 21:18:47,591 - INFO - Verbunden mit ('127.0.0.1', 49504)
+2024-06-07 21:18:47,591 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:18:47,591 - INFO - Befehl empfangen: execute:/mnt/c/tmp/test.py
+2024-06-07 21:19:49,344 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:19:50,702 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:19:50,702 - INFO - Kein neuer Inhalt angegeben. Datei wurde nicht geändert.
+2024-06-07 21:19:50,702 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:19:50,702 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:19:50,702 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:19:50,703 - INFO - Befehl gesendet: execute:/mnt/c/tmp/test.py
+2024-06-07 21:19:50,703 - INFO - Verbunden mit ('127.0.0.1', 57684)
+2024-06-07 21:19:50,703 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:19:50,703 - INFO - Befehl empfangen: execute:/mnt/c/tmp/test.py
+2024-06-07 21:19:52,849 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:19:55,557 - INFO - Programm wurde beendet.
+2024-06-07 21:19:56,673 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:19:58,277 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:19:58,289 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:19:58,289 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:19:58,289 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:19:58,289 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:19:58,290 - INFO - Befehl gesendet: execute:/mnt/c/tmp/test.py
+2024-06-07 21:19:58,290 - INFO - Verbunden mit ('127.0.0.1', 51416)
+2024-06-07 21:19:58,290 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:19:58,290 - INFO - Befehl empfangen: execute:/mnt/c/tmp/test.py
+2024-06-07 21:20:40,251 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:20:42,625 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:20:42,637 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:20:42,637 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:20:42,637 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:20:42,638 - INFO - Befehl gesendet: execute:/mnt/c/tmp/test.py
+2024-06-07 21:20:42,638 - INFO - Verbunden mit ('127.0.0.1', 52200)
+2024-06-07 21:20:42,638 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:20:42,638 - INFO - Befehl empfangen: execute:/mnt/c/tmp/test.py
+2024-06-07 21:20:53,088 - INFO - Programm wurde beendet.
+2024-06-07 21:20:59,169 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:21:03,695 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:21:03,706 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:21:03,706 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:21:03,707 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:21:03,707 - ERROR - Verbindung zum Server fehlgeschlagen. Bitte stellen Sie sicher, dass der Server läuft.
+2024-06-07 21:21:03,707 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:21:16,280 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:22:52,895 - INFO - Programm wurde beendet.
+2024-06-07 21:22:53,965 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:23:00,062 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:23:00,075 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:23:00,075 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:23:00,076 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:23:00,076 - ERROR - Verbindung zum Server fehlgeschlagen. Bitte stellen Sie sicher, dass der Server läuft.
+2024-06-07 21:23:00,076 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:23:20,220 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:23:22,220 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:23:23,287 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:23:23,287 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:23:23,287 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:23:23,288 - ERROR - Verbindung zum Server fehlgeschlagen. Bitte stellen Sie sicher, dass der Server läuft.
+2024-06-07 21:23:23,288 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:23:41,472 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:23:43,635 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:23:43,645 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:23:43,645 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:23:43,645 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:23:43,646 - ERROR - Verbindung zum Server fehlgeschlagen. Bitte stellen Sie sicher, dass der Server läuft.
+2024-06-07 21:23:43,646 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:26:59,093 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:27:01,452 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:27:01,463 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:27:01,463 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:27:01,463 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:27:01,464 - ERROR - Verbindung zum Server fehlgeschlagen. Bitte stellen Sie sicher, dass der Server läuft.
+2024-06-07 21:27:01,464 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:27:21,889 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:27:24,162 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:27:24,172 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:27:24,172 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:27:24,172 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:27:24,173 - ERROR - Verbindung zum Server fehlgeschlagen. Bitte stellen Sie sicher, dass der Server läuft.
+2024-06-07 21:27:24,173 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:32:25,193 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:32:26,994 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:32:27,004 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:32:27,004 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:32:27,004 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:32:27,004 - ERROR - Verbindung zum Server fehlgeschlagen. Bitte stellen Sie sicher, dass der Server läuft.
+2024-06-07 21:32:27,004 - INFO - Warten auf weitere Eingaben...
+2024-06-07 21:32:52,783 - INFO - Bearbeiten der Datei: /mnt/c/tmp/test.py
+2024-06-07 21:32:54,064 - INFO - Ende der Eingabe erkannt. Verarbeite den Inhalt...
+2024-06-07 21:32:54,074 - INFO - Datei /mnt/c/tmp/test.py wurde erfolgreich geändert und gesichert.
+2024-06-07 21:32:54,074 - INFO - Bearbeitung abgeschlossen. Signal wird gesendet.
+2024-06-07 21:32:54,074 - INFO - Signal an Run-Server wird gesendet: /mnt/c/tmp/test.py
+2024-06-07 21:32:54,074 - ERROR - Verbindung zum Server fehlgeschlagen. Bitte stellen Sie sicher, dass der Server läuft.
+2024-06-07 21:32:54,074 - INFO - Warten auf weitere Eingaben...
