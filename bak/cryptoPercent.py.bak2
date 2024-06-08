@@ -4,7 +4,10 @@ from binance.client import Client
 import pandas as pd
 from datetime import datetime
 import json
+import pytz
 import matplotlib
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 # Setze das Backend auf TkAgg
@@ -44,31 +47,54 @@ def find_ll_hh(df):
             local_low = df['low'].iloc[i:i+4].min()
             if lowest_low is None or local_low < lowest_low:
                 lowest_low = local_low
-                lowest_low_index = df['low'].iloc[i:i+4].idxmin()
+                lowest_low_index = df.iloc[i:i+4]['low'].idxmin()
         
         # Check for HH
         if df['close'].iloc[i] > df['open'].iloc[i] and df['close'].iloc[i+1] < df['open'].iloc[i+1] and df['close'].iloc[i+2] < df['open'].iloc[i+2]:
             local_high = df['high'].iloc[i:i+3].max()
             if highest_high is None or local_high > highest_high:
                 highest_high = local_high
-                highest_high_index = df['high'].iloc[i:i+3].idxmax()
+                highest_high_index = df.iloc[i:i+3]['high'].idxmax()
 
     return lowest_low, lowest_low_index, highest_high, highest_high_index
 
-def plot_candlestick_chart(df, lowest_low_index, highest_high_index):
+def plot_candlestick_chart(df):
     mc = mpf.make_marketcolors(up='g', down='r', inherit=True)
     s = mpf.make_mpf_style(marketcolors=mc)
 
-    add_plot = []
+    # Konvertiere die UTC-Zeit in Wiener Zeit (UTC+2)
+    df.index = df.index.tz_localize('UTC').tz_convert('Europe/Vienna')
 
-    if highest_high_index is not None:
-        highest_high_data = pd.Series([df['high'].loc[highest_high_index]], index=[highest_high_index])
-        add_plot.append(mpf.make_addplot(highest_high_data, type='scatter', markersize=200, marker='^', color='r'))
-    if lowest_low_index is not None:
-        lowest_low_data = pd.Series([df['low'].loc[lowest_low_index]], index=[lowest_low_index])
-        add_plot.append(mpf.make_addplot(lowest_low_data, type='scatter', markersize=200, marker='v', color='g'))
+    # Berechne die Gesamtdauer in Stunden
+    total_hours = (df.index[-1] - df.index[0]).total_seconds() / 3600
 
-    mpf.plot(df, type='candle', style=s, addplot=add_plot, title='Candlestick Chart with HH and LL', ylabel='Price')
+    # Berechne das Major-Intervall
+    major_interval = max(1, int(total_hours / 10))  # Maximal 10 Hauptintervalle
+
+    # Berechne das Minor-Intervall
+    minor_interval = max(0.5, major_interval / 2)  # Maximal 20 Unterintervalle
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Plotting the candlestick chart using mplfinance
+    mpf.plot(df, type='candle', style=s, ax=ax)
+
+    # Setting the x-axis major locator to display dates
+    ax.xaxis.set_major_locator(mdates.HourLocator(interval=major_interval))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M\n%d.%m.%y'))
+
+    # Setting the x-axis minor locator to display time every 30 minutes with ticks
+    ax.xaxis.set_minor_locator(mdates.MinuteLocator(interval=int(minor_interval * 60)))
+    ax.xaxis.set_minor_formatter(mdates.DateFormatter('|'))
+
+    plt.setp(ax.xaxis.get_minorticklabels(), rotation=45, fontsize=8)
+    plt.setp(ax.xaxis.get_majorticklabels(), rotation=0, fontsize=10)
+
+    # Adjust the limits of the x-axis
+    ax.set_xlim([df.index[0], df.index[-1]])
+
+    # Display the plot
+    plt.show()
 
 def main(symbol, start_date, end_date=None):
     flush_print(f"Starte Analyse für {symbol} von {start_date} bis {end_date}")
@@ -96,8 +122,13 @@ def main(symbol, start_date, end_date=None):
     # Find LL and HH
     lowest_low, lowest_low_index, highest_high, highest_high_index = find_ll_hh(df)
     
+    # Ergebnisse ausgeben
+    flush_print("Ergebnisse:")
+    flush_print(f"Lowest Low (LL): {lowest_low} at index {lowest_low_index}")
+    flush_print(f"Highest High (HH): {highest_high} at index {highest_high_index}")
+    
     # Grafik anzeigen
-    plot_candlestick_chart(df, lowest_low_index, highest_high_index)
+    plot_candlestick_chart(df)
 
 # Beispielaufruf
 if __name__ == "__main__":

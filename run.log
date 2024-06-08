@@ -221,3 +221,176 @@ Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
 Ergebnisse:
 Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
 Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+2024-06-08 14:36:14,164 - INFO - Verbunden mit ('127.0.0.1', 42862)
+2024-06-08 14:36:14,164 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+2024-06-08 14:46:33,334 - INFO - Verbunden mit ('127.0.0.1', 34598)
+2024-06-08 14:46:33,334 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+2024-06-08 14:48:04,301 - INFO - Verbunden mit ('127.0.0.1', 39742)
+2024-06-08 14:48:04,302 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+2024-06-08 14:50:44,315 - INFO - Verbunden mit ('127.0.0.1', 47488)
+2024-06-08 14:50:44,315 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 5121 ticks ([-5.8284722222222225, ..., 100.83819444444444]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+2024-06-08 14:50:59,399 - INFO - Verbunden mit ('127.0.0.1', 44144)
+2024-06-08 14:50:59,399 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2561 ticks ([-5.833333333333333, ..., 100.83333333333333]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+2024-06-08 14:52:27,744 - INFO - Verbunden mit ('127.0.0.1', 40194)
+2024-06-08 14:52:27,744 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2560 ticks ([-5.807638888888889, ..., 100.81736111111111]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2560 ticks ([-5.807638888888889, ..., 100.81736111111111]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2560 ticks ([-5.807638888888889, ..., 100.81736111111111]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+2024-06-08 14:54:56,784 - INFO - Verbunden mit ('127.0.0.1', 58008)
+2024-06-08 14:54:56,784 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2560 ticks ([-5.807638888888889, ..., 100.81736111111111]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2560 ticks ([-5.807638888888889, ..., 100.81736111111111]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2560 ticks ([-5.807638888888889, ..., 100.81736111111111]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+2024-06-08 14:55:10,585 - INFO - Verbunden mit ('127.0.0.1', 58018)
+2024-06-08 14:55:10,585 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2560 ticks ([-5.807638888888889, ..., 100.81736111111111]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2560 ticks ([-5.807638888888889, ..., 100.81736111111111]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 2560 ticks ([-5.807638888888889, ..., 100.81736111111111]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+2024-06-08 14:57:59,568 - INFO - Verbunden mit ('127.0.0.1', 48812)
+2024-06-08 14:57:59,568 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Traceback (most recent call last):
+  File "/mnt/c/tmp/codeGenerator/cryptPercent/cryptoPercent.py", line 134, in <module>
+    main(symbol, start_date)
+  File "/mnt/c/tmp/codeGenerator/cryptPercent/cryptoPercent.py", line 127, in main
+    plot_candlestick_chart(df)
+  File "/mnt/c/tmp/codeGenerator/cryptPercent/cryptoPercent.py", line 86, in plot_candlestick_chart
+    ax.xaxis.set_minor_locator(mdates.HourLocator(interval=major_interval / 2))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/tmp/codeGenerator/myenv/lib/python3.11/site-packages/matplotlib/dates.py", line 1594, in __init__
+    rule = rrulewrapper(HOURLY, byhour=byhour, interval=interval,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/tmp/codeGenerator/myenv/lib/python3.11/site-packages/matplotlib/dates.py", line 956, in __init__
+    self._update_rrule(**kwargs)
+  File "/mnt/c/tmp/codeGenerator/myenv/lib/python3.11/site-packages/matplotlib/dates.py", line 993, in _update_rrule
+    self._rrule = rrule(**self._construct)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/tmp/codeGenerator/myenv/lib/python3.11/site-packages/dateutil/rrule.py", line 636, in __init__
+    self._byhour = self.__construct_byset(start=dtstart.hour,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/tmp/codeGenerator/myenv/lib/python3.11/site-packages/dateutil/rrule.py", line 1069, in __construct_byset
+    i_gcd = gcd(self._interval, base)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'float' object cannot be interpreted as an integer
+2024-06-08 14:59:45,006 - INFO - Verbunden mit ('127.0.0.1', 56212)
+2024-06-08 14:59:45,006 - INFO - Befehl empfangen: execute:cryptPercent/cryptoPercent.py
+Starte Analyse für SEIUSDT von 1 day ago UTC bis None
+Rufe Kerzen für SEIUSDT von 1 day ago UTC bis None ab
+96 Kerzen abgerufen
+Ergebnisse:
+Lowest Low (LL): 0.4981 at index 2024-06-07 20:00:00
+Highest High (HH): 0.5653 at index 2024-06-07 14:00:00
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+Locator attempting to generate 1280 ticks ([-5.791666666666667, ..., 100.79166666666667]), which exceeds Locator.MAXTICKS (1000).
+2024-06-08 22:30:19,429 - INFO - Run wird durch Strg+C beendet.

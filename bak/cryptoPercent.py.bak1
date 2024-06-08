@@ -4,7 +4,10 @@ from binance.client import Client
 import pandas as pd
 from datetime import datetime
 import json
+import pytz
 import matplotlib
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 # Setze das Backend auf TkAgg
@@ -55,20 +58,39 @@ def find_ll_hh(df):
 
     return lowest_low, lowest_low_index, highest_high, highest_high_index
 
-def plot_candlestick_chart(df, lowest_low_index, highest_high_index):
+def plot_candlestick_chart(df):
     mc = mpf.make_marketcolors(up='g', down='r', inherit=True)
     s = mpf.make_mpf_style(marketcolors=mc)
 
-    add_plot = []
+    # Konvertiere die UTC-Zeit in Wiener Zeit (UTC+2)
+    df.index = df.index.tz_localize('UTC').tz_convert('Europe/Vienna')
 
-    if highest_high_index is not None:
-        highest_high_data = pd.Series([df['high'].loc[highest_high_index]], index=[highest_high_index])
-        add_plot.append(mpf.make_addplot(highest_high_data, type='scatter', markersize=200, marker='^', color='r'))
-    if lowest_low_index is not None:
-        lowest_low_data = pd.Series([df['low'].loc[lowest_low_index]], index=[lowest_low_index])
-        add_plot.append(mpf.make_addplot(lowest_low_data, type='scatter', markersize=200, marker='v', color='g'))
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    mpf.plot(df, type='candle', style=s, addplot=add_plot, title='Candlestick Chart with HH and LL', ylabel='Price')
+    # Plotting the candlestick chart using mplfinance
+    mpf.plot(df, type='candle', style=s, ax=ax)
+
+    # Berechne die Gesamtdauer in Stunden
+    total_hours = (df.index[-1] - df.index[0]).total_seconds() / 3600
+
+    # Hartkodiert: maximal 10 Hauptintervalle
+    major_interval = max(1, int(total_hours / 10))
+
+    # Setting the x-axis major locator to display dates
+    ax.xaxis.set_major_locator(mdates.HourLocator(interval=major_interval))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M\n%d.%m.%y'))
+
+    plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, fontsize=10)
+
+    # Keine Minor-Ticks setzen
+    ax.xaxis.set_minor_locator(mdates.HourLocator(interval=major_interval / 2))
+    ax.xaxis.set_minor_formatter(mdates.DateFormatter(''))
+
+    # Adjust the limits of the x-axis
+    ax.set_xlim([df.index[0], df.index[-1]])
+
+    # Display the plot
+    plt.show()
 
 def main(symbol, start_date, end_date=None):
     flush_print(f"Starte Analyse für {symbol} von {start_date} bis {end_date}")
@@ -96,8 +118,13 @@ def main(symbol, start_date, end_date=None):
     # Find LL and HH
     lowest_low, lowest_low_index, highest_high, highest_high_index = find_ll_hh(df)
     
+    # Ergebnisse ausgeben
+    flush_print("Ergebnisse:")
+    flush_print(f"Lowest Low (LL): {lowest_low} at index {lowest_low_index}")
+    flush_print(f"Highest High (HH): {highest_high} at index {highest_high_index}")
+    
     # Grafik anzeigen
-    plot_candlestick_chart(df, lowest_low_index, highest_high_index)
+    plot_candlestick_chart(df)
 
 # Beispielaufruf
 if __name__ == "__main__":

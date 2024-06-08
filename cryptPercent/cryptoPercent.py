@@ -4,7 +4,10 @@ from binance.client import Client
 import pandas as pd
 from datetime import datetime
 import json
+import pytz
 import matplotlib
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 import mplfinance as mpf
 
 # Setze das Backend auf TkAgg
@@ -59,7 +62,35 @@ def plot_candlestick_chart(df):
     mc = mpf.make_marketcolors(up='g', down='r', inherit=True)
     s = mpf.make_mpf_style(marketcolors=mc)
 
-    mpf.plot(df, type='candle', style=s, title='Candlestick Chart', ylabel='Price')
+    # Konvertiere die UTC-Zeit in Wiener Zeit (UTC+2)
+    df.index = df.index.tz_localize('UTC').tz_convert('Europe/Vienna')
+
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Plotting the candlestick chart using mplfinance
+    mpf.plot(df, type='candle', style=s, ax=ax)
+
+    # Berechne die Gesamtdauer in Stunden
+    total_hours = (df.index[-1] - df.index[0]).total_seconds() / 3600
+
+    # Hartkodiert: maximal 10 Hauptintervalle
+    major_interval = max(1, int(total_hours / 10))
+
+    # Setting the x-axis major locator to display dates
+    ax.xaxis.set_major_locator(mdates.HourLocator(interval=major_interval))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M\n%d.%m.%y'))
+
+    plt.setp(ax.xaxis.get_majorticklabels(), rotation=45, fontsize=10)
+
+    # Keine Minor-Ticks setzen
+    ax.xaxis.set_minor_locator(mdates.HourLocator(interval=major_interval))
+    ax.xaxis.set_minor_formatter(mdates.DateFormatter(''))
+
+    # Adjust the limits of the x-axis
+    ax.set_xlim([df.index[0], df.index[-1]])
+
+    # Display the plot
+    plt.show()
 
 def main(symbol, start_date, end_date=None):
     flush_print(f"Starte Analyse für {symbol} von {start_date} bis {end_date}")

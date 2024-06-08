@@ -6,6 +6,7 @@ class ArgumentParser:
         self.edit_filename = None
         self.program_to_run = None
         self.run_mode = False
+        self.ki = False
         self.parse_arguments()
 
     def parse_arguments(self):
@@ -34,6 +35,8 @@ class ArgumentParser:
                 else:
                     print("Kein Programm angegeben. Verwenden Sie das Format 'python3 main.py -r <program>'")
                     sys.exit(1)
+            elif '-ki' in sys.argv:
+                self.ki = True
 
     def print_help(self):
         help_message = """
@@ -44,6 +47,7 @@ Optionen:
   -d DATEINAME       Bearbeitet nur die angegebene Datei
   -p PROGRAMM        Startet den Run-Server und führt das angegebene Programm nach dem Bearbeiten der Datei aus
   -r PROGRAMM        Startet den Run-Server und wartet auf Befehle, um das angegebene Programm auszuführen
+  -ki                Führt die OpenAI-Integration aus und generiert Code basierend auf einer Beschreibung
 
 Ohne Parameter startet das Skript im interaktiven Modus und erwartet Eingaben im folgenden Format:
   DATEINAME
@@ -53,5 +57,6 @@ Beispiele:
   python script.py -d Dockerfile
   python script.py -d irgendeine_datei.txt -p "python your_program.py"
   python script.py -r /mnt/c/tmp/test.py
+  python script.py -ki
 """
         print(help_message)
