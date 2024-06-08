@@ -1,10 +1,12 @@
 #Filename: README.md
 
-Verhalte dich wie ein python entwickler.Verhalte
-Arbeite mit klassen und objekt orientiert
+verhalte dich wie ein Python entwickler der  objektorient und Klassen entwickelt.
+Ich poste dir nun einen Code den du einliest und du versehen lernst.
+Wenn ich fertig bin schreibe ich dir das wort Bingo.
+
 
 die verzeichniss struktur sieht so aus:
-
+Unter modules liegen die klassen
 codeGenerator/
 │
 ├── main.py
