@@ -23,26 +23,29 @@ class FileManager:
 
     def run(self):
         try:
-            if self.args.help:
-                self.args.print_help()
-            elif self.args.edit_filename:
-                self.file_operations.edit_file(self.args.edit_filename)
-                self.send_signal_to_run(self.args.edit_filename)
-            else:
-                print("Interaktiver Modus. Bitte geben Sie den Dateinamen ein:")
-                while True:
-                    line = self.file_operations.read_input()
-                    if line is None:
-                        print("Keine Eingabe erkannt. Bitte erneut versuchen.")
-                        continue  # Fortsetzen, um erneut auf Eingaben zu warten
+            while True:
+                if self.args.help:
+                    self.args.print_help()
+                    break
+                elif self.args.edit_filename:
+                    self.file_operations.edit_file(self.args.edit_filename)
+                    self.send_signal_to_run(self.args.edit_filename)
+                    print("Warten auf weitere Eingaben...")
+                else:
+                    print("Interaktiver Modus. Bitte geben Sie den Dateinamen ein:")
+                    while True:
+                        line = self.file_operations.read_input()
+                        if line is None:
+                            print("Keine Eingabe erkannt. Bitte erneut versuchen.")
+                            continue  # Fortsetzen, um erneut auf Eingaben zu warten
 
-                    filename = line.strip()
-                    if filename:
-                        self.file_operations.edit_file(filename)
-                        self.send_signal_to_run(filename)
-                        print("Warten auf weitere Eingaben...")
-                    else:
-                        print("Ungültige Eingabe. Bitte geben Sie einen Dateinamen ein.")
+                        filename = line.strip()
+                        if filename:
+                            self.file_operations.edit_file(filename)
+                            self.send_signal_to_run(filename)
+                            print("Warten auf weitere Eingaben...")
+                        else:
+                            print("Ungültige Eingabe. Bitte geben Sie einen Dateinamen ein.")
         except KeyboardInterrupt:
             print("Programm wurde beendet.")
             sys.exit(0)

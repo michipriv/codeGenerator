@@ -2,24 +2,18 @@ import socket
 import signal
 import os
 import sys
+from modules.logger import Logger
 
 class Run:
-    def __init__(self):
+    def __init__(self, log_file='run.log'):
+        self.logger = Logger(log_file).get_logger()
         self.server_address = ('localhost', 65433)
         signal.signal(signal.SIGINT, self.signal_handler)
+        self.log_file = log_file
 
     def signal_handler(self, sig, frame):
         print("Run wird durch Strg+C beendet.")
         sys.exit(0)
-
-    def send_command(self, command):
-        try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect(self.server_address)
-                s.sendall(command.encode('utf-8'))
-                print(f"Befehl gesendet: {command}")
-        except ConnectionRefusedError:
-            print("Verbindung zum Server fehlgeschlagen. Bitte stellen Sie sicher, dass der Server läuft.")
 
     def receive_commands(self, program_to_run):
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -40,7 +34,10 @@ class Run:
                         print(f"Befehl empfangen: {command}")
                         if command.startswith('execute:'):
                             filename = command.split(':')[1]
-                            os.system(f'python3 {program_to_run} {filename}')
+                            if os.path.exists(filename):
+                                os.system(f'python3 {program_to_run} {filename} 2>&1 | tee -a {self.log_file}')
+                            else:
+                                print(f"Datei {filename} existiert nicht.")
                         if command == 'exit':
                             print("Server wird beendet.")
                             server_socket.close()

@@ -1,0 +1,7 @@
+python-binance
+pandas
+matplotlib
+mplfinance
+
+#sudo apt-get install python3-tk
+

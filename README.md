@@ -19,3 +19,21 @@ codeGenerator/
 │   ├── run.py
 │   └── server.py
 │   └── file_manager.py
+
+
+
+#virutelle Umgebung für modul installion erzeugen:
+
+python3 -m venv myenv
+source myenv/bin/activate
+
+
+# github einchecken
+git add .
+git commit -m "."
+git push
+
+
+# programm starten
+python3 main.py  -r  test.py
+python3 main.py  -d  test.py
