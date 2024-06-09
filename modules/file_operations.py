@@ -1,29 +1,39 @@
-import os
+# Filename: file_operations.py
+
 from modules.utils import clear_screen
 
 class FileOperations:
     def __init__(self, backup_manager):
         self.backup_manager = backup_manager
 
-    def read_input(self):
+    def read_input(self, prompt=""):
         try:
-            return input()
+            return input(prompt)
         except EOFError:
             return None
 
     def edit_file(self, filename):
-        print(f"Bearbeiten der Datei: {filename}")
-        print(f"Bitte geben Sie den neuen Inhalt für {filename} ein (Ende mit Strg+D):")
-        new_content = []
-
         while True:
-            line = self.read_input()
-            if line is None:
-                print("Ende der Eingabe erkannt. Verarbeite den Inhalt...")
-                break
-            new_content.append(line)
+            print(f"Bearbeiten der Datei: {filename}")
+            print(f"Bitte geben Sie den neuen Inhalt für {filename} ein (Ende mit Strg+D):")
+            new_content = []
+            
+            print("von vorne")
+    
+            while True:
+                try:
+                    line = self.read_input()
+                    if line is None:
+                        print("Ende der Eingabe erkannt. Verarbeite den Inhalt...")
+                        break
+                    new_content.append(line)
+                except KeyboardInterrupt:
+                    print("Bearbeitung abgebrochen.")
+                    return None
+    
+            self.process_content(new_content, filename)
+            return 
 
-        self.process_content(new_content, filename)
 
     def process_content(self, new_content, filename):
         if new_content:
@@ -36,4 +46,3 @@ class FileOperations:
                 print(f"Fehler beim Schreiben der Datei {filename}: {e}")
         else:
             print("Kein neuer Inhalt angegeben. Datei wurde nicht geändert.")
-        print("Bearbeitung abgeschlossen.")

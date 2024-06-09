@@ -1,9 +1,11 @@
+#Filename: logger.py
+
 import logging
 import sys
 import os
 
 class Logger:
-    def __init__(self, log_file='app.log'):
+    def __init__(self, log_file='log/app.log'):
         log_dir = os.path.dirname(log_file)
         if log_dir and not os.path.exists(log_dir):
             os.makedirs(log_dir)
