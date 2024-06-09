@@ -1,5 +1,3 @@
-#Filename: argument_parser.py
-
 import sys
 
 class ArgumentParser:
@@ -10,6 +8,7 @@ class ArgumentParser:
         self.run_mode = False
         self.ki = False
         self.server_mode = False
+        self.program_call = None  # New attribute for the -p argument
         self.parse_arguments()
 
     def parse_arguments(self):
@@ -35,6 +34,13 @@ class ArgumentParser:
                 self.server_mode = True
             if '-ki' in sys.argv:
                 self.ki = True
+            if '-p' in sys.argv:  # New condition for the -p argument
+                program_call_index = sys.argv.index('-p') + 1
+                if program_call_index < len(sys.argv):
+                    self.program_call = sys.argv[program_call_index]
+                else:
+                    print("Kein Programmaufruf angegeben. Verwenden Sie das Format 'python3 main.py -p python3'")
+                    sys.exit(1)
 
     def print_help(self):
         help_message = """
@@ -46,6 +52,7 @@ Optionen:
   -r PROGRAMM        Startet den Run-Server und wartet auf Befehle, um das angegebene Programm auszuführen
   -s                 Startet den Server
   -ki                Führt die OpenAI-Integration aus und generiert Code basierend auf einer Beschreibung
+  -p PROGRAMMAUFRUF  Führt den angegebenen Programmaufruf aus
 
 Ohne Parameter startet das Skript im interaktiven Modus und erwartet Eingaben im folgenden Format:
   DATEINAME
@@ -56,5 +63,13 @@ Beispiele:
   python script.py -d irgendeine_datei.txt -r /mnt/c/tmp/test.py
   python script.py -s
   python script.py -ki
+  python script.py -p "ls -la"
 """
         print(help_message)
+
+# Example usage
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    if parser.help:
+        parser.print_help()
+    # You can add other logic here to handle the parsed arguments as needed

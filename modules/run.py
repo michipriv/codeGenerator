@@ -6,11 +6,13 @@ import sys
 import os
 
 class Run:
-    def __init__(self, host, port, program_to_run):
+    def __init__(self, args, host, port ):
         signal.signal(signal.SIGINT, self.signal_handler)
         self.server_address = (host, port)
-        self.program_to_run = program_to_run
+        self.program_to_run = args.program_to_run
+        self.program_call = args.program_call
         self.running = True
+        
 
     def signal_handler(self, sig, frame):
         print("Run wird durch Strg+C beendet.")
@@ -41,7 +43,14 @@ class Run:
                             filename = command.split(':')[1]
                             if os.path.exists(filename):
                                 print(f"Führe Datei {filename} aus...")
-                                os.system(f'python3 {filename}')
+                                
+                                print (f'{self.program_call} {filename}')
+                                os.system(f'{self.program_call} {filename}')    #Interpreter oder compilieren
+                                
+                                #if self.program_to_run:
+                                #    os.system(f'./{self.program_to_run}')  # compiler prg starten
+                                    
+                                
                                 self.send_message('Befehl empfangen und ausgeführt')
                             else:
                                 self.send_message('Datei nicht gefunden')

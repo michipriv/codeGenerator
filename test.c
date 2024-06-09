@@ -31,17 +31,17 @@ def calculate_indicators(df):
     df['HH'] = ''
     df['LL'] = ''
     
-    for i in range(2, len(df)):
+    for i in range(len(df)):
         if i >= 10:
             recent_candles = df.iloc[i-10:i]
             
-            if df.at[i-2, 'Candle Color'] == 'green' and df.at[i-1, 'Candle Color'] == 'red' and df.at[i, 'Candle Color'] == 'red':
-                highest_high_idx = recent_candles['High'].idxmax()
-                df.at[highest_high_idx, 'HH'] = 'HH'
-                
-            if df.at[i-2, 'Candle Color'] == 'red' and df.at[i-1, 'Candle Color'] == 'green' and df.at[i, 'Candle Color'] == 'green':
-                lowest_low_idx = recent_candles['Low'].idxmin()
-                df.at[lowest_low_idx, 'LL'] = 'LL'
+            red_candles = recent_candles[recent_candles['Candle Color'] == 'red']
+            if len(red_candles) >= 2 and (recent_candles['High'].idxmax() == i):
+                df.at[i, 'HH'] = 'HH'
+            
+            green_candles = recent_candles[recent_candles['Candle Color'] == 'green']
+            if len(green_candles) >= 2 and (recent_candles['Low'].idxmin() == i):
+                df.at[i, 'LL'] = 'LL'
     
     return df
 
@@ -60,18 +60,10 @@ def plot_candlestick_with_indicators(df, coin_name, timeframe):
     hh_points = df[df['HH'] == 'HH']
     ll_points = df[df['LL'] == 'LL']
     
-    # Ensure the lengths of x and y data match before plotting
     if not hh_points.empty:
-        if len(hh_points.index) == len(hh_points['High']):
-            add_plot.append(mpf.make_addplot(hh_points['High'], type='scatter', markersize=100, marker='^', color='blue', panel=0))
-        else:
-            print("Length mismatch for HH points:", len(hh_points.index), len(hh_points['High']))
-    
+        add_plot.append(mpf.make_addplot(hh_points['High'], type='scatter', markersize=100, marker='^', color='blue', panel=0))
     if not ll_points.empty:
-        if len(ll_points.index) == len(ll_points['Low']):
-            add_plot.append(mpf.make_addplot(ll_points['Low'], type='scatter', markersize=100, marker='v', color='orange', panel=0))
-        else:
-            print("Length mismatch for LL points:", len(ll_points.index), len(ll_points['Low']))
+        add_plot.append(mpf.make_addplot(ll_points['Low'], type='scatter', markersize=100, marker='v', color='orange', panel=0))
     
     market_colors = mpf.make_marketcolors(up='green', down='red', inherit=True)
     style = mpf.make_mpf_style(
@@ -121,9 +113,6 @@ df['Close'] = pd.to_numeric(df['Close'])
 df['Volume'] = pd.to_numeric(df['Volume'])
 
 df = calculate_indicators(df)
-
-# Print only the relevant columns
-print(df[['Open', 'Close', 'Candle Color', 'HH', 'LL']])
 
 plot_candlestick_with_indicators(df, 'SEI', '15min')
 print("Process complete.")

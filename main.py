@@ -45,7 +45,7 @@ def main():
                 server_thread.stop()
     elif args.run_mode:
         print("Starte Run-Modus...")
-        run_client = Run(config['host'], config['port'], args.program_to_run)
+        run_client = Run(args, config['host'], config['port'], )
         run_client.start()
     elif args.ki:
         print("Starte OpenAI-Modus...")

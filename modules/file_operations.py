@@ -18,8 +18,6 @@ class FileOperations:
             print(f"Bitte geben Sie den neuen Inhalt für {filename} ein (Ende mit Strg+D):")
             new_content = []
             
-            print("von vorne")
-    
             while True:
                 try:
                     line = self.read_input()

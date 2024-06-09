@@ -1,6 +1,6 @@
 # Filename: README.md
 
-# Prompt 1
+# Prompt 1 um in einem neuen Chatverlauf die Klassen des Codegenrators zu hinterlegen
 
 Verhalte dich wie ein Python-Entwickler, der objektorientiert und mit Klassen entwickelt.
 Ich poste dir nun einen Code, der aus mehreren Klassen besteht.
@@ -58,7 +58,8 @@ codeGenerator/
 │   ├── file_manager.py
 │   ├── argument_parser.py
 │   └── openai.py
---bak
+├── bak/                # Verzeichnis für Backups
+│   ├── ...
 
 
 
@@ -68,6 +69,23 @@ Ich kopiere nun die Änderungen in den Code und lasse das Programm laufen.
 Sollte es Fehler geben, so poste ich dir diese, und du behebst die Fehler und erstellst mir ausschließlich die Dateien, 
 die davon betroffen sind. Achte auch immer darauf, 
 dass am Anfang jeder Klasse: #Filename: ... steht.
+
+
+# Allgemeiner python Entwickler prompt
+
+Verhalte dich wie ein Python Entwickler.
+Erstelle Programme Obejektorientiert und in Klassen.
+Lege die klassen im Verzeichnis Modul ab.
+Füge bei der jeder Codeblock ausgabe am anfang das Wort "#Filename: " hinzu.
+Verwende folgende verz struktur
+Hauptprogramm/
+│
+├── main
+├── etc/                # Verzeichnis für API-Schlüssel und Konfigurationsdateien
+│   ├── api_key.json    # Beispiel für eine Konfigurationsdatei
+│   └── config.json     # Beispiel für eine weitere Konfigurationsdatei
+│   ├── ...             # Inhalte der virtuellen Umgebung
+├── modules/
 
 
 
@@ -84,7 +102,8 @@ git push
 
 # Programm starten
 python3 main.py  -d  test.py
-python3 main.py  -r  test.py
+python3 main.py  -r  -p python3
 
+python3 main.py -r test -p "gcc -o test"
 
 lsof -i :47011
