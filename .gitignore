@@ -3,3 +3,4 @@ api_key.json
 myenv
 __pycache__
 run.log
+*.wav

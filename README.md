@@ -88,6 +88,16 @@ Hauptprogramm/
 ├── modules/
 
 
+# test prompt
+Sende am Anfang des codes immer Folgendes: # Filename: test.py Erstelle als Ausgabe nur Python code keine erklärungen. erstelle  "Hello World" das ASCII druckt
+
+
+
+# GitHub einchecken
+git add .
+git commit -m "."
+git push
+
 
 # Virtuelle Umgebung für Modul-Installation erzeugen:
 
@@ -95,14 +105,14 @@ python3 -m venv myenv
 source myenv/bin/activate
 cd /mnt/c/tmp/codeGenerator
 
-# GitHub einchecken
-git add .
-git commit -m "."
-git push
+python3 main.py -s                # startet server
+python3 main.py -d test.py -e m   #manuell eingabe, schreibt datei
+python3 main.py -d test.py -e ki  #ki schreibt datei
+python3 main.py -r -p python3     #führt programm aus
+python3 main.py -ki -d test.py    #KI eingabe
 
-# Programm starten
-python3 main.py  -d  test.py
-python3 main.py  -r  -p python3
+
+
 
 python3 main.py -r test -p "gcc -o test"
 

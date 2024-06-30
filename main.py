@@ -1,4 +1,4 @@
-#Filename: main.py
+# Filename: main.py
 
 import sys
 import json
@@ -33,6 +33,10 @@ def main():
 
     if args.help:
         args.print_help()
+    elif args.ki and args.edit_filename:
+        print("Starte OpenAI-Modus...")
+        openai_integration = OpenAIIntegration(args, config['host'], config['port'], 'etc/api_key.json')
+        openai_integration.run_interactive_mode()
     elif args.server_mode:
         print("Starte Server-Modus...")
         server_thread = ServerHandler(config['host'], config['port'])
@@ -45,12 +49,12 @@ def main():
                 server_thread.stop()
     elif args.run_mode:
         print("Starte Run-Modus...")
-        run_client = Run(args, config['host'], config['port'], )
+        run_client = Run(args, config['host'], config['port'])
         run_client.start()
-    elif args.ki:
-        print("Starte OpenAI-Modus...")
-        openai_integration = OpenAIIntegration('etc/api_key.json')
-        openai_integration.run_interactive_mode()
+    elif args.edit_filename and args.manual_mode:
+        print("Starte FileManager im manuellen Eingabemodus...")
+        file_manager = FileManager(args, config['host'], config['port'])
+        file_manager.run()
     elif args.edit_filename:
         print("Starte FileManager-Modus...")
         file_manager = FileManager(args, config['host'], config['port'])
