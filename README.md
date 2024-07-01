@@ -113,12 +113,14 @@ python3 main.py -ki -d test.py    #KI eingabe (in entwicklung)
 cd test                                             #neues Programm
 mkdir bak && mkdir log && mkdir etc
 
-python3 ../codeGenerator/main.py -d test.py         # schreibt datei
-python3 ../codeGenerator/main.py -r -p python3      #führt datei automatisch aus
+python3 ../codeGenerator/main.py -d main.py         # Übergabe der Main Datei, diese wird durch run ausgeführt
+                                                    # alle anderen Datein werden in eigene Klassen geschrieben
+python3 ../codeGenerator/main.py -r -p python3      #führt die -d Main datei automatisch aus, alle anderen Dateien werden nicht aufgerufen
 
 
 
 
+beispiel für gcc
 
 python3 main.py -r test -p "gcc -o test"
 
