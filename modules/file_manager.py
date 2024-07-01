@@ -8,12 +8,13 @@ from modules.file_operations import FileOperations
 from modules.backup_manager import BackupManager
 
 class FileManager:
-    def __init__(self, args, host, port):
+    def __init__(self, args, host, port, main_filename):
         self.backup_manager = BackupManager()
         self.file_operations = FileOperations(self.backup_manager)
         self.args = args
         self.server_address = (host, port)
         self.running = True
+        self.main_filename = main_filename
         signal.signal(signal.SIGINT, self.signal_handler)
 
     def signal_handler(self, sig, frame):
@@ -50,7 +51,7 @@ class FileManager:
                         filename = self.extract_filename(code)
                         if filename:
                             self.file_operations.save_file(filename, code)
-                            self.send_message(f'message:run:execute:{filename}')
+                            self.send_message(f'message:run:execute:{self.main_filename}')
                         else:
                             print("Kein gültiger Dateiname gefunden.")
                     else:

@@ -59,10 +59,12 @@ def main():
         print("Starte Run-Modus...")
         run_client = Run(args, config['host'], config['port'])
         run_client.start()
-    else:
-        print("Starte FileManager-Modus...")
-        file_manager = FileManager(args, config['host'], config['port'])
+    elif args.edit_filename:
+        print(f"Starte FileManager-Modus für Hauptdatei: {args.edit_filename}...")
+        file_manager = FileManager(args, config['host'], config['port'], args.edit_filename)
         file_manager.run()
+    else:
+        print("Keine gültigen Argumente übergeben. Verwenden Sie '-h' für Hilfe.")
 
 if __name__ == "__main__":
     main()
