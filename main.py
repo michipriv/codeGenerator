@@ -41,7 +41,7 @@ def main():
 
     if args.help:
         args.print_help()
-    elif args.ki and args.edit_filename:
+    elif args.ki:
         print("Starte OpenAI-Modus...")
         openai_integration = OpenAIIntegration(args, config['host'], config['port'], os.path.join(BASE_DIR, 'etc/api_key.json'))
         openai_integration.run_interactive_mode()
@@ -59,12 +59,10 @@ def main():
         print("Starte Run-Modus...")
         run_client = Run(args, config['host'], config['port'])
         run_client.start()
-    elif args.edit_filename:
+    else:
         print("Starte FileManager-Modus...")
         file_manager = FileManager(args, config['host'], config['port'])
         file_manager.run()
-    else:
-        print("Keine gültigen Argumente übergeben. Verwenden Sie '-h' für Hilfe.")
 
 if __name__ == "__main__":
     main()

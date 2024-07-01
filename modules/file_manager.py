@@ -3,6 +3,7 @@
 import socket
 import signal
 import sys
+import re
 from modules.file_operations import FileOperations
 from modules.backup_manager import BackupManager
 
@@ -25,22 +26,35 @@ class FileManager:
             s.connect(self.server_address)
             s.sendall(message.encode('utf-8'))
 
+    def extract_filename(self, code):
+        match = re.search(r'# ?[Ff]ilename: (.+)', code)
+        if match:
+            return match.group(1).strip()
+        return None
+
     def run(self):
         try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect(self.server_address)
-                s.sendall(b'register:file_manager')
-                response = s.recv(1024).decode('utf-8')
-                print(f"Antwort vom Server: {response}")
             while self.running:
                 try:
-                    if self.args.edit_filename:
-                        self.file_operations.edit_file(self.args.edit_filename)
-                        # Benachrichtige den Run-Client über die bearbeitete Datei
-                        self.send_message(f'message:run:execute:{self.args.edit_filename}')
-                        
-                        
+                    print("Bitte fügen Sie den Code ein (Ende mit Strg+D):")
+                    code_lines = []
+                    while True:
+                        try:
+                            line = input()
+                            code_lines.append(line)
+                        except EOFError:
+                            break
 
+                    if code_lines:
+                        code = '\n'.join(code_lines)
+                        filename = self.extract_filename(code)
+                        if filename:
+                            self.file_operations.save_file(filename, code)
+                            self.send_message(f'message:run:execute:{filename}')
+                        else:
+                            print("Kein gültiger Dateiname gefunden.")
+                    else:
+                        print("Kein Code eingegeben.")
                 except EOFError:
                     print("EOFError erkannt. Wiederholen der Eingabe...")
                     continue
