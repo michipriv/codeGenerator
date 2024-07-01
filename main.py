@@ -1,8 +1,16 @@
 # Filename: main.py
 
 import sys
+import os
 import json
 import signal
+
+# Bestimme das Basisverzeichnis (codeGenerator)
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+
+# Füge das BASE_DIR zum Suchpfad hinzu
+sys.path.append(BASE_DIR)
+
 from modules.utils import clear_screen
 from modules.file_manager import FileManager
 from modules.argument_parser import ArgumentParser
@@ -11,7 +19,7 @@ from modules.server import ServerHandler
 from modules.openai import OpenAIIntegration
 
 def load_config(file_path='etc/config.json'):
-    with open(file_path, 'r') as f:
+    with open(os.path.join(BASE_DIR, file_path), 'r') as f:
         return json.load(f)
 
 def main():
@@ -35,7 +43,7 @@ def main():
         args.print_help()
     elif args.ki and args.edit_filename:
         print("Starte OpenAI-Modus...")
-        openai_integration = OpenAIIntegration(args, config['host'], config['port'], 'etc/api_key.json')
+        openai_integration = OpenAIIntegration(args, config['host'], config['port'], os.path.join(BASE_DIR, 'etc/api_key.json'))
         openai_integration.run_interactive_mode()
     elif args.server_mode:
         print("Starte Server-Modus...")
@@ -51,10 +59,6 @@ def main():
         print("Starte Run-Modus...")
         run_client = Run(args, config['host'], config['port'])
         run_client.start()
-    elif args.edit_filename and args.manual_mode:
-        print("Starte FileManager im manuellen Eingabemodus...")
-        file_manager = FileManager(args, config['host'], config['port'])
-        file_manager.run()
     elif args.edit_filename:
         print("Starte FileManager-Modus...")
         file_manager = FileManager(args, config['host'], config['port'])

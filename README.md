@@ -106,10 +106,16 @@ source myenv/bin/activate
 cd /mnt/c/tmp/codeGenerator
 
 python3 main.py -s                # startet server
-python3 main.py -d test.py -e m   #manuell eingabe, schreibt datei
-python3 main.py -d test.py -e ki  #ki schreibt datei
-python3 main.py -r -p python3     #führt programm aus
-python3 main.py -ki -d test.py    #KI eingabe
+python3 main.py -ki -d test.py    #KI eingabe (in entwicklung)
+
+
+#start in anderem verzeichnis
+cd test                                             #neues Programm
+mkdir bak && mkdir log && mkdir etc
+
+python3 ../codeGenerator/main.py -d test.py         # schreibt datei
+python3 ../codeGenerator/main.py -r -p python3      #führt datei automatisch aus
+
 
 
 
