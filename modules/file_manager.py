@@ -51,6 +51,8 @@ class FileManager:
                         filename = self.extract_filename(code)
                         if filename:
                             self.file_operations.save_file(filename, code)
+                            
+                            #   message:<client_id>:<command>:<details>
                             self.send_message(f'message:run:execute:{self.main_filename}')
                         else:
                             print("Kein gültiger Dateiname gefunden.")
