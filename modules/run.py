@@ -6,7 +6,7 @@ import sys
 import os
 
 class Run:
-    def __init__(self, args, host, port):
+    def __init__(self, args, host, port ):
         signal.signal(signal.SIGINT, self.signal_handler)
         self.server_address = (host, port)
         self.program_to_run = args.program_to_run
@@ -43,8 +43,12 @@ class Run:
                             if os.path.exists(filename):
                                 print(f"Führe Datei {filename} aus...")
                                 
-                                print(f'{self.program_call} {filename}')
-                                os.system(f'{self.program_call} {filename}')    # Interpreter oder Kompilieren
+                                print (f'{self.program_call} {filename}')
+                                os.system(f'{self.program_call} {filename}')    # Interpreter oder compilieren
+                                
+                                #if self.program_to_run:
+                                #    os.system(f'./{self.program_to_run}')  # compiler prg starten
+                                    
                                 
                                 self.send_message('Befehl empfangen und ausgeführt')
                             else:

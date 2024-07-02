@@ -4,6 +4,8 @@ import socket
 import signal
 import sys
 import re
+import termios  # Terminal I/O control
+import tty  # Terminal control
 from modules.file_operations import FileOperations
 from modules.backup_manager import BackupManager
 
@@ -15,10 +17,11 @@ class FileManager:
         self.server_address = (host, port)
         self.running = True
         self.main_filename = main_filename
+        self.current_code = ""
         signal.signal(signal.SIGINT, self.signal_handler)
 
     def signal_handler(self, sig, frame):
-        print("FileManager wird durch Strg+C beendet.")
+        print("\nStrg+C erkannt, beende das Programm...")
         self.running = False
         sys.exit(0)
 
@@ -27,39 +30,86 @@ class FileManager:
             s.connect(self.server_address)
             s.sendall(message.encode('utf-8'))
 
+    def register_with_server(self):
+        self.send_message('register:file_manager')
+
     def extract_filename(self, code):
         match = re.search(r'# ?[Ff]ilename: (.+)', code)
         if match:
             return match.group(1).strip()
         return None
 
+    def save_code(self):
+        filename = self.extract_filename(self.current_code)
+        if filename:
+            self.file_operations.save_file(filename, self.current_code)
+            print(f"Datei {filename} wurde erfolgreich gespeichert.")
+        else:
+            print("Kein gültiger Dateiname gefunden.")
+
+    def read_input(self):
+        code_lines = []
+        print("Bitte fügen Sie den Code ein (Ende mit Strg+D, Strg+F oder Strg+C):")
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(fd)  # Setze Terminal in Rohmodus
+            while True:
+                ch = sys.stdin.read(1)
+                if ch == '\x04':  # Ctrl+D
+                    print("\nStrg+D erkannt, speichere den Code...")
+                    return '\n'.join(code_lines), 'save_only'
+                elif ch == '\x06':  # Ctrl+F
+                    print("\nStrg+F erkannt, speichere den Code und führe ihn aus...")
+                    return '\n'.join(code_lines), 'save_and_send'
+                elif ch == '\x03':  # Ctrl+C
+                    print("\nStrg+C erkannt, beende das Programm...")
+                    self.signal_handler(signal.SIGINT, None)
+                elif ch == '\r' or ch == '\n':  # Enter
+                    code_lines.append('')
+                    sys.stdout.write('\n')
+                    sys.stdout.flush()
+                elif ch == '\x7f':  # Backspace
+                    if code_lines and code_lines[-1]:
+                        code_lines[-1] = code_lines[-1][:-1]
+                        sys.stdout.write('\b \b')
+                        sys.stdout.flush()
+                else:
+                    if len(code_lines) == 0:
+                        code_lines.append(ch)
+                    else:
+                        code_lines[-1] += ch
+                    sys.stdout.write(ch)
+                    sys.stdout.flush()
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)  # Terminal-Einstellungen wiederherstellen
+
     def run(self):
         try:
+            # Registrieren Sie den FileManager beim Server
+            self.register_with_server()
             while self.running:
-                try:
-                    print("Bitte fügen Sie den Code ein (Ende mit Strg+D):")
-                    code_lines = []
-                    while True:
-                        try:
-                            line = input()
-                            code_lines.append(line)
-                        except EOFError:
-                            break
-
-                    if code_lines:
-                        code = '\n'.join(code_lines)
-                        filename = self.extract_filename(code)
-                        if filename:
-                            self.file_operations.save_file(filename, code)
-                            
-                            #   message:<client_id>:<command>:<details>
-                            self.send_message(f'message:run:execute:{self.main_filename}')
-                        else:
-                            print("Kein gültiger Dateiname gefunden.")
-                    else:
-                        print("Kein Code eingegeben.")
-                except EOFError:
-                    print("EOFError erkannt. Wiederholen der Eingabe...")
-                    continue
+                self.current_code, action = self.read_input()
+                if self.current_code:
+                    if action == 'save_only':
+                        self.save_code()
+                    elif action == 'save_and_send':
+                        self.save_code()
+                        self.send_message(f'message:run:execute:{self.main_filename}')
+                else:
+                    print("Kein Code eingegeben.")
         except KeyboardInterrupt:
             self.signal_handler(signal.SIGINT, None)
+
+# Beispielaufruf
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="FileManager")
+    parser.add_argument('--program_to_run', type=str, help="Das zu startende Programm nach dem Kompilieren")
+    parser.add_argument('--program_call', type=str, help="Der Befehl zum Ausführen des Programms")
+    parser.add_argument('--host', type=str, default='localhost', help="Der Hostname des Servers")
+    parser.add_argument('--port', type=int, default=47011, help="Der Port des Servers")
+    args = parser.parse_args()
+
+    file_manager = FileManager(args, args.host, args.port, args.program_to_run)
+    file_manager.run()
