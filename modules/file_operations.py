@@ -7,6 +7,14 @@ class FileOperations:
         self.backup_manager = backup_manager
 
     def ensure_directory(self, filepath):
+        required_dirs = ['bak', 'log', 'etc']
+        
+        # Check if required directories exist, if not, create them
+        for dir_name in required_dirs:
+            if not os.path.exists(dir_name):
+                os.makedirs(dir_name)
+                print(f"Verzeichnis {dir_name} erstellt.")
+        
         directory = os.path.dirname(filepath)
         if directory and not os.path.exists(directory):
             os.makedirs(directory)

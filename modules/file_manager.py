@@ -90,26 +90,14 @@ class FileManager:
             self.register_with_server()
             while self.running:
                 self.current_code, action = self.read_input()
-                if self.current_code:
-                    if action == 'save_only':
+                if action == 'save_only' and self.current_code:
+                    self.save_code()
+                elif action == 'save_and_send':
+                    if self.current_code:
                         self.save_code()
-                    elif action == 'save_and_send':
-                        self.save_code()
-                        self.send_message(f'message:run:execute:{self.main_filename}')
+                    self.send_message(f'message:run:execute:{self.main_filename}')
                 else:
                     print("Kein Code eingegeben.")
         except KeyboardInterrupt:
             self.signal_handler(signal.SIGINT, None)
 
-# Beispielaufruf
-if __name__ == "__main__":
-    import argparse
-    parser = argparse.ArgumentParser(description="FileManager")
-    parser.add_argument('--program_to_run', type=str, help="Das zu startende Programm nach dem Kompilieren")
-    parser.add_argument('--program_call', type=str, help="Der Befehl zum Ausführen des Programms")
-    parser.add_argument('--host', type=str, default='localhost', help="Der Hostname des Servers")
-    parser.add_argument('--port', type=int, default=47011, help="Der Port des Servers")
-    args = parser.parse_args()
-
-    file_manager = FileManager(args, args.host, args.port, args.program_to_run)
-    file_manager.run()
