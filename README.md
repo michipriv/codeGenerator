@@ -1,5 +1,10 @@
 # Filename: README.md
 
+Ideen
+strg +f ohne code einfügen startet programm
+error log ist verloren gegangen ohne loggin alle bidlschirmmeldungen und alle fehelrmledungen in datei logen, 
+je nach porgrmmstart aufteilen
+
 # Prompt 1 um in einem neuen Chatverlauf die Klassen des Codegenrators zu hinterlegen
 
 Verhalte dich wie ein Python-Entwickler, der objektorientiert und mit Klassen entwickelt.
