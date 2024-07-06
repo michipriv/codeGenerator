@@ -1,6 +1,4 @@
-api_key.txt
-api_key.json
-myenv
 __pycache__
-run.log
+*.log
 *.wav
+*.json
