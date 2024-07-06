@@ -11,6 +11,8 @@ class ArgumentParser:
         self.ki = False
         self.server_mode = False
         self.program_call = None
+        self.message = None
+        self.target_function = None
         self.parse_arguments()
 
     def parse_arguments(self):
@@ -43,6 +45,20 @@ class ArgumentParser:
                 else:
                     print("Kein Programmaufruf angegeben. Verwenden Sie das Format 'python3 main.py -p <program_call>'")
                     sys.exit(1)
+            if '-m' in sys.argv:
+                message_index = sys.argv.index('-m') + 1
+                if message_index < len(sys.argv):
+                    self.message = sys.argv[message_index]
+                else:
+                    print("Keine Nachricht angegeben. Verwenden Sie das Format 'python3 main.py -m <message> -z <target_function>'")
+                    sys.exit(1)
+            if '-z' in sys.argv:
+                target_function_index = sys.argv.index('-z') + 1
+                if target_function_index < len(sys.argv):
+                    self.target_function = sys.argv[target_function_index]
+                else:
+                    print("Keine Zielfunktion angegeben. Verwenden Sie das Format 'python3 main.py -m <message> -z <target_function>'")
+                    sys.exit(1)
 
     def print_help(self):
         help_message = """
@@ -55,6 +71,8 @@ Optionen:
   -s                 Startet den Server
   -ki                Führt die OpenAI-Integration aus und generiert Code basierend auf einer Beschreibung
   -p PROGRAMMAUFRUF  Führt den angegebenen Programmaufruf aus
+  -m NACHRICHT       Nachricht zum Senden an die Zielfunktion
+  -z ZIELFUNKTION    Zielfunktion, die die Nachricht empfängt
 
 Ohne Parameter startet das Skript im interaktiven Modus und erwartet Eingaben im folgenden Format:
   DATEINAME
@@ -66,12 +84,9 @@ Beispiele:
   python script.py -s
   python script.py -ki
   python script.py -p "ls -la"
+  python script.py -m "Nachricht" -z "zielfunktion"
 """
         print(help_message)
 
-# Example usage
-if __name__ == "__main__":
-    parser = ArgumentParser()
-    if parser.help:
-        parser.print_help()
-    # You can add other logic here to handle the parsed arguments as needed
+
+#EOF

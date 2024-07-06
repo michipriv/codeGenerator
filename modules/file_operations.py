@@ -35,3 +35,6 @@ class FileOperations:
             return input(prompt)
         except EOFError:
             return None
+
+
+#EOF

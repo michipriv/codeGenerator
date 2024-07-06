@@ -60,3 +60,7 @@ class Run:
                 print(f"Fehler im Run-Client: {e}")
                 self.running = False
                 sys.exit(0)
+
+
+
+#EOF

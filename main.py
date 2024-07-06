@@ -11,7 +11,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # Füge das BASE_DIR zum Suchpfad hinzu
 sys.path.append(BASE_DIR)
 
-from modules.utils import clear_screen
+from modules.utils import clear_screen, TestMessenger
 from modules.file_manager import FileManager
 from modules.argument_parser import ArgumentParser
 from modules.run import Run
@@ -43,7 +43,7 @@ def main():
         args.print_help()
     elif args.ki:
         print("Starte OpenAI-Modus...")
-        openai_integration = OpenAIIntegration(args, config['host'], config['port'], os.path.join(BASE_DIR, 'etc/api_key.json'))
+        openai_integration = OpenAIIntegration(args, config['host'], config['port'], config['openai_api_key'], config['organization'])
         openai_integration.run_interactive_mode()
     elif args.server_mode:
         print("Starte Server-Modus...")
@@ -63,8 +63,15 @@ def main():
         print(f"Starte FileManager-Modus für Hauptdatei: {args.edit_filename}...")
         file_manager = FileManager(args, config['host'], config['port'], args.edit_filename)
         file_manager.run()
+    elif args.message and args.target_function:
+        print(f"Sende Nachricht '{args.message}' an '{args.target_function}'...")
+        test_messenger = TestMessenger(config['host'], config['port'])
+        test_messenger.send_message(args.message, args.target_function)
     else:
         print("Keine gültigen Argumente übergeben. Verwenden Sie '-h' für Hilfe.")
 
 if __name__ == "__main__":
     main()
+
+
+#EOF
