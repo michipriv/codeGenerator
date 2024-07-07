@@ -1,16 +1,22 @@
-# Filename: openai.py
-
-import openai
 import json
 import socket
+import sys
+import termios
+import tty
+import os
+from datetime import datetime
+from modules.code_generator import CodeGenerator
 
 class OpenAIIntegration:
     def __init__(self, args, host, port, api_key, organization):
-        openai.api_key = api_key
-        openai.organization = organization
-        self.client = openai
+        self.client = CodeGenerator(api_key, organization)
         self.server_address = (host, port)
         self.register_with_server()
+        self.old_settings = termios.tcgetattr(sys.stdin)
+        self.conversation_history = []
+        self.log_directory = os.path.join(os.getcwd(), 'log')
+        if not os.path.exists(self.log_directory):
+            os.makedirs(self.log_directory)
 
     def register_with_server(self):
         self.send_message('register:openai')
@@ -19,7 +25,6 @@ class OpenAIIntegration:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect(self.server_address)
             s.sendall(message.encode('utf-8'))
-
 
     def receive_message(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -33,76 +38,97 @@ class OpenAIIntegration:
                         return data.decode('utf-8')
         return None
 
-    def generiere_code(self, gpt_assistant_prompt, gpt_user_prompt, model="gpt-4", temperature=0.2, max_tokens=256, frequency_penalty=0.0):
-        """
-        Generiert Programmcode basierend auf einer gegebenen Beschreibung.
-        """
-        try:
-            messages = [
-                {"role": "system", "content": gpt_assistant_prompt},
-                {"role": "user", "content": gpt_user_prompt}
-            ]
-            response = openai.chat.completions.create(
-                model=model,
-                messages=messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                frequency_penalty=frequency_penalty
-            )
-            generated_code = response.choices[0].message.content
-            print (generated_code)
-            
-            # Entferne alles vor #Filename und nach #EOF
-            start_index = generated_code.find("#Filename:")
-            end_index = generated_code.find("#EOF") + len("#EOF")
-            if start_index != -1 and end_index != -1:
-                generated_code = generated_code[start_index:end_index].strip()
-            else:
-                raise ValueError("System Prompt Fehler: Der generierte Code enthält nicht die erforderlichen #Filename und #EOF Marker")
-            
-            if not generated_code.startswith("#Filename:"):
-                raise ValueError("System Prompt Fehler: Der generierte Code beginnt nicht mit #Filename:")
-            if not generated_code.endswith("#EOF"):
-                raise ValueError("System Prompt Fehler: Der generierte Code endet nicht mit #EOF")         
-          
-            self.send_message(f"message:file_manager:save:{generated_code}")
-            print(f"Nachricht an Filemanager gesendet")
-            return generated_code
-        except Exception as e:
-            print(f"Ein Fehler ist aufgetreten: {e}")
-            return None
-
     def create_prompt(self):
         return (
             "Verhalte dich wie ein Python-Entwickler, der objektorientiert und mit Klassen entwickelt. "
             "Bei der Antwort füge im Codeblock immer die Zeile mit: #Filename ein, das ist extrem wichtig für die Zuordnung. "
-            "Antworte nur mit Code, und achte darauf, dass der Code mit #Filename beginnt und mit #EOF endet. Lasse jede Erklärung weg."
-            "das hauptprogramm heist immer main.py"
-            "Klassen werden im verzeichnis module abgespeichert"
+            "Achte darauf, dass der Code mit #Filename beginnt und mit #EOF endet."
+            "Das Hauptprogramm heißt immer main.py. "
+            "Klassen werden im Verzeichnis modules abgespeichert."
+            "Du kannst mit dem Befehl: delete_file:dateiname Daten löschen."
+            "Du kannst mit dem Befehl: delete_directory:verzeichnis Daten löschen."
         )
-    
-    
+
+    def read_multiline_input(self, prompt):
+        print(prompt)
+        print("")
+        
+        lines = []
+        while True:
+            try:
+                line = input()
+            except EOFError:
+                print("Eingabe abgeschlossen.")
+                break
+            lines.append(line)
+        return "\n".join(lines)
+
+    def extract_code_blocks(self, text):
+        code_blocks = []
+        remaining_text = text
+        while True:
+            start_index = remaining_text.find("#Filename:")
+            if start_index == -1:
+                break
+            end_index = remaining_text.find("#EOF", start_index)
+            if end_index == -1:
+                print("Warnung: Kein #EOF gefunden. Abbruch.")
+                break
+            end_index += len("#EOF")
+            code_blocks.append(remaining_text[start_index:end_index].strip())
+            remaining_text = remaining_text[:start_index] + remaining_text[end_index:]
+        return code_blocks, remaining_text.strip()
+
+    def log_ki_antwort(self, generierter_code):
+        timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        log_filename = os.path.join(self.log_directory, f"ki-ausgabe.log.{timestamp}")
+        with open(log_filename, 'w') as log_file:
+            log_file.write(generierter_code)
+        print(f"KI-Antwort in {log_filename} gespeichert.")
 
     def run_interactive_mode(self):
-        """
-        Führt den interaktiven Modus für die OpenAI-Integration aus.
-        """
         try:
+            gpt_assistant_prompt = self.create_prompt()
+            self.conversation_history.append({"role": "system", "content": gpt_assistant_prompt})
+            
             while True:
-                gpt_assistant_prompt = self.create_prompt()
-    
+                gpt_user_prompt = self.read_multiline_input("Was soll ich tun? (Beenden mit Strg+D) ")
+                self.conversation_history.append({"role": "user", "content": gpt_user_prompt})
                 
-                gpt_user_prompt = input("Was soll ich tun? ")
-                generierter_code = self.generiere_code(gpt_assistant_prompt, gpt_user_prompt)
-                print(f"Generierter Code:\n{generierter_code}")
-    
-                # Sende den generierten Code an den FileManager und löse das Speichern aus
-                self.send_message(f"save:{generierter_code}")
-    
+                # Generiere den Code basierend auf der Benutzereingabe und sende ihn an den FileManager
+                generierter_code = self.client.generiere_code(self.conversation_history)
+                #print("##### TEST AUSGABE Code-generator -ki"); print(generierter_code); print("##### TEST AUSGABE Code-generator -ki")
+
+                # Loggen der KI-Antwort
+                self.log_ki_antwort(generierter_code)
+
+                # Trenne KI-Text und Codeblöcke
+                code_blocks, remaining_text = self.extract_code_blocks(generierter_code)
+                
+                # Zeige den textlichen Teil der KI-Antwort an
+                if remaining_text:
+                    print("KI-Antwort (ohne Code):")
+                    print(remaining_text)
+                
+                self.conversation_history.append({"role": "assistant", "content": generierter_code})
+                
+                for block in code_blocks:
+                    self.send_message(f"message:file_manager:save:{block}")
+                    print(f"Codeblock an FileManager gesendet:\n{block}")
+
+                # Verarbeiten von Löschbefehlen (Dateien und Verzeichnisse)
+                if "delete_file:" in remaining_text:
+                    file_to_delete = remaining_text.split("delete_file:")[1].strip()
+                    self.send_message(f"message:file_manager:delete_file:{file_to_delete}")
+                    print(f"Lösche Datei: {file_to_delete}")
+                if "delete_directory:" in remaining_text:
+                    directory_to_delete = remaining_text.split("delete_directory:")[1].strip()
+                    self.send_message(f"message:file_manager:delete_directory:{directory_to_delete}")
+                    print(f"Lösche Verzeichnis: {directory_to_delete}")
+
         except KeyboardInterrupt:
             print("\nProgramm wurde beendet.")
-
-
-
+        finally:
+            termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.old_settings)
 
 #EOF

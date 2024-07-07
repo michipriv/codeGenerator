@@ -1,4 +1,4 @@
-# Filename: server.py
+# Filename: modules/server.py
 
 """
 Klassen die untereinander kommunizieren müssen sich am server registrieren

@@ -2,14 +2,26 @@
 
 Ideen
 
+Filemanager in klassen /dateien aufteilen
+befehle für verbindungsdaufbau, senden , empfangen einheiltich machen und als beispiel erstellen ABleietn aus class run und filemanager
 
-error log ist verloren gegangen ohne lib  loggin alle bidlschirmmeldungen und alle fehelrmledungen in datei logen, 
-je nach porgrmmstart mit datum/zeit aufteilen
-modul: einlesen eines bestehenedn Programmcodes in die sitzung
-modul: einlesen vo internet information zb zu einer Api oder programm beispiele
+modul: einlesen eines bestehenedn Programmcodes aus einem Verzeichnis in die bestehende KI-sitzung. file operations datei lesen und directory lesen erstellen
+modul: einlesen von internet information zb zu einer Api oder programm beispiele
+run: möglichkeit um libraries nachzu installieren wenn diese benötigt werden
+error log ist verloren gegangen ohne lib  loggin alle bidlschirmmeldungen und alle fehelrmledungen in datei logen, logik mit datum/zeit 
+
 
 erledigt: strg +f ohne code einfügen startet programm
-erledigt:automatisches erstellend er verz bak, etc log
+erledigt: automatisches erstellend er verz bak, etc log
+erledigt: ### mkdir bak && mkdir log && mkdir etc  wird durhc programm erstellt wenn neue datein geschrieben werden
+erledigt: Ki sendet zusätzlich an filemanager, code einfügen bleibt optional bestehen, filemanager kann auch strg f prg ausführen. beides kann gleichzeitig genutzt werden
+erledigt: filemanager gibt bescheid das er eine nachricht von openai erhalten hat
+erledigt: löschen von dateien und verzeichnise
+erledigt: ki programmierung: es muss code und es müssen fragen über eine sitzung erstellt werden. trenne code und trenne fragen
+
+
+
+
 
 # Prompt 1 um in einem neuen Chatverlauf die Klassen des Codegenrators zu hinterlegen
 
@@ -18,6 +30,27 @@ Ich poste dir nun einen Code, der aus mehreren Klassen besteht.
 Bei der Antwort füge im Codeblock immer die Zeile mit: #Filename ein, das ist extrem wichtig für die Zuordnung.
 Lies den Code nur ein und warte, bis ich das Stichwort BINGO schreibe.
 
+
+#beispiel prompt für codegenerator KI
+Ich bin Anfänger in Python und möchte mein erstes Programm erstellen. Kannst du mir ein einfaches hello world erstellen?
+
+
+
+
+#OPENAI Prompt
+
+Openai:
+Ich möchte, dass du immer die Version V1.35.10 der OpenAI-Python-Bibliothek verwendest. 
+Bitte überprüfe jedes Mal, ob die von dir verwendeten Methoden und Syntax mit dieser Version kompatibel sind. 
+Vermeide die Verwendung von veralteten Methoden wie openai.ChatCompletion.create. 
+Verwende stattdessen die aktuell gültige API-Syntax für V1.35.10.
+lese die api https://github.com/openai/openai-python/blob/main/api.md
+lese https://github.com/openai/openai-python
+
+
+
+
+#Prompt verz
 Die Verzeichnisstruktur sieht so aus:
 Unter modules liegen die Klassen
 
@@ -122,18 +155,20 @@ source myenv/bin/activate
 cd /mnt/c/tmp/codeGenerator
 
 python3 main.py -s                # startet server
-python3 main.py -ki -d test.py    #KI eingabe (in entwicklung)
+
 
 
 #start in anderem verzeichnis
-cd test                                             #neues Programm
-mkdir bak && mkdir log && mkdir etc
+
+
 
 python3 ../codeGenerator/main.py -d main.py         # Übergabe der Main Datei, diese wird durch run ausgeführt
                                                     # alle anderen Datein werden in eigene Klassen geschrieben
 python3 ../codeGenerator/main.py -r -p python3      #führt die -d Main datei automatisch aus, alle anderen Dateien werden nicht aufgerufen
 
+python3 ../codeGenerator/main.py -ki    #KI eingabe (in entwicklung)
 
+python3 ../codeGenerator/main.py -m "test" -z "server"      #sendet testnachricht an server oder andee client
 
 
 beispiel für gcc
@@ -141,3 +176,20 @@ beispiel für gcc
 python3 main.py -r test -p "gcc -o test"
 
 lsof -i :47011
+
+
+
+#openai version der installierten openai lib ist wichtig diese muss der aus github entsprechen
+https://github.com/openai/openai-python
+
+PyPI version: V1.35.10
+
+pythons starten:
+
+import openai
+print(openai.__version__)
+
+
+
+
+#EOF

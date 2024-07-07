@@ -1,6 +1,7 @@
-# Filename: file_operations.py
+# Filename: modules/file_operations.py
 
 import os
+import shutil  # Fügen Sie diesen Import hinzu
 
 class FileOperations:
     def __init__(self, backup_manager):
@@ -30,11 +31,28 @@ class FileOperations:
         except Exception as e:
             print(f"Fehler beim Schreiben der Datei {filename}: {e}")
 
-    def read_input(self, prompt=""):
+    def delete_file(self, filename):
         try:
-            return input(prompt)
-        except EOFError:
-            return None
+            if os.path.exists(filename):
+                os.remove(filename)
+                print(f"Datei {filename} wurde erfolgreich gelöscht.")
+            else:
+                print(f"Datei {filename} existiert nicht.")
+        except Exception as e:
+            print(f"Fehler beim Löschen der Datei {filename}: {e}")
+
+    def delete_directory(self, directory):
+        try:
+            if os.path.exists(directory):
+                shutil.rmtree(directory)
+                print(f"Verzeichnis {directory} wurde erfolgreich gelöscht.")
+            else:
+                print(f"Verzeichnis {directory} existiert nicht.")
+        except Exception as e:
+            print(f"Fehler beim Löschen des Verzeichnisses {directory}: {e}")
+            import traceback
+            traceback.print_exc()
+
 
 
 #EOF

@@ -43,7 +43,7 @@ def main():
         args.print_help()
     elif args.ki:
         print("Starte OpenAI-Modus...")
-        openai_integration = OpenAIIntegration(args, config['host'], config['port'], config['openai_api_key'], config['organization'])
+        openai_integration = OpenAIIntegration(args, config['host'], config['port'], config['openai_api_key'], config['openai_organization'])
         openai_integration.run_interactive_mode()
     elif args.server_mode:
         print("Starte Server-Modus...")

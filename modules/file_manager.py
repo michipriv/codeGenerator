@@ -1,4 +1,4 @@
-# Filename: file_manager.py
+# Filename: modules/file_manager.py
 
 import socket
 import signal
@@ -58,12 +58,12 @@ class FileManager:
                     if data:
                         message = data.decode('utf-8')
                         if message.startswith("save:"):
-                            message = message[len("save:"):].strip()
-                        self.openai_message = message
-                        self.save_received_code(message)  # Speichern des empfangenen Codes
+                            self.save_received_code(message[len("save:"):].strip())
+                        elif message.startswith("delete_file:"):
+                            self.file_operations.delete_file(message[len("delete_file:"):].strip())
+                        elif message.startswith("delete_directory:"):
+                            self.file_operations.delete_directory(message[len("delete_directory:"):].strip())
                         self.send_message('message:server:Nachricht von Openai')
-                        print("Nachricht")
-                        print(self.openai_message)
                 except socket.timeout:
                     pass  # Timeout tritt nach 1 Sekunde auf, und der Loop geht weiter
                 except socket.error as e:
@@ -204,3 +204,5 @@ class FileManager:
                 self.message_thread.join(1)
             self.reset_terminal()
             print("FileManager beendet.")
+
+#EOF
