@@ -1,25 +1,20 @@
 # Filename: modules/file_operations.py
 
 import os
-import shutil  # Fügen Sie diesen Import hinzu
+import shutil
 
 class FileOperations:
     def __init__(self, backup_manager):
         self.backup_manager = backup_manager
 
     def ensure_directory(self, filepath):
-        required_dirs = ['bak', 'log', 'etc']
-        
-        # Check if required directories exist, if not, create them
-        for dir_name in required_dirs:
-            if not os.path.exists(dir_name):
-                os.makedirs(dir_name)
-                print(f"Verzeichnis {dir_name} erstellt.")
-        
+        # Ensure the directory for the file path exists
         directory = os.path.dirname(filepath)
         if directory and not os.path.exists(directory):
             os.makedirs(directory)
-            print(f"Verzeichnis {directory} erstellt.")
+            print(f"Verzeichnis {directory} wurde erfolgreich erstellt.")
+        elif directory:
+            print(f"Verzeichnis {directory} existiert bereits.")
 
     def save_file(self, filename, content):
         try:
@@ -41,6 +36,16 @@ class FileOperations:
         except Exception as e:
             print(f"Fehler beim Löschen der Datei {filename}: {e}")
 
+    def create_directory(self, directory):
+        try:
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+                print(f"Verzeichnis {directory} wurde erfolgreich erstellt.")
+            else:
+                print(f"Verzeichnis {directory} existiert bereits.")
+        except Exception as e:
+            print(f"Fehler beim Erstellen des Verzeichnisses {directory}: {e}")
+
     def delete_directory(self, directory):
         try:
             if os.path.exists(directory):
@@ -53,6 +58,27 @@ class FileOperations:
             import traceback
             traceback.print_exc()
 
+    def read_file(self, filename):
+        try:
+            with open(filename, 'r') as f:
+                content = f.read()
+            print(f"Datei {filename} wurde erfolgreich gelesen.")
+            return content
+        except Exception as e:
+            print(f"Fehler beim Lesen der Datei {filename}: {e}")
+            return None
 
+    def list_directory_files(self, directory):
+        try:
+            if os.path.exists(directory):
+                files = os.listdir(directory)
+                print(f"Dateien im Verzeichnis {directory}: {files}")
+                return files
+            else:
+                print(f"Verzeichnis {directory} existiert nicht.")
+                return []
+        except Exception as e:
+            print(f"Fehler beim Auflisten der Dateien im Verzeichnis {directory}: {e}")
+            return []
 
 #EOF

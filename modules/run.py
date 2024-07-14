@@ -1,66 +1,56 @@
 # Filename: modules/run.py
 
-import socket
 import signal
 import sys
+import threading
 import os
+from modules.client import Client
+from modules.message import Message
 
 class Run:
-    def __init__(self, args, host, port ):
+    def __init__(self, args, host, port, client_id="run"):
         signal.signal(signal.SIGINT, self.signal_handler)
         self.server_address = (host, port)
-        self.program_to_run = args.program_to_run
-        self.program_call = args.program_call
         self.running = True
+        self.client = Client(host, port, client_id)
+        self.client.register()
+        self.message_thread = threading.Thread(target=self.receive_messages)
+        self.message_thread.daemon = True
+        self.message_thread.start()
 
     def signal_handler(self, sig, frame):
         print("Run wird durch Strg+C beendet.")
         self.running = False
         sys.exit(0)
 
-    def send_message(self, message):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect(self.server_address)
-            s.sendall(message.encode('utf-8'))
+    def handle_message(self, message):
+        print("Nachricht erhalten")  # Debugging output
+        data = Message.deserialize(message)
+        print(f"Empfangene Nachricht: {data}")  # Debugging output
 
-    def start(self):
-        print(f"Run-Client läuft und wartet auf Befehle am Port {self.server_address[1]}...")
+        if data.message_type == Message.SEND:
+            command = data.content
+            print(f"Empfangener Befehl: {command}")
+            filename = command.split()[1] if len(command.split()) > 1 else None
+            if filename and os.path.exists(filename):
+                os.system(command)
+            else:
+                print(f"Datei {filename} existiert nicht.")
+        elif data.message_type == Message.RESPONSE:
+            print(f"Nachricht: {data.content}")
+
+    def receive_messages(self):
         while self.running:
             try:
-                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                    s.connect(self.server_address)
-                    s.sendall(b'register:run')
-                    response = s.recv(1024).decode('utf-8')
-                    print(f"Antwort vom Server: {response}")
-                    while self.running:
-                        data = s.recv(1024)
-                        if not data:
-                            break
-                        command = data.decode('utf-8')
-                        print(f"Befehl empfangen: {command}")
-                        if command.startswith('execute:'):
-                            filename = command.split(':')[1]
-                            if os.path.exists(filename):
-                                print(f"Führe Datei {filename} aus...")
-                                
-                                print (f'{self.program_call} {filename}')
-                                os.system(f'{self.program_call} {filename}')    # Interpreter oder compilieren
-                                
-                                #if self.program_to_run:
-                                #    os.system(f'./{self.program_to_run}')  # compiler prg starten
-                                    
-                                
-                                self.send_message('Befehl empfangen und ausgeführt')
-                            else:
-                                self.send_message('Datei nicht gefunden')
-                        elif command == 'exit':
-                            self.running = False
-                            break
+                print("Warte auf Nachrichten...")  # Debugging output
+                message = self.client.listener_socket.recv()
+                self.handle_message(message)
+                self.client.listener_socket.send(Message("server", self.client.client_id, Message.RESPONSE, "Message received").serialize())
             except Exception as e:
-                print(f"Fehler im Run-Client: {e}")
-                self.running = False
-                sys.exit(0)
+                print(f"Fehler beim Empfangen der Nachricht: {e}")
 
-
+    def start(self):
+        print("Run client started and waiting for commands...")
+        self.receive_messages()
 
 #EOF

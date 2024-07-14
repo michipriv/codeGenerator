@@ -11,21 +11,59 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # Füge das BASE_DIR zum Suchpfad hinzu
 sys.path.append(BASE_DIR)
 
-from modules.utils import clear_screen, TestMessenger
-from modules.file_manager import FileManager
 from modules.argument_parser import ArgumentParser
-from modules.run import Run
 from modules.server import ServerHandler
-from modules.openai import OpenAIIntegration
+from modules.file_manager import FileManager
+from modules.run import Run  # Importiere die Run-Klasse
+from modules.beispiel import ExampleClient  # Importiere die ExampleClient-Klasse
+from modules.openai import OpenAIIntegration  # Importiere die OpenAIIntegration-Klasse
+
+def clear_screen():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
 
 def load_config(file_path='etc/config.json'):
-    with open(os.path.join(BASE_DIR, file_path), 'r') as f:
+    with open(os.path.join(BASE_DIR, file_path), 'r', encoding='utf-8') as f:
         return json.load(f)
+
+def load_prompts(file_path='etc/prompt.txt'):
+    prompts = {}
+    current_key = None
+    current_prompt = []
+
+    try:
+        with open(os.path.join(BASE_DIR, file_path), 'r', encoding='utf-8', errors='replace') as file:
+            for line in file:
+                line = line.strip()
+                if line.startswith('//') or not line:
+                    continue
+                if line.startswith('PROMPT:'):
+                    if current_key and current_prompt:
+                        prompts[current_key] = '\n'.join(current_prompt)
+                    current_key = line[len('PROMPT:'):].strip()
+                    current_prompt = []
+                elif line.startswith('TEXT:'):
+                    continue
+                elif line.startswith('END:'):
+                    if current_key and current_prompt:
+                        prompts[current_key] = '\n'.join(current_prompt)
+                    current_key = None
+                    current_prompt = []
+                else:
+                    current_prompt.append(line)
+            if current_key and current_prompt:
+                prompts[current_key] = '\n'.join(current_prompt)
+    except UnicodeDecodeError as e:
+        print(f"Error decoding file {file_path}: {e}")
+    return prompts
 
 def main():
     clear_screen()
 
-    config = load_config()
+    config = load_config()  # config laden
+    prompts_dict = load_prompts()  # Laden der Prompts aus der Textdatei
 
     # Argumente parsen
     args = ArgumentParser()
@@ -33,45 +71,42 @@ def main():
     server_thread = None
 
     def signal_handler(sig, frame):
-        if server_thread and server_thread.is_alive():
+        if server_thread:
             server_thread.signal_handler(sig, frame)
         sys.exit(0)
 
     signal.signal(signal.SIGINT, signal_handler)
 
+    prompt_text = prompts_dict.get(args.prompt, "Default prompt text")
+
     if args.help:
         args.print_help()
     elif args.ki:
-        print("Starte OpenAI-Modus...")
-        openai_integration = OpenAIIntegration(args, config['host'], config['port'], config['openai_api_key'], config['openai_organization'])
+        print("Starting OpenAI mode...")
+        #print(prompt_text)
+        openai_integration = OpenAIIntegration(args, config['host'], config['port'], config['openai_api_key'], config['openai_organization'], prompt_text,  client_id="openai")
         openai_integration.run_interactive_mode()
     elif args.server_mode:
-        print("Starte Server-Modus...")
+        print("Starting server mode...")
         server_thread = ServerHandler(config['host'], config['port'])
-        server_thread.start()
-        
-        try:
-            server_thread.join()  # Lässt den Hauptthread auf den Server-Thread warten
-        except KeyboardInterrupt:
-            if server_thread:
-                server_thread.stop()
+        server_thread.start_server()  # Sync Server-Start
     elif args.run_mode:
-        print("Starte Run-Modus...")
-        run_client = Run(args, config['host'], config['port'])
+        print("Starting run mode...")
+        run_client = Run(args, config['host'], config['port'], client_id="run")
         run_client.start()
     elif args.edit_filename:
-        print(f"Starte FileManager-Modus für Hauptdatei: {args.edit_filename}...")
-        file_manager = FileManager(args, config['host'], config['port'], args.edit_filename)
+        print(f"Starting FileManager mode for main file: {args.edit_filename}...")
+        file_manager = FileManager(args, config['host'], config['port'], args.edit_filename, client_id="file_manager")
         file_manager.run()
-    elif args.message and args.target_function:
-        print(f"Sende Nachricht '{args.message}' an '{args.target_function}'...")
-        test_messenger = TestMessenger(config['host'], config['port'])
-        test_messenger.send_message(args.message, args.target_function)
+    elif args.example_mode:
+        print("Starting example mode...")
+        example_client = ExampleClient(config['host'], config['port'], args.client_id)
+        example_client.run()
+        
     else:
-        print("Keine gültigen Argumente übergeben. Verwenden Sie '-h' für Hilfe.")
+        print("No valid arguments provided. Use '-h' for help.")
 
 if __name__ == "__main__":
     main()
-
 
 #EOF

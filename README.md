@@ -2,8 +2,6 @@
 
 Ideen
 
-Filemanager in klassen /dateien aufteilen
-befehle für verbindungsdaufbau, senden , empfangen einheiltich machen und als beispiel erstellen ABleietn aus class run und filemanager
 
 modul: einlesen eines bestehenedn Programmcodes aus einem Verzeichnis in die bestehende KI-sitzung. file operations datei lesen und directory lesen erstellen
 modul: einlesen von internet information zb zu einer Api oder programm beispiele
@@ -18,22 +16,19 @@ erledigt: Ki sendet zusätzlich an filemanager, code einfügen bleibt optional b
 erledigt: filemanager gibt bescheid das er eine nachricht von openai erhalten hat
 erledigt: löschen von dateien und verzeichnise
 erledigt: ki programmierung: es muss code und es müssen fragen über eine sitzung erstellt werden. trenne code und trenne fragen
-
-
-
+erledigt: befehle für verbindungsdaufbau, senden , empfangen einheiltich machen und als beispiel erstellen ABleietn aus class run und filemanager
+erledigt: Filemanager in klassen /dateien aufteilen
+erledigt: normalisierung dateien erstellen,löschen verzeichnise ersteleln und löschen
 
 
 # Prompt 1 um in einem neuen Chatverlauf die Klassen des Codegenrators zu hinterlegen
 
 Verhalte dich wie ein Python-Entwickler, der objektorientiert und mit Klassen entwickelt.
+Erstelle Klassen und programmierung so das Sie wiederverwendbar sind. 
 Ich poste dir nun einen Code, der aus mehreren Klassen besteht.
 Bei der Antwort füge im Codeblock immer die Zeile mit: #Filename ein, das ist extrem wichtig für die Zuordnung.
+beachte die maximale Token grenze von 4096 wenn du klassen erstellst. teile klassen in kleine übersichtbare funktionen auf
 Lies den Code nur ein und warte, bis ich das Stichwort BINGO schreibe.
-
-
-#beispiel prompt für codegenerator KI
-Ich bin Anfänger in Python und möchte mein erstes Programm erstellen. Kannst du mir ein einfaches hello world erstellen?
-
 
 
 
@@ -77,45 +72,6 @@ codeGenerator/
 
 
 
-# Prompt 2
-Ablaufbeschreibung
-
-Datei schreiben:
-python3 main.py  -d test.py
-Starte das Programm in einer Linux-Shell und übergibt den Dateinamen test.py.
-Das Programm wartet in einer Eingabezeile, bis ein Programmcode eingefügt wird.
-Nach dem Einfügen wird mittels Strg + D der eingefügte Code in die jeweilige Datei enigefügt bzw vorher das Verzeichnis und die datei erstellt.
-Mit STRG +F wird gespeichert und zusätzlich die Datei in der run klasse ausgeführt.
-Wird strg +f gedrückt und es ist kein Code eingegegben wird die datei in der runklasse ausgeführt
-
-Kommunikation:
-Zusätzlich starte über die main.py einen Server, um mit anderen Bereichen des Programmes zu kommunizieren.
-der austausch zwischen code speichern und ausführen erfplgt über die serveroutine
-
-Programm ausführen:
-python3 main.py  -r test.py
-In einer zweiten Linux-Shell läuft das oben angeführte Programm.
-Die Run-Klasse wartet nun auf den Ausführungsbefehl und startet dann das Python-Programm test.py.
-Der Befehl kommt durch die Datei-schreiben-Klasse.
-Sobald das File geschrieben wurde, wird der Befehl zum Starten des Programmes an die Run-Klasse gesendet.
-In der Run-Klasse werden die Bildschirmausgaben - normal und Fehler - in eine Logdatei geschrieben, nur die der Run-Klasse.
-Zusätzlich wird am Bildschirm die Ausgabe des Programmes angezeigt.
-
-Alle Aufrufe passieren über main.py und werden dann durch die entsprechenden Klassen durchgeführt.
-Die Funktionen sind in Klassen ausgelagert, um die Übersicht zu erhalten und die Dateien klein zu halten.
-
-Lese die Programmbeschreibung und antworte ausschließlich: Wie kann ich dir helfen?
-
-
-
-#Prompt 4
-
-Ich kopiere nun die Änderungen in den Code und lasse das Programm laufen.
-Sollte es Fehler geben, so poste ich dir diese, und du behebst die Fehler und erstellst mir ausschließlich die Dateien, 
-die davon betroffen sind. Achte auch immer darauf, 
-dass am Anfang jeder Klasse: #Filename: ... steht.
-
-
 # Allgemeiner python Entwickler prompt
 
 Verhalte dich wie ein Python Entwickler.
@@ -128,8 +84,7 @@ Hauptprogramm/
 │
 ├── main
 ├── etc/                # Verzeichnis für API-Schlüssel und Konfigurationsdateien
-│   ├── api_key.json    # Beispiel für eine Konfigurationsdatei
-│   └── config.json     # Beispiel für eine weitere Konfigurationsdatei
+│   └── config.yaml     # Beispiel für eine weitere Konfigurationsdatei
 │   ├── ...             # Inhalte der virtuellen Umgebung
 ├── modules/
 
@@ -162,21 +117,28 @@ python3 main.py -s                # startet server
 
 
 
-python3 ../codeGenerator/main.py -d main.py         # Übergabe der Main Datei, diese wird durch run ausgeführt
+python3 ../codeGenerator/main.py -d main.py         # Filemanagerklasse:  Übergabe der Main Datei, diese wird durch die Klasse run ausgeführt
                                                     # alle anderen Datein werden in eigene Klassen geschrieben
-python3 ../codeGenerator/main.py -r -p python3      #führt die -d Main datei automatisch aus, alle anderen Dateien werden nicht aufgerufen
+python3 ../codeGenerator/main.py -r                 #run klasse: führt die -d Main datei automatisch aus, alle anderen Dateien werden nicht aufgerufen
 
-python3 ../codeGenerator/main.py -ki    #KI eingabe (in entwicklung)
+python3 ../codeGenerator/main.py -ki                #KI eingabe 
 
-python3 ../codeGenerator/main.py -m "test" -z "server"      #sendet testnachricht an server oder andee client
+python3 ../codeGenerator/main.py -m "test" -z "beispiel"      #sendet testnachricht an server oder andee client
+python3 ../codeGenerator/main.py -m "test" -z "file_manager" -t 10k      #sendet testnachricht mit der größe 10k
+
+python3 ../codeGenerator/main.py -bsp  client2              # Beispiel klasse für senden und empfangen von nachrichten, verwenden um neue klasse das senden und empfange beizubringen
+                                                            # cleint1 auslassen
+python3 ../codeGenerator/main.py -bsp  client3              # Beispiel klasse für senden und empfangen von nachrichten, verwenden um neue klasse das senden und empfange beizubringen
+Nachrichten format:  client2:Helllo world
 
 
+#andere Porgrammiersprache
 beispiel für gcc
 
 python3 main.py -r test -p "gcc -o test"
 
 lsof -i :47011
-
+kill -9 pid
 
 
 #openai version der installierten openai lib ist wichtig diese muss der aus github entsprechen
