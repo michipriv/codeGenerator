@@ -35,8 +35,6 @@ class ExampleClient:
             except Exception as e:
                 print(f"Error while sending message: {e}")
 
-        
-
     def run(self):
         recv_thread = threading.Thread(target=self.start_receiving)
         recv_thread.daemon = True
@@ -44,16 +42,6 @@ class ExampleClient:
 
         try:
             self.send_message_input()
-            
-            # Beispiel Aufruf von send_message
-            recipient_id = "server"
-            sender_id = self.client_id
-            message_type = "send"
-            content = "This is an example message content."
-            self.client.send_message(recipient_id, sender_id, message_type, content)
-            
-            
-            
         except KeyboardInterrupt:
             self.running = False
             recv_thread.join()

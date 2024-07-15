@@ -8,7 +8,7 @@ class ConversationManager:
     def __init__(self, max_tokens=2048):
         self.conversation_history = []
         self.max_tokens = max_tokens
-        self.encoding = tiktoken.encoding_for_model("gpt-3.5-turbo")
+        self.encoding = tiktoken.encoding_for_model("gpt-4o")
         self.content_list = []
         self.log_directory = os.path.join(os.getcwd(), 'log')
 

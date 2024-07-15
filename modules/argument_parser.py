@@ -31,6 +31,16 @@ class ArgumentParser:
                 self.server_mode = True
             if '-ki' in sys.argv:
                 self.ki = True
+                if '-p' in sys.argv:
+                    prompt_index = sys.argv.index('-p') + 1
+                    if prompt_index < len(sys.argv):
+                        self.prompt = sys.argv[prompt_index]
+                    else:
+                        print("No prompt provided. Use the format 'python3 main.py -ki -p <prompt>'")
+                        sys.exit(1)
+                else:
+                    print("The -ki option requires the -p <prompt> argument. Use the format 'python3 main.py -ki -p <prompt>'")
+                    sys.exit(1)
             if '-bsp' in sys.argv:
                 self.example_mode = True
                 client_id_index = sys.argv.index('-bsp') + 1
@@ -38,13 +48,6 @@ class ArgumentParser:
                     self.client_id = sys.argv[client_id_index]
                 else:
                     print("No client ID provided. Use the format 'python3 main.py -bsp <client_id>'")
-                    sys.exit(1)
-            if '-p' in sys.argv:
-                prompt_index = sys.argv.index('-p') + 1
-                if prompt_index < len(sys.argv):
-                    self.prompt = sys.argv[prompt_index]
-                else:
-                    print("No prompt provided. Use the format 'python3 main.py -p <prompt>'")
                     sys.exit(1)
 
     def print_help(self):
@@ -68,7 +71,7 @@ Examples:
   python script.py -d main.py
   python script.py -d some_file.txt -r
   python script.py -s
-  python script.py -ki
+  python script.py -ki -p python-entwickler
   python script.py -bsp client_id
   python script.py -p python-entwickler
 """

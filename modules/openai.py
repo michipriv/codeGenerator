@@ -22,6 +22,7 @@ class OpenAIIntegration(Client):
         self.client = CodeGenerator(api_key, organization)  # Initialisiere den CodeGenerator
         self.conversation_manager = ConversationManager()
         self.conversation_manager.add_message("system", self.prompt)
+        
         self.encoding = tiktoken.encoding_for_model("gpt-4")  # Tokenizer für das Modell
 
         # Register with the server
@@ -37,6 +38,7 @@ class OpenAIIntegration(Client):
         return self.prompt
 
     def read_multiline_input(self, prompt):
+        print("")
         print(prompt)
         print("")
         

@@ -29,7 +29,7 @@ END:
 
 // Prompt für C++-Entwickler
 PROMPT:c++-entwickler
-
+TEXT:
 Verhalte dich wie ein C++-Entwickler.
 Bei der Antwort f√ºge im Codeblock immer die Zeile mit: #Filename ein, das ist extrem wichtig für die Zuordnung.
 

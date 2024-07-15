@@ -117,11 +117,14 @@ python3 main.py -s                # startet server
 
 
 
-python3 ../codeGenerator/main.py -d main.py         # Filemanagerklasse:  Übergabe der Main Datei, diese wird durch die Klasse run ausgeführt
-                                                    # alle anderen Datein werden in eigene Klassen geschrieben
-python3 ../codeGenerator/main.py -r                 #run klasse: führt die -d Main datei automatisch aus, alle anderen Dateien werden nicht aufgerufen
+python3 ../codeGenerator/main.py -d main.py             # Filemanagerklasse:  Übergabe der Main Datei, diese wird durch die Klasse run ausgeführt
+                                                        # alle anderen Datein werden in eigene Klassen geschrieben
 
-python3 ../codeGenerator/main.py -ki                #KI eingabe 
+python3 ../codeGenerator/main.py -ki -p python-entwickler  #KI eingabe 
+
+python3 ../codeGenerator/main.py -r                     #run klasse: führt die -d Main datei automatisch aus, alle anderen Dateien werden nicht aufgerufen
+
+
 
 python3 ../codeGenerator/main.py -m "test" -z "beispiel"      #sendet testnachricht an server oder andee client
 python3 ../codeGenerator/main.py -m "test" -z "file_manager" -t 10k      #sendet testnachricht mit der größe 10k

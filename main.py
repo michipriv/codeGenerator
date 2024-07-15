@@ -40,31 +40,33 @@ def load_prompts(file_path='etc/prompt.txt'):
                 if line.startswith('//') or not line:
                     continue
                 if line.startswith('PROMPT:'):
-                    if current_key and current_prompt:
-                        prompts[current_key] = '\n'.join(current_prompt)
                     current_key = line[len('PROMPT:'):].strip()
                     current_prompt = []
-                elif line.startswith('TEXT:'):
-                    continue
-                elif line.startswith('END:'):
-                    if current_key and current_prompt:
-                        prompts[current_key] = '\n'.join(current_prompt)
+                elif line.startswith('TEXT:') and current_key:
+                    current_prompt = [line[len('TEXT:'):].strip()]
+                elif line.startswith('END:') and current_key:
+                    prompts[current_key] = '\n'.join(current_prompt)
                     current_key = None
                     current_prompt = []
-                else:
+                elif current_key:
                     current_prompt.append(line)
-            if current_key and current_prompt:
-                prompts[current_key] = '\n'.join(current_prompt)
+    
+        #debugausgabe
+        #for key, value in prompts.items():
+        #    print(f"{key}: {value}")
+        #    print("::::::::::::::::::::::::::::")
+            
+            
     except UnicodeDecodeError as e:
         print(f"Error decoding file {file_path}: {e}")
     return prompts
+
 
 def main():
     clear_screen()
 
     config = load_config()  # config laden
     prompts_dict = load_prompts()  # Laden der Prompts aus der Textdatei
-
     # Argumente parsen
     args = ArgumentParser()
 
@@ -77,8 +79,10 @@ def main():
 
     signal.signal(signal.SIGINT, signal_handler)
 
-    prompt_text = prompts_dict.get(args.prompt, "Default prompt text")
-
+    prompt_text = prompts_dict.get(args.prompt)
+    
+    
+    
     if args.help:
         args.print_help()
     elif args.ki:
@@ -100,7 +104,7 @@ def main():
         file_manager.run()
     elif args.example_mode:
         print("Starting example mode...")
-        example_client = ExampleClient(config['host'], config['port'], args.client_id)
+        example_client = ExampleClient(config['host'], config['port'], client_id="run")
         example_client.run()
         
     else:

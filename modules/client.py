@@ -2,6 +2,7 @@
 
 import zmq
 import hashlib
+import random
 from modules.message import Message
 
 class Client:
@@ -14,21 +15,32 @@ class Client:
         self.server_socket.connect(f"tcp://{self.host}:{self.port}")
         
         # Generate a unique port for the client
-        unique_port = self.generate_unique_port(port, client_id)
+        self.unique_port = self.generate_unique_port()
         self.listener_socket = self.context.socket(zmq.REP)
-        self.listener_socket.bind(f"tcp://{self.host}:{unique_port}")
+        self.listener_socket.bind(f"tcp://{self.host}:{self.unique_port}")
 
-    def generate_unique_port(self, base_port, client_id):
-        hash_object = hashlib.md5(client_id.encode())
-        unique_number = int(hash_object.hexdigest(), 16) % 10000  # Get a 4-digit unique number
-        return base_port + 1 + unique_number
+    def generate_unique_port(self):
+        while True:
+            unique_port = random.randint(1024, 65535)  # Get a random port number in the range 1024-65535
+            if self.is_port_available(unique_port):
+                return unique_port
+
+    def is_port_available(self, port):
+        with zmq.Context.instance().socket(zmq.REQ) as socket:
+            try:
+                socket.bind(f"tcp://{self.host}:{port}")
+                socket.unbind(f"tcp://{self.host}:{port}")
+                return True
+            except zmq.ZMQError:
+                return False
 
     def register(self):
-        unique_port = self.generate_unique_port(self.port, self.client_id)
+        unique_port = self.unique_port
         msg = Message("server", self.client_id, Message.REGISTER, f"tcp://{self.host}:{unique_port}")
         self.server_socket.send(msg.serialize())
         reply = self.server_socket.recv()
         reply_msg = Message.deserialize(reply)
+        print(f"Client {self.client_id} registered with port {unique_port}.")
         print(f"Received reply from {reply_msg.sender}: {reply_msg.content}")
 
     def receive_message(self):
