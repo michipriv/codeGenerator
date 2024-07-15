@@ -26,9 +26,9 @@ class Run:
         sys.exit(0)
 
     def handle_message(self, message):
-        print("Nachricht erhalten")
+        
         data = Message.deserialize(message)
-        print(f"Empfangene Nachricht: {data}")
+        
 
         if data.message_type == Message.SEND:
             command = data.content
