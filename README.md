@@ -103,19 +103,34 @@ git commit -m "."
 git push
 
 
+
+
+
 # Virtuelle Umgebung für Modul-Installation erzeugen:
 
 python3 -m venv myenv
 source myenv/bin/activate
-cd /mnt/c/tmp/codeGenerator
 
+
+
+##libs
+pip3 install zmq
+pip3 install openai
+pip3 install tiktoken
+pip3 install pybamm
+
+
+
+pip3 install pyfiglet		#ascii lib
+pip3 install ascii_magic	#ascii lib
+
+
+# Programm starten
+cd /mnt/c/tmp/codeGenerator
 python3 main.py -s                # startet server
 
-
-
 #start in anderem verzeichnis
-
-
+cd /mnt/c/tmp/test
 
 python3 ../codeGenerator/main.py -d main.py             # Filemanagerklasse:  Übergabe der Main Datei, diese wird durch die Klasse run ausgeführt
                                                         # alle anderen Datein werden in eigene Klassen geschrieben
