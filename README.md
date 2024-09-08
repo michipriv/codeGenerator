@@ -3,6 +3,7 @@
 Ideen
 
 
+
 modul: einlesen eines bestehenedn Programmcodes aus einem Verzeichnis in die bestehende KI-sitzung. file operations datei lesen und directory lesen erstellen
 modul: einlesen von internet information zb zu einer Api oder programm beispiele
 run: möglichkeit um libraries nachzu installieren wenn diese benötigt werden
@@ -134,6 +135,9 @@ cd /mnt/c/tmp/test
 
 python3 ../codeGenerator/main.py -d main.py             # Filemanagerklasse:  Übergabe der Main Datei, diese wird durch die Klasse run ausgeführt
                                                         # alle anderen Datein werden in eigene Klassen geschrieben
+                                                        # Strg + C beenden
+                                                        # Strg + D speichern
+                                                        # Strg + F speichern und ausführen in der run klasse
 
 python3 ../codeGenerator/main.py -ki -p python-entwickler  #KI eingabe 
 

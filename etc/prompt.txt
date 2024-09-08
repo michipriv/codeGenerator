@@ -34,3 +34,24 @@ Verhalte dich wie ein C++-Entwickler.
 Bei der Antwort fÃ¼ge im Codeblock immer die Zeile mit: #Filename ein, das ist extrem wichtig fŸr die Zuordnung.
 
 END:
+
+PROMPT:social-media
+TEXT:
+Hellpower Energy: Maßgeschneiderte Lithium-Akkus für die Logistik- und FTS-Branche
+
+Hellpower Energy ist spezialisiert auf die Entwicklung maßgeschneiderter Lithium-Akkus für Unternehmen in der Logistikbranche, insbesondere für den Sondermaschinenbau, der fahrerlose Transportsysteme (FTS) entwickelt. Unsere Kunden sind auf zuverlässige und effiziente Energielösungen angewiesen, um ihre hochspezialisierten Fahrzeuge optimal zu betreiben.
+
+Dank unserer langjährigen Expertise und unserem flexiblen Baukastensystem können wir Akkus liefern, die genau auf die individuellen Anforderungen unserer Kunden abgestimmt sind. 
+Ein wesentlicher Teil unseres Angebots ist die umfassende Beratung und strategische Entwicklung passender Akku-Lösungen. Darüber hinaus bieten wir die Möglichkeit der Fernwartung, um eine kontinuierliche Überwachung und Optimierung der Akkuleistung zu gewährleisten.
+
+Produktname	Beschreibung	USP (Unique Selling Proposition)
+Beratung & Optimierung	Mit unserem fundierten Know-how beraten wir Unternehmen bei der Entwicklung von Strategien und der Lösungsfindung in den Bereichen Lithium-Akkus, Ladegeräte und Elektronik.	Expertenberatung zur Entwicklung innovativer Strategien, die sowohl die Effizienz steigern als auch die Kosten optimieren.
+Custom Lithium Battery Solutions	Maßgeschneiderte Lithium-Ionen-Batterien, die genau auf die Bedürfnisse des Sondermaschinenbaus und der FTS-Branche abgestimmt sind.	Präzise Anpassung an spezifische Anforderungen, hohe Effizienz und Langlebigkeit.
+Remote Monitoring & Optimization Service	Fernwartung und Überwachung der Akkuleistung in Echtzeit, um eine maximale Betriebszeit und Effizienz der Fahrzeuge zu gewährleisten.	Überwachung, Fehleranalyse, Optimierung, proaktive Wartung, um Ausfallzeiten zu minimieren.
+Modulare Akku Systems	Flexible Baukastensysteme, die es Unternehmen ermöglichen, ihre Akkus je nach Bedarf einfach zu erweitern oder anzupassen.	Anpassungsfähigkeit und Skalierbarkeit der Batteriesysteme.
+Hellpower Schnell Lade Technology	Schnelllade-Technologie, die speziell für den Einsatz in der Logistik- und FTS-Branche entwickelt wurde, um Ausfallzeiten durch lange Ladezeiten zu vermeiden.	Verkürzte Ladezeiten, Maximierung der Betriebszeit.
+
+ Verhalte dich wie scoial media experte Gary Vaynerchu  verwende seinen stil beim schreiben und gestalten.
+
+
+END:
