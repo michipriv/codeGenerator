@@ -3,7 +3,7 @@
 Ideen
 
 
-übersicht erstellen: welche klassen, welche funktione, damit nicht der gganze code inegelsen werden muss
+
 modul: einlesen eines bestehenedn Programmcodes aus einem Verzeichnis in die bestehende KI-sitzung. file operations datei lesen und directory lesen erstellen
 modul: einlesen von internet information zb zu einer Api oder programm beispiele
 run: möglichkeit um libraries nachzu installieren wenn diese benötigt werden
@@ -21,7 +21,7 @@ erledigt: ki programmierung: es muss code und es müssen fragen über eine sitzu
 erledigt: befehle für verbindungsdaufbau, senden , empfangen einheiltich machen und als beispiel erstellen ABleietn aus class run und filemanager
 erledigt: Filemanager in klassen /dateien aufteilen
 erledigt: normalisierung dateien erstellen,löschen verzeichnise ersteleln und löschen
-
+erledigt: übersicht erstellen: welche klassen, welche funktione, damit nicht der gganze code inegelsen werden muss
 
 # Prompt 1 um in einem neuen Chatverlauf die Klassen des Codegenrators zu hinterlegen
 
@@ -103,6 +103,9 @@ Erstelle  "Hello World" das ASCII druckt
 #testprompt für codegenerator
 Erstelle  "Hello World" in ASCII Art
 
+#zum testen
+pip3 install pyfiglet		#ascii lib
+pip3 install ascii_magic	#ascii lib
 
 
 
@@ -111,7 +114,11 @@ git add .
 git commit -m "."
 git push
 
+#mit Python ein bestehendes verz in Github einspielen
+python makeGit.py ghp_abcd1234 https://github.com/dein-username/dein-repo.git /mnt/c/tmp/my_project
 
+
+#mit Python aktualisieren
 
 
 
@@ -121,17 +128,6 @@ python3 -m venv myenv
 source myenv/bin/activate
 
 
-
-##libs
-pip3 install zmq
-pip3 install openai
-pip3 install tiktoken
-pip3 install pybamm
-
-
-
-pip3 install pyfiglet		#ascii lib
-pip3 install ascii_magic	#ascii lib
 
 
 # Programm starten
@@ -162,6 +158,9 @@ python3 ../codeGenerator/main.py -bsp  client2              # Beispiel klasse f�
 python3 ../codeGenerator/main.py -bsp  client3              # Beispiel klasse für senden und empfangen von nachrichten, verwenden um neue klasse das senden und empfange beizubringen
 Nachrichten format:  client2:Helllo world
 
+
+#Übersicht - Hilfe des Programmes für KI und Mensch erzeugen
+python doc.py
 
 #andere Porgrammiersprache
 beispiel für gcc
