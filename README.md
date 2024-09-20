@@ -3,11 +3,12 @@
 Ideen
 
 
-
+übersicht erstellen: welche klassen, welche funktione, damit nicht der gganze code inegelsen werden muss
 modul: einlesen eines bestehenedn Programmcodes aus einem Verzeichnis in die bestehende KI-sitzung. file operations datei lesen und directory lesen erstellen
 modul: einlesen von internet information zb zu einer Api oder programm beispiele
 run: möglichkeit um libraries nachzu installieren wenn diese benötigt werden
 error log ist verloren gegangen ohne lib  loggin alle bidlschirmmeldungen und alle fehelrmledungen in datei logen, logik mit datum/zeit 
+AST Soruce Code verwaltung damit die KI den Code effizienter versteht
 
 
 erledigt: strg +f ohne code einfügen startet programm
@@ -29,6 +30,7 @@ Erstelle Klassen und programmierung so das Sie wiederverwendbar sind.
 Ich poste dir nun einen Code, der aus mehreren Klassen besteht.
 Bei der Antwort füge im Codeblock immer die Zeile mit: #Filename ein, das ist extrem wichtig für die Zuordnung.
 beachte die maximale Token grenze von 4096 wenn du klassen erstellst. teile klassen in kleine übersichtbare funktionen auf
+verwende Python Docstring Conventions für die docu
 Lies den Code nur ein und warte, bis ich das Stichwort BINGO schreibe.
 
 
@@ -90,11 +92,17 @@ Hauptprogramm/
 ├── modules/
 
 
-# test prompt
+# test prompt in chatgpt
 
 Verhalte dich wie ein Python experte.
 Sende am Anfang des codes immer Folgendes: # Filename: test.py Erstelle als Ausgabe nur Python code keine erklärungen.
-Eerstelle  "Hello World" das ASCII druckt
+Erstelle  "Hello World" das ASCII druckt
+
+
+
+#testprompt für codegenerator
+Erstelle  "Hello World" in ASCII Art
+
 
 
 
@@ -138,6 +146,7 @@ python3 ../codeGenerator/main.py -d main.py             # Filemanagerklasse:  Ü
                                                         # Strg + C beenden
                                                         # Strg + D speichern
                                                         # Strg + F speichern und ausführen in der run klasse
+                                                        # Strg + L liest im aktuellen Verz die main.py und alle python datein aus dem Modul verz.
 
 python3 ../codeGenerator/main.py -ki -p python-entwickler  #KI eingabe 
 

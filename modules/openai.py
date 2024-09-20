@@ -1,18 +1,45 @@
 # Filename: modules/openai.py
 
-import sys
-import termios
-import tty
+from modules.client import Client
 import threading
 import os
-import tiktoken
+import termios
+import sys
+from modules.message import Message
 from modules.code_generator import CodeGenerator
 from modules.conversation_manager import ConversationManager
-from modules.client import Client
-from modules.message import Message
+import tiktoken
 
 class OpenAIIntegration(Client):
+    """
+    Klasse zur Integration mit OpenAI, die die Kommunikation mit der OpenAI-API verwaltet
+    und die Verarbeitung von Benutzeranfragen sowie die Extraktion von Codeblöcken übernimmt.
+
+    Attributes:
+        api_key (str): Der API-Schlüssel für die OpenAI-Integration.
+        organization (str): Die Organisation für die OpenAI-Integration.
+        prompt (str): Der Start-Prompt für die Konversation.
+        total_tokens (int): Die Gesamtanzahl der bisher verwendeten Tokens.
+        client (CodeGenerator): Der CodeGenerator zur Generierung von Code.
+        conversation_manager (ConversationManager): Verwaltet die Konversationshistorie.
+        encoding: Tokenizer für das GPT-4-Modell.
+        running (bool): Gibt an, ob die Instanz aktiv ist.
+        receiver_thread (threading.Thread): Thread zum Empfang von Nachrichten.
+    """
+
     def __init__(self, args, host, port, api_key, organization, prompt, client_id):
+        """
+        Initialisiert die OpenAIIntegration-Klasse.
+
+        Parameters:
+            args: Die Argumente, die beim Start der Anwendung übergeben wurden.
+            host (str): Der Hostname des Servers.
+            port (int): Der Port des Servers.
+            api_key (str): Der API-Schlüssel für die OpenAI-Integration.
+            organization (str): Die Organisation für die OpenAI-Integration.
+            prompt (str): Der Start-Prompt für die Konversation.
+            client_id (str): Die eindeutige ID des Clients.
+        """
         super().__init__(host, port, client_id)
         self.api_key = api_key
         self.organization = organization
@@ -22,22 +49,121 @@ class OpenAIIntegration(Client):
         self.client = CodeGenerator(api_key, organization)  # Initialisiere den CodeGenerator
         self.conversation_manager = ConversationManager()
         self.conversation_manager.add_message("system", self.prompt)
-        
+
         self.encoding = tiktoken.encoding_for_model("gpt-4")  # Tokenizer für das Modell
 
-        # Register with the server
+        # Registrierung bei ZMQ-Server
         self.register()
 
-        # Start the receiver thread
+        # Starte Empfangsthread
         self.running = True
         self.receiver_thread = threading.Thread(target=self.start_receiving)
         self.receiver_thread.daemon = True
         self.receiver_thread.start()
 
-    def create_prompt(self):
-        return self.prompt
+    def start_receiving(self):
+        """
+        Wartet auf eingehende Nachrichten über ZMQ und verarbeitet diese.
+        """
+        while self.running:
+            try:
+                msg_obj = self.receive_message()  # Empfange Nachricht über ZMQ
+                if msg_obj:
+                    print(f"Received message from {msg_obj.sender}: {msg_obj.content}")
+                    self.process_file_content(msg_obj.content)  # Verarbeite den empfangenen Datei-Inhalt
+            except Exception as e:
+                print(f"Error while receiving messages: {e}")
+
+    def process_file_content(self, file_content):
+        """
+        Verarbeitet den empfangenen Datei-Inhalt und generiert eine Antwort von OpenAI.
+
+        Parameters:
+            file_content (str): Der Inhalt der empfangenen Datei.
+        """
+        # Füge den Inhalt zur Konversation hinzu
+        self.conversation_manager.add_message("user", file_content)
+
+        # Generiere die Antwort von OpenAI
+        generierter_code = self.client.generiere_code(self.conversation_manager.get_history())
+
+        # Codeblöcke und restlichen Text extrahieren
+        code_blocks, remaining_text = self.conversation_manager.extract_code_blocks(generierter_code)
+
+        # Sende die Codeblöcke einzeln an den FileManager
+        if code_blocks:
+            self.send_code_blocks(code_blocks)
+        else:
+            print("Keine Codeblöcke gefunden!")
+
+        # Gib den restlichen Text ohne Codeblöcke aus
+        if remaining_text.strip():
+            print("KI Antwort:")
+            print("")
+            print(remaining_text)
+
+    def send_code_blocks(self, code_blocks):
+        """
+        Sendet die extrahierten Codeblöcke einzeln an den FileManager.
+
+        Parameters:
+            code_blocks (list): Eine Liste von Codeblöcken, die gesendet werden sollen.
+        """
+        for block in code_blocks:
+            try:
+                recipient = "file_manager"
+                message_type = Message.SEND
+                print(f"Sende Codeblock an File_Manager")
+                self.send_message(recipient, self.client_id, message_type, block)  # Sende Codeblock an FileManager
+            except Exception as e:
+                print(f"Error while sending code block: {e}")
+
+    def run_interactive_mode(self):
+        """
+        Startet den interaktiven Modus zur Verarbeitung von Benutzeranfragen.
+        """
+        try:
+            while True:
+                print("Waiting for user input...")
+                gpt_user_prompt = self.read_multiline_input("Was soll ich tun? (Beenden mit Strg+D) ")
+
+                # Füge die Benutzereingabe zur Konversation hinzu
+                self.conversation_manager.add_message("user", gpt_user_prompt)
+
+                # Generiere die OpenAI-Antwort basierend auf dem Konversationsverlauf
+                generierter_code = self.client.generiere_code(self.conversation_manager.get_history())
+
+                # Extrahiere Codeblöcke und Text
+                code_blocks, remaining_text = self.conversation_manager.extract_code_blocks(generierter_code)
+
+                # Sende die Codeblöcke an den FileManager
+                if code_blocks:
+                    self.send_code_blocks(code_blocks)
+                else:
+                    print("Keine Codeblöcke gefunden!")
+
+                # Zeige den Text ohne Codeblöcke im Terminal an
+                if remaining_text.strip():
+                    print("Generierter Text (ohne Codeblöcke):")
+                    print(remaining_text)
+
+        except KeyboardInterrupt:
+            print("\nProgramm wurde beendet.")
+        finally:
+            self.running = False
+            self.receiver_thread.join()
+            termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.old_settings)
 
     def read_multiline_input(self, prompt):
+        """
+        Liest mehrzeilige Benutzereingaben.
+
+        Parameters:
+            prompt (str): Der Text, der als Eingabeaufforderung angezeigt wird.
+
+        Returns:
+            str: Der eingegebene mehrzeilige Text.
+        """
         print("")
         print(prompt)
         print("")
@@ -53,86 +179,15 @@ class OpenAIIntegration(Client):
         return "\n".join(lines)
 
     def count_tokens(self, text):
+        """
+        Zählt die Anzahl der Tokens in einem gegebenen Text.
+
+        Parameters:
+            text (str): Der Text, dessen Tokens gezählt werden sollen.
+
+        Returns:
+            int: Die Anzahl der Tokens.
+        """
         return len(self.encoding.encode(text))
 
-    def run_interactive_mode(self):
-        try:
-            while True:
-                print("Waiting for user input...")
-                gpt_user_prompt = self.read_multiline_input("Was soll ich tun? (Beenden mit Strg+D) ")
-                
-                self.conversation_manager.add_message("user", gpt_user_prompt)
-                
-                user_tokens = self.count_tokens(gpt_user_prompt)
-                
-                generierter_code = self.client.generiere_code(self.conversation_manager.get_history())
-                
-                assistant_tokens = self.count_tokens(generierter_code)
-                self.total_tokens += user_tokens + assistant_tokens
-                
-                print(f"Tokens - Frage: {user_tokens} | Antwort: {assistant_tokens} | Gesamt: {self.total_tokens}")
-                
-                self.conversation_manager.log_ki_antwort(generierter_code)
-                
-                code_blocks, remaining_text = self.conversation_manager.extract_code_blocks(generierter_code)
-                
-                self.log_code_blocks(code_blocks)  # Logge die Codeblöcke zur Kontrolle
-                self.send_code_blocks(code_blocks)  # Sende die Codeblöcke einzeln
-
-                self.conversation_manager.save_content(remaining_text, code_blocks)
-                
-                self.conversation_manager.add_message("assistant", generierter_code)
-
-                print("Gespeicherte Inhalte:")
-                for item in self.conversation_manager.content_list:
-                    key, value = item
-                    if key == "TEXT":
-                        print(f"{key}: {value}")
-
-        except KeyboardInterrupt:
-            print("\nProgramm wurde beendet.")
-        finally:
-            self.running = False
-            self.receiver_thread.join()
-            termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.old_settings)
-
-    def start_receiving(self):
-        while self.running:
-            try:
-                msg_obj = self.receive_message()
-                if msg_obj:
-                    print(f"Received message from {msg_obj.sender}: {msg_obj.content}")
-            except Exception as e:
-                print(f"Error while receiving messages: {e}")
-
-    def send_code_blocks(self, code_blocks):
-        for block in code_blocks:
-            try:
-                recipient = "file_manager"
-                message_type = "send"
-                self.send_message(recipient, self.client_id, message_type, block)
-            except Exception as e:
-                print(f"Error while sending code block: {e}")
-
-    def log_code_blocks(self, code_blocks):
-        log_directory = os.path.join(os.getcwd(), 'log')
-        if not os.path.exists(log_directory):
-            os.makedirs(log_directory)
-        
-        for i, block in enumerate(code_blocks, 1):
-            log_filename = os.path.join(log_directory, f"code_block_{i}.log")
-            with open(log_filename, 'w') as log_file:
-                log_file.write(block)
-
-    def run(self):
-        recv_thread = threading.Thread(target=self.start_receiving)
-        recv_thread.daemon = True
-        recv_thread.start()
-
-        try:
-            pass  # Hier wird nichts weiter gemacht, send_message_input wurde entfernt
-        except KeyboardInterrupt:
-            self.running = False
-            recv_thread.join()
-
-#EOF
+# EOF

@@ -3,7 +3,22 @@
 import sys
 
 class ArgumentParser:
+    """
+    Klasse zur Analyse von Befehlszeilenargumenten für das Skript.
+
+    Attributes:
+        help (bool): Gibt an, ob die Hilfe angezeigt werden soll.
+        edit_filename (str): Der Name der Datei, die bearbeitet werden soll.
+        run_mode (bool): Gibt an, ob der Run-Modus aktiviert ist.
+        ki (bool): Gibt an, ob der OpenAI-Modus aktiviert ist.
+        server_mode (bool): Gibt an, ob der Server-Modus aktiviert ist.
+        example_mode (bool): Gibt an, ob der Beispielmodus aktiviert ist.
+        client_id (str): Die ID des Clients.
+        prompt (str): Der benutzerdefinierte Prompt.
+    """
+
     def __init__(self):
+        """Initialisiert die ArgumentParser-Klasse und analysiert die Argumente."""
         self.help = False
         self.edit_filename = None
         self.run_mode = False
@@ -15,6 +30,9 @@ class ArgumentParser:
         self.parse_arguments()
 
     def parse_arguments(self):
+        """
+        Analysiert die Befehlszeilenargumente und setzt die entsprechenden Attribute.
+        """
         if len(sys.argv) > 1:
             if '-h' in sys.argv or '--help' in sys.argv:
                 self.help = True
@@ -51,6 +69,9 @@ class ArgumentParser:
                     sys.exit(1)
 
     def print_help(self):
+        """
+        Gibt die Hilfenachricht für das Skript aus.
+        """
         help_message = """
 Usage: python script.py [OPTION]
 

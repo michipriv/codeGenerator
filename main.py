@@ -81,14 +81,11 @@ def main():
 
     prompt_text = prompts_dict.get(args.prompt)
     
-    
-    
     if args.help:
         args.print_help()
     elif args.ki:
         print("Starting OpenAI mode...")
-        #print(prompt_text)
-        openai_integration = OpenAIIntegration(args, config['host'], config['port'], config['openai_api_key'], config['openai_organization'], prompt_text,  client_id="openai")
+        openai_integration = OpenAIIntegration(args, config['host'], config['port'], config['openai_api_key'], config['openai_organization'], prompt_text, client_id="openai")
         openai_integration.run_interactive_mode()
     elif args.server_mode:
         print("Starting server mode...")
@@ -113,4 +110,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-#EOF
+# EOF
