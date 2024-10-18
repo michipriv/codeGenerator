@@ -62,17 +62,13 @@ class OpenAIIntegration(Client):
 
         # Starte Empfangsthread
         self.running = True
-        self.receiver_thread = threading.Thread(target=self._start_receiving)  # Methode korrekt referenzieren
+        self.receiver_thread = threading.Thread(target=self.start_receiving)  # Korrekte Referenzierung
         self.receiver_thread.daemon = True
         self.receiver_thread.start()
 
-        # Überprüfe, ob overview_data vorhanden ist
-        if self.overview_data:
-            print("overview.json Daten erfolgreich geladen und in OpenAI integriert.")
-        else:
-            print("Keine overview.json Daten vorhanden.")
+       
 
-    def _start_receiving(self) -> None:
+    def start_receiving(self) -> None:
         """
         Wartet auf eingehende Nachrichten über ZMQ und verarbeitet diese.
 

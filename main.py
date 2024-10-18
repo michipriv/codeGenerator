@@ -75,13 +75,13 @@ def load_prompts(file_path: str = 'etc/prompt.txt') -> dict:
         print(f"Error decoding file {file_path}: {e}")
     return prompts
 
-def load_overview_json(file_path: str = 'overview.json') -> dict:
+def load_overview_json(file_path: str = 'doc/overview.json') -> dict:
     """
-    Läd die Datei overview.json und gibt den Inhalt zurück.
+    Läd die Datei overview.json aus dem Verzeichnis 'doc/overview' und gibt den Inhalt zurück.
 
     Falls die Datei nicht existiert, wird eine Fehlermeldung ausgegeben.
 
-    :param file_path: Der Pfad zur overview.json-Datei (standardmäßig im Verzeichnis codeGenerator).
+    :param file_path: Der Pfad zur overview.json-Datei (standardmäßig im Verzeichnis doc/overview).
     :return: Der Inhalt der Datei als Dictionary.
     """
     try:
@@ -112,7 +112,7 @@ def main():
     """
     clear_screen()
 
-    # Lade overview.json, wenn vorhanden
+    # Lade overview.json aus dem Verzeichnis 'doc/overview', wenn vorhanden
     overview_data = load_overview_json()
 
     # Load the configuration and prompts
@@ -141,15 +141,17 @@ def main():
 
     # Retrieve the prompt text based on the argument
     prompt_text = prompts_dict.get(args.prompt)
+    
+    # Display the prompt being used
+    if prompt_text:
+        print(f"Prompt '{args.prompt}' wurde erfolgreich geladen.")
+    else:
+        print(f"Kein Prompt gefunden für '{args.prompt}'.")
 
-  
-
-    # - help: Zeigt die Hilfenachricht an, wenn -h oder --help aufgerufen wurde.
+    # Handle different modes based on command-line arguments
     if args.help:
         # Zeige Hilfe und verfügbare Optionen
         args.print_help()
-
-    # - ki: Aktiviert den OpenAI-Modus, wenn -ki und -p für den Prompt angegeben sind.
     elif args.ki:
         # Starte den OpenAI-Integrationsmodus
         print("Starting OpenAI mode...")
@@ -164,29 +166,21 @@ def main():
             overview_data=overview_data  # Übergibt die geladenen Daten aus overview.json
         )
         openai_integration.run_interactive_mode()
-    
-    # - server_mode: Startet den Server im Server-Modus.
     elif args.server_mode:
         # Starte den Server-Modus
         print("Starting server mode...")
         server_thread = ServerHandler(config['host'], config['port'])
         server_thread.start_server()  # Sync Server-Start
-
-    # - run_mode: Aktiviert den Run-Modus, um einen Client mit benutzerdefinierten Befehlen zu starten.
     elif args.run_mode:
         # Starte den Run-Modus für benutzerdefinierte Befehle
         print("Starting run mode...")
         run_client = Run(args, config['host'], config['port'], client_id="run")
         run_client.start()
-
-    # - edit_filename: Startet den FileManager-Modus für die angegebene Datei.
     elif args.edit_filename:
         # Starte den FileManager-Modus für die angegebene Datei
         print(f"Starting FileManager mode for main file: {args.edit_filename}...")
         file_manager = FileManager(args, config['host'], config['port'], args.edit_filename, client_id="file_manager")
         file_manager.run()
-
-    # - example_mode: Startet den Beispielmodus mit einem Beispiel-Client.
     elif args.example_mode:
         # Starte den Beispielmodus
         print("Starting example mode...")
