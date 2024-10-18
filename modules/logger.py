@@ -15,12 +15,11 @@ class Logger:
         logger (Logger): Die Logger-Instanz.
     """
 
-    def __init__(self, log_file='log/app.log'):
+    def __init__(self, log_file: str = 'log/app.log'):
         """
         Initialisiert die Logger-Klasse.
 
-        Parameters:
-            log_file (str): Der Pfad zur Logdatei. Standardmäßig 'log/app.log'.
+        :param log_file: Der Pfad zur Logdatei. Standardmäßig 'log/app.log'.
         """
         log_dir = os.path.dirname(log_file)
         if log_dir and not os.path.exists(log_dir):
@@ -54,38 +53,40 @@ class Logger:
             linebuf (str): Buffer für die Zeilen, die geschrieben werden.
         """
 
-        def __init__(self, logger, log_level):
+        def __init__(self, logger: logging.Logger, log_level: int):
             """
             Initialisiert die StreamToLogger-Klasse.
 
-            Parameters:
-                logger (Logger): Die Logger-Instanz.
-                log_level (int): Der Log-Level für die Umleitung.
+            :param logger: Die Logger-Instanz.
+            :param log_level: Der Log-Level für die Umleitung.
             """
             self.logger = logger
             self.log_level = log_level
             self.linebuf = ''
 
-        def write(self, buf):
+        def write(self, buf: str) -> None:
             """
             Schreibt den gegebenen Puffer in den Logger.
 
-            Parameters:
-                buf (str): Der Puffer mit den zu protokollierenden Nachrichten.
+            :param buf: Der Puffer mit den zu protokollierenden Nachrichten.
+            :return: None
             """
             for line in buf.rstrip().splitlines():
                 self.logger.log(self.log_level, line.rstrip())
 
-        def flush(self):
-            """Stellt sicher, dass alle gepufferten Ausgaben geschrieben werden."""
+        def flush(self) -> None:
+            """
+            Stellt sicher, dass alle gepufferten Ausgaben geschrieben werden.
+
+            :return: None
+            """
             pass
 
-    def get_logger(self):
+    def get_logger(self) -> logging.Logger:
         """
         Gibt die Logger-Instanz zurück.
 
-        Returns:
-            Logger: Die Logger-Instanz.
+        :return: Die Logger-Instanz.
         """
         return self.logger
 

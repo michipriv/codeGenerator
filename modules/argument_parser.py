@@ -6,6 +6,9 @@ class ArgumentParser:
     """
     Klasse zur Analyse von Befehlszeilenargumenten für das Skript.
 
+    Diese Klasse analysiert die Befehlszeilenargumente und setzt die entsprechenden Attribute,
+    um verschiedene Modi und Parameter des Programms zu steuern.
+
     Attributes:
         help (bool): Gibt an, ob die Hilfe angezeigt werden soll.
         edit_filename (str): Der Name der Datei, die bearbeitet werden soll.
@@ -13,12 +16,22 @@ class ArgumentParser:
         ki (bool): Gibt an, ob der OpenAI-Modus aktiviert ist.
         server_mode (bool): Gibt an, ob der Server-Modus aktiviert ist.
         example_mode (bool): Gibt an, ob der Beispielmodus aktiviert ist.
-        client_id (str): Die ID des Clients.
-        prompt (str): Der benutzerdefinierte Prompt.
+        client_id (str): Die ID des Clients, die an den Beispielmodus übergeben wird.
+        prompt (str): Der benutzerdefinierte Prompt, der an den KI-Modus übergeben wird.
     """
 
     def __init__(self):
-        """Initialisiert die ArgumentParser-Klasse und analysiert die Argumente."""
+        """
+        Initialisiert die ArgumentParser-Klasse und analysiert die übergebenen Argumente.
+
+        Die Argumente, die verarbeitet werden, umfassen:
+        - '-h' oder '--help' zur Anzeige der Hilfe
+        - '-d <filename>' zum Bearbeiten einer Datei
+        - '-r' zum Starten des Run-Modus
+        - '-s' zum Starten des Server-Modus
+        - '-ki -p <prompt>' zum Starten des OpenAI-Modus mit einem Prompt
+        - '-bsp <client_id>' zum Starten des Beispielmodus mit einer Client-ID
+        """
         self.help = False
         self.edit_filename = None
         self.run_mode = False
@@ -32,6 +45,16 @@ class ArgumentParser:
     def parse_arguments(self):
         """
         Analysiert die Befehlszeilenargumente und setzt die entsprechenden Attribute.
+
+        Die Argumente, die erkannt und verarbeitet werden, umfassen:
+        - '-h' oder '--help' zur Anzeige der Hilfe
+        - '-d <filename>' zum Bearbeiten einer Datei
+        - '-r' zum Starten des Run-Modus
+        - '-s' zum Starten des Server-Modus
+        - '-ki -p <prompt>' zum Starten des OpenAI-Modus mit einem Prompt
+        - '-bsp <client_id>' zum Starten des Beispielmodus mit einer Client-ID
+
+        :return: None
         """
         if len(sys.argv) > 1:
             if '-h' in sys.argv or '--help' in sys.argv:
@@ -71,8 +94,14 @@ class ArgumentParser:
     def print_help(self):
         """
         Gibt die Hilfenachricht für das Skript aus.
+
+        Diese Methode zeigt eine Übersicht der verfügbaren Befehlszeilenoptionen an,
+        die der Benutzer verwenden kann.
+
+        :return: None
         """
         help_message = """
+        Kommandozeilen
 Usage: python script.py [OPTION]
 
 Options:

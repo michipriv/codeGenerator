@@ -22,41 +22,41 @@ class Terminal:
         """
         Initialisiert die Terminal-Klasse.
 
-        Parameters:
-            file_operations (FileOperations): Instanz der FileOperations-Klasse.
+        :param file_operations: Instanz der FileOperations-Klasse.
         """
         self.file_operations = file_operations
         self.old_settings = termios.tcgetattr(sys.stdin.fileno())
         self.running = True
         signal.signal(signal.SIGINT, self.signal_handler)
 
-    def signal_handler(self, sig, frame):
+    def signal_handler(self, sig, frame) -> None:
         """
         Behandelt das Signal für Strg+C, um das Programm zu beenden.
 
-        Parameters:
-            sig: Das empfangene Signal.
-            frame: Der aktuelle Stack-Frame.
+        :param sig: Das empfangene Signal.
+        :param frame: Der aktuelle Stack-Frame.
+        :return: None
         """
         print("\nStrg+C erkannt, beende das Programm...")
         self.running = False
         self.reset_terminal()
         sys.exit(0)
 
-    def reset_terminal(self):
+    def reset_terminal(self) -> None:
         """
         Setzt die Terminal-Einstellungen auf die alten Werte zurück.
+
+        :return: None
         """
         fd = sys.stdin.fileno()
         termios.tcsetattr(fd, termios.TCSADRAIN, self.old_settings)
         print("\nTerminal wurde zurückgesetzt.")
 
-    def read_input(self):
+    def read_input(self) -> tuple:
         """
         Liest Benutzereingaben im Terminal und verarbeitet Steuerbefehle.
 
-        Returns:
-            tuple: Ein Tuple, das den eingegebenen Code (oder None) und die Aktion enthält.
+        :return: Ein Tuple, das den eingegebenen Code (oder None) und die Aktion enthält.
         """
         code_lines = []
         print("Bitte fügen Sie den Code ein (Ende mit Strg+D, Strg+F, Strg+L oder Strg+C):")

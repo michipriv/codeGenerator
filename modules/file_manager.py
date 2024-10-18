@@ -31,16 +31,15 @@ class FileManager:
         message_thread (threading.Thread): Der Thread zum Empfangen von Nachrichten.
     """
 
-    def __init__(self, args, host, port, main_filename, client_id):
+    def __init__(self, args, host: str, port: int, main_filename: str, client_id: str):
         """
         Initialisiert die FileManager-Klasse.
 
-        Parameters:
-            args: Argumente, die beim Starten des FileManagers übergeben werden.
-            host (str): Der Hostname des Servers.
-            port (int): Der Port des Servers.
-            main_filename (str): Der Name der Hauptdatei, die verwaltet wird.
-            client_id (str): Die eindeutige ID des Clients.
+        :param args: Argumente, die beim Starten des FileManagers übergeben werden.
+        :param host: Der Hostname des Servers.
+        :param port: Der Port des Servers.
+        :param main_filename: Der Name der Hauptdatei, die verwaltet wird.
+        :param client_id: Die eindeutige ID des Clients.
         """
         self.backup_manager = BackupManager()
         self.file_operations = FileOperations(self.backup_manager)
@@ -55,9 +54,11 @@ class FileManager:
         self.message_thread = threading.Thread(target=self.receive_messages)
         self.message_thread.daemon = True
 
-    def run(self):
+    def run(self) -> None:
         """
         Startet den FileManager-Modus und verarbeitet Benutzereingaben.
+
+        :return: None
         """
         print(f"FileManager started for file: {self.main_filename}")
         self.message_thread.start()
@@ -73,9 +74,11 @@ class FileManager:
         except KeyboardInterrupt:
             self.signal_handler(signal.SIGINT, None)
 
-    def receive_messages(self):
+    def receive_messages(self) -> None:
         """
         Empfängt Nachrichten über den ZMQ-Socket und verarbeitet sie.
+
+        :return: None
         """
         poller = zmq.Poller()
         poller.register(self.client.listener_socket, zmq.POLLIN)
@@ -94,12 +97,12 @@ class FileManager:
             except Exception as e:
                 print(f"General Error while receiving messages: {e}")
 
-    def save_received_code(self, code):
+    def save_received_code(self, code: str) -> None:
         """
         Speichert den empfangenen Code nach Formatierung.
 
-        Parameters:
-            code (str): Der empfangene Code, der gespeichert werden soll.
+        :param code: Der empfangene Code, der gespeichert werden soll.
+        :return: None
         """
         print("Original received code:")
         print(code)
@@ -120,13 +123,13 @@ class FileManager:
             self.file_operations.save_file(default_filename, self.current_code)
             print(f"Der Code wurde unter {default_filename} gespeichert.")
 
-    def signal_handler(self, sig, frame):
+    def signal_handler(self, sig, frame) -> None:
         """
         Behandelt das Signal zum Beenden des FileManagers.
 
-        Parameters:
-            sig: Das empfangene Signal.
-            frame: Der aktuelle Stack-Frame.
+        :param sig: Das empfangene Signal.
+        :param frame: Der aktuelle Stack-Frame.
+        :return: None
         """
         print("Shutting down FileManager...")
         self.running = False

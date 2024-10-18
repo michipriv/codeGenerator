@@ -19,13 +19,12 @@ class ServerHandler:
         clients (dict): Ein Dictionary zur Speicherung der registrierten Clients.
     """
 
-    def __init__(self, host, port):
+    def __init__(self, host: str, port: int):
         """
         Initialisiert die ServerHandler-Klasse.
 
-        Parameters:
-            host (str): Der Hostname des Servers.
-            port (int): Der Port, auf dem der Server lauscht.
+        :param host: Der Hostname des Servers.
+        :param port: Der Port, auf dem der Server lauscht.
         """
         self.host = host
         self.port = port
@@ -34,9 +33,11 @@ class ServerHandler:
         self.socket.bind(f"tcp://{self.host}:{self.port}")
         self.clients = {}
 
-    def start_server(self):
+    def start_server(self) -> None:
         """
         Startet den Server und wartet auf eingehende Nachrichten.
+
+        :return: None
         """
         print(f"Server started at {self.host}:{self.port}")
         try:
@@ -51,15 +52,12 @@ class ServerHandler:
         except KeyboardInterrupt:
             self.shutdown_server()
 
-    def process_message(self, message):
+    def process_message(self, message: Message) -> Message:
         """
         Verarbeitet die empfangene Nachricht und gibt eine Antwort zurück.
 
-        Parameters:
-            message (Message): Die empfangene Nachricht.
-
-        Returns:
-            Message: Die Antwortnachricht.
+        :param message: Die empfangene Nachricht.
+        :return: Die Antwortnachricht.
         """
         if message.message_type == Message.REGISTER:
             self.clients[message.sender] = message.content
@@ -75,13 +73,13 @@ class ServerHandler:
         else:
             return Message(message.sender, "server", Message.RESPONSE, "Unknown message type")
 
-    def send_to_client(self, address, message):
+    def send_to_client(self, address: str, message: Message) -> None:
         """
         Sendet eine Nachricht an den angegebenen Client.
 
-        Parameters:
-            address (str): Die Adresse des Clients.
-            message (Message): Die zu sendende Nachricht.
+        :param address: Die Adresse des Clients.
+        :param message: Die zu sendende Nachricht.
+        :return: None
         """
         client_socket = self.context.socket(zmq.REQ)
         client_socket.connect(address)
@@ -89,21 +87,23 @@ class ServerHandler:
         client_socket.recv()
         client_socket.close()
 
-    def signal_handler(self, sig, frame):
+    def signal_handler(self, sig, frame) -> None:
         """
         Behandelt das Signal zum Beenden des Servers.
 
-        Parameters:
-            sig: Das empfangene Signal.
-            frame: Der aktuelle Stack-Frame.
+        :param sig: Das empfangene Signal.
+        :param frame: Der aktuelle Stack-Frame.
+        :return: None
         """
         print("Shutting down server...")
         self.shutdown_server()
         sys.exit(0)
 
-    def shutdown_server(self):
+    def shutdown_server(self) -> None:
         """
         Schließt den Server und gibt Ressourcen frei.
+
+        :return: None
         """
         self.socket.close()
         self.context.term()

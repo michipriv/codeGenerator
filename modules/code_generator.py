@@ -14,30 +14,26 @@ class CodeGenerator:
         organization (str): Die Organisation für die OpenAI-Integration.
     """
 
-    def __init__(self, api_key, organization):
+    def __init__(self, api_key: str, organization: str):
         """
         Initialisiert die CodeGenerator-Klasse.
 
-        Parameters:
-            api_key (str): Der API-Schlüssel für die OpenAI-Integration.
-            organization (str): Die Organisation für die OpenAI-Integration.
+        :param api_key: Der API-Schlüssel für die OpenAI-Integration.
+        :param organization: Die Organisation für die OpenAI-Integration.
         """
         openai.api_key = api_key
         openai.organization = organization
 
-    def generiere_code(self, messages, model="gpt-4", temperature=0.2, max_tokens=4096, frequency_penalty=0.2):
+    def generiere_code(self, messages: list, model: str = "gpt-4", temperature: float = 0.2, max_tokens: int = 4096, frequency_penalty: float = 0.2) -> str:
         """
         Generiert Code basierend auf den übergebenen Nachrichten.
 
-        Parameters:
-            messages (list): Eine Liste von Nachrichten, die als Eingabe an das Modell gesendet werden.
-            model (str): Das verwendete Modell. Standardmäßig "gpt-4".
-            temperature (float): Steuerung der Kreativität der Ausgabe. Standardmäßig 0.2.
-            max_tokens (int): Maximale Anzahl der Tokens für die Antwort. Standardmäßig 4096.
-            frequency_penalty (float): Bestrafung für die Wiederholung von Tokens. Standardmäßig 0.2.
-
-        Returns:
-            str: Der generierte Code oder None, wenn ein Fehler auftritt.
+        :param messages: Eine Liste von Nachrichten, die als Eingabe an das Modell gesendet werden.
+        :param model: Das verwendete Modell. Standardmäßig "gpt-4".
+        :param temperature: Steuerung der Kreativität der Ausgabe. Standardmäßig 0.2.
+        :param max_tokens: Maximale Anzahl der Tokens für die Antwort. Standardmäßig 4096.
+        :param frequency_penalty: Bestrafung für die Wiederholung von Tokens. Standardmäßig 0.2.
+        :return: Der generierte Code oder None, wenn ein Fehler auftritt.
         """
         try:
             response = openai.chat.completions.create(

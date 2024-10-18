@@ -9,6 +9,7 @@ from modules.message import Message
 from modules.code_generator import CodeGenerator
 from modules.conversation_manager import ConversationManager
 import tiktoken
+import json
 
 class OpenAIIntegration(Client):
     """
@@ -25,26 +26,30 @@ class OpenAIIntegration(Client):
         encoding: Tokenizer für das GPT-4-Modell.
         running (bool): Gibt an, ob die Instanz aktiv ist.
         receiver_thread (threading.Thread): Thread zum Empfang von Nachrichten.
+        overview_data (dict): Enthält Daten aus der overview.json, falls vorhanden.
+        first_prompt_sent (bool): Indikator, ob der erste Prompt bereits an die KI gesendet wurde.
     """
 
-    def __init__(self, args, host, port, api_key, organization, prompt, client_id):
+    def __init__(self, args, host: str, port: int, api_key: str, organization: str, prompt: str, client_id: str, overview_data: dict = None):
         """
         Initialisiert die OpenAIIntegration-Klasse.
 
-        Parameters:
-            args: Die Argumente, die beim Start der Anwendung übergeben wurden.
-            host (str): Der Hostname des Servers.
-            port (int): Der Port des Servers.
-            api_key (str): Der API-Schlüssel für die OpenAI-Integration.
-            organization (str): Die Organisation für die OpenAI-Integration.
-            prompt (str): Der Start-Prompt für die Konversation.
-            client_id (str): Die eindeutige ID des Clients.
+        :param args: Die Argumente, die beim Start der Anwendung übergeben wurden.
+        :param host: Der Hostname des Servers.
+        :param port: Der Port des Servers.
+        :param api_key: Der API-Schlüssel für die OpenAI-Integration.
+        :param organization: Die Organisation für die OpenAI-Integration.
+        :param prompt: Der Start-Prompt für die Konversation.
+        :param client_id: Die eindeutige ID des Clients.
+        :param overview_data: Daten aus der overview.json, falls vorhanden.
         """
         super().__init__(host, port, client_id)
         self.api_key = api_key
         self.organization = organization
         self.prompt = prompt
         self.total_tokens = 0  # Gesamtanzahl der Tokens bisher
+        self.overview_data = overview_data  # Speichert die Daten aus overview.json, falls vorhanden
+        self.first_prompt_sent = False  # Indikator, ob der erste Prompt bereits gesendet wurde
 
         self.client = CodeGenerator(api_key, organization)  # Initialisiere den CodeGenerator
         self.conversation_manager = ConversationManager()
@@ -57,13 +62,21 @@ class OpenAIIntegration(Client):
 
         # Starte Empfangsthread
         self.running = True
-        self.receiver_thread = threading.Thread(target=self.start_receiving)
+        self.receiver_thread = threading.Thread(target=self._start_receiving)  # Methode korrekt referenzieren
         self.receiver_thread.daemon = True
         self.receiver_thread.start()
 
-    def start_receiving(self):
+        # Überprüfe, ob overview_data vorhanden ist
+        if self.overview_data:
+            print("overview.json Daten erfolgreich geladen und in OpenAI integriert.")
+        else:
+            print("Keine overview.json Daten vorhanden.")
+
+    def _start_receiving(self) -> None:
         """
         Wartet auf eingehende Nachrichten über ZMQ und verarbeitet diese.
+
+        :return: None
         """
         while self.running:
             try:
@@ -74,13 +87,18 @@ class OpenAIIntegration(Client):
             except Exception as e:
                 print(f"Error while receiving messages: {e}")
 
-    def process_file_content(self, file_content):
+    def process_file_content(self, file_content: str) -> None:
         """
         Verarbeitet den empfangenen Datei-Inhalt und generiert eine Antwort von OpenAI.
 
-        Parameters:
-            file_content (str): Der Inhalt der empfangenen Datei.
+        :param file_content: Der Inhalt der empfangenen Datei.
+        :return: None
         """
+        # Wenn der erste Prompt gesendet wird, hänge die overview.json Daten an
+        if not self.first_prompt_sent:
+            file_content = self._append_overview_to_prompt(file_content)
+            self.first_prompt_sent = True
+
         # Füge den Inhalt zur Konversation hinzu
         self.conversation_manager.add_message("user", file_content)
 
@@ -102,12 +120,26 @@ class OpenAIIntegration(Client):
             print("")
             print(remaining_text)
 
-    def send_code_blocks(self, code_blocks):
+    def _append_overview_to_prompt(self, file_content: str) -> str:
+        """
+        Hängt den Inhalt von overview.json an den ersten Prompt an.
+
+        :param file_content: Der ursprüngliche Prompt-Inhalt.
+        :return: Der erweiterte Prompt-Inhalt mit der overview.json.
+        """
+        if self.overview_data:
+            overview_text = "\n\n# Overview Data:\n"
+            overview_text += json.dumps(self.overview_data, indent=2)  # Formatiere overview.json-Inhalt als Text
+            print("overview.json an den ersten Prompt angehängt.")
+            return file_content + overview_text
+        return file_content
+
+    def send_code_blocks(self, code_blocks: list) -> None:
         """
         Sendet die extrahierten Codeblöcke einzeln an den FileManager.
 
-        Parameters:
-            code_blocks (list): Eine Liste von Codeblöcken, die gesendet werden sollen.
+        :param code_blocks: Eine Liste von Codeblöcken, die gesendet werden sollen.
+        :return: None
         """
         for block in code_blocks:
             try:
@@ -118,9 +150,11 @@ class OpenAIIntegration(Client):
             except Exception as e:
                 print(f"Error while sending code block: {e}")
 
-    def run_interactive_mode(self):
+    def run_interactive_mode(self) -> None:
         """
         Startet den interaktiven Modus zur Verarbeitung von Benutzeranfragen.
+
+        :return: None
         """
         try:
             while True:
@@ -154,15 +188,12 @@ class OpenAIIntegration(Client):
             self.receiver_thread.join()
             termios.tcsetattr(sys.stdin, termios.TCSADRAIN, self.old_settings)
 
-    def read_multiline_input(self, prompt):
+    def read_multiline_input(self, prompt: str) -> str:
         """
         Liest mehrzeilige Benutzereingaben.
 
-        Parameters:
-            prompt (str): Der Text, der als Eingabeaufforderung angezeigt wird.
-
-        Returns:
-            str: Der eingegebene mehrzeilige Text.
+        :param prompt: Der Text, der als Eingabeaufforderung angezeigt wird.
+        :return: Der eingegebene mehrzeilige Text.
         """
         print("")
         print(prompt)
@@ -178,15 +209,12 @@ class OpenAIIntegration(Client):
             lines.append(line)
         return "\n".join(lines)
 
-    def count_tokens(self, text):
+    def count_tokens(self, text: str) -> int:
         """
         Zählt die Anzahl der Tokens in einem gegebenen Text.
 
-        Parameters:
-            text (str): Der Text, dessen Tokens gezählt werden sollen.
-
-        Returns:
-            int: Die Anzahl der Tokens.
+        :param text: Der Text, dessen Tokens gezählt werden sollen.
+        :return: Die Anzahl der Tokens.
         """
         return len(self.encoding.encode(text))
 

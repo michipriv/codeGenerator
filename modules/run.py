@@ -22,15 +22,14 @@ class Run:
         message_thread (threading.Thread): Der Thread zum Empfangen von Nachrichten.
     """
 
-    def __init__(self, args, host, port, client_id):
+    def __init__(self, args, host: str, port: int, client_id: str):
         """
         Initialisiert die Run-Klasse und registriert den Client.
 
-        Parameters:
-            args: Die übergebenen Argumente.
-            host (str): Der Hostname des Servers.
-            port (int): Der Port, auf dem der Server lauscht.
-            client_id (str): Die ID des Clients.
+        :param args: Die übergebenen Argumente.
+        :param host: Der Hostname des Servers.
+        :param port: Der Port, auf dem der Server lauscht.
+        :param client_id: Die ID des Clients.
         """
         signal.signal(signal.SIGINT, self.signal_handler)
         self.server_address = (host, port)
@@ -42,24 +41,24 @@ class Run:
         self.message_thread.daemon = True
         self.message_thread.start()
 
-    def signal_handler(self, sig, frame):
+    def signal_handler(self, sig, frame) -> None:
         """
         Behandelt das Signal für Strg+C, um den Client zu beenden.
 
-        Parameters:
-            sig: Das empfangene Signal.
-            frame: Der aktuelle Stack-Frame.
+        :param sig: Das empfangene Signal.
+        :param frame: Der aktuelle Stack-Frame.
+        :return: None
         """
         print("Run wird durch Strg+C beendet.")
         self.running = False
         sys.exit(0)
 
-    def handle_message(self, message):
+    def handle_message(self, message: bytes) -> None:
         """
         Verarbeitet die empfangene Nachricht.
 
-        Parameters:
-            message (bytes): Die empfangene serialisierte Nachricht.
+        :param message: Die empfangene serialisierte Nachricht.
+        :return: None
         """
         data = Message.deserialize(message)
 
@@ -74,9 +73,11 @@ class Run:
         elif data.message_type == Message.RESPONSE:
             print(f"Nachricht: {data.content}")
 
-    def receive_messages(self):
+    def receive_messages(self) -> None:
         """
         Wartet auf eingehende Nachrichten und verarbeitet diese.
+
+        :return: None
         """
         while self.running:
             try:
@@ -86,9 +87,11 @@ class Run:
             except Exception as e:
                 print(f"Fehler beim Empfangen der Nachricht: {e}")
 
-    def start(self):
+    def start(self) -> None:
         """
         Startet den Run-Client und wartet auf Befehle.
+
+        :return: None
         """
         print("Run client started and waiting for commands...")
         self.receive_messages()

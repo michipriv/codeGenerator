@@ -2,8 +2,12 @@
 
 Ideen
 
-
-
+Testsystem: CI/CD-Pipeline mit GitHub, workflow system um automatisch tests durchzuführen und am test und live server in betrieb zu nehmen: 
+			Continuous Integration/Continuous Deployment (CI/CD) Pipeline, (unittest, pytests, flake8, pylint, jenkins, circleci)
+Umgebung: Docker ansatz um getrenne Entwicklungsumgebung zu haben
+dokumentation: doku für mensch und KI
+code optimierun: Refactoring und Optimierung , entfernen von überflüssigen code, dateien ud reogrnsieren bestehenden codes, bewertung mitthilfe von programmen: SonarQube
+test entwicklung:   Testgetriebene Entwicklung (TDD), erstellen von tests um die klasse zu überprüfen
 modul: einlesen eines bestehenedn Programmcodes aus einem Verzeichnis in die bestehende KI-sitzung. file operations datei lesen und directory lesen erstellen
 modul: einlesen von internet information zb zu einer Api oder programm beispiele
 run: möglichkeit um libraries nachzu installieren wenn diese benötigt werden
@@ -22,6 +26,7 @@ erledigt: befehle für verbindungsdaufbau, senden , empfangen einheiltich machen
 erledigt: Filemanager in klassen /dateien aufteilen
 erledigt: normalisierung dateien erstellen,löschen verzeichnise ersteleln und löschen
 erledigt: übersicht erstellen: welche klassen, welche funktione, damit nicht der gganze code inegelsen werden muss
+erledigt: github einbindung
 
 # Prompt 1 um in einem neuen Chatverlauf die Klassen des Codegenrators zu hinterlegen
 

@@ -14,16 +14,13 @@ class FormatCode:
         None
     """
 
-    def format_code(self, code):
+    def format_code(self, code: str) -> str:
         """
         Formatiert den gegebenen Code mit dem 'black'-Formatter.
 
-        Parameters:
-            code (str): Der zu formatierende Python-Code.
-
-        Returns:
-            str: Der formatierte Code oder der ursprüngliche Code, 
-                  falls das Formatieren nicht möglich war.
+        :param code: Der zu formatierende Python-Code.
+        :return: Der formatierte Code oder der ursprüngliche Code, 
+                 falls das Formatieren nicht möglich war.
         """
         try:
             import black
@@ -43,18 +40,15 @@ class FormatCode:
             print(f"Ein unerwarteter Fehler ist aufgetreten: {e}")
             return code
 
-    def extract_filename(self, code):
+    def extract_filename(self, code: str) -> str:
         """
         Extrahiert den Dateinamen aus dem gegebenen Code.
 
         Sucht nach einem Kommentar im Format '# Filename: <Dateiname>' oder
         '# filename: <Dateiname>' und gibt den Dateinamen zurück.
 
-        Parameters:
-            code (str): Der Code, aus dem der Dateiname extrahiert werden soll.
-
-        Returns:
-            str: Der extrahierte Dateiname oder None, wenn kein Dateiname gefunden wurde.
+        :param code: Der Code, aus dem der Dateiname extrahiert werden soll.
+        :return: Der extrahierte Dateiname oder None, wenn kein Dateiname gefunden wurde.
         """
         # Verwende ein Regex, um den Dateinamen zu extrahieren
         match = re.search(r'# ?[Ff]ilename: (.+)', code)

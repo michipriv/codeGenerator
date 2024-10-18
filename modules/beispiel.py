@@ -20,23 +20,24 @@ class ExampleClient:
         running (bool): Gibt an, ob der Client aktiv ist.
     """
 
-    def __init__(self, host, port, client_id):
+    def __init__(self, host: str, port: int, client_id: str):
         """
         Initialisiert die ExampleClient-Klasse.
 
-        Parameters:
-            host (str): Der Hostname des Servers.
-            port (int): Der Port des Servers.
-            client_id (str): Die eindeutige ID des Clients.
+        :param host: Der Hostname des Servers.
+        :param port: Der Port des Servers.
+        :param client_id: Die eindeutige ID des Clients.
         """
         self.client_id = client_id
         self.client = Client(host, port, client_id)
         self.client.register()
         self.running = True
 
-    def start_receiving(self):
+    def start_receiving(self) -> None:
         """
         Wartet auf eingehende Nachrichten und verarbeitet diese.
+
+        :return: None
         """
         while self.running:
             try:
@@ -46,9 +47,11 @@ class ExampleClient:
             except Exception as e:
                 print(f"Error while receiving messages: {e}")
 
-    def send_message_input(self):
+    def send_message_input(self) -> None:
         """
         Ermöglicht dem Benutzer das Senden von Nachrichten an einen Empfänger.
+
+        :return: None
         """
         print(f"Client {self.client_id} started. You can send messages now.")
         
@@ -61,9 +64,11 @@ class ExampleClient:
             except Exception as e:
                 print(f"Error while sending message: {e}")
 
-    def run(self):
+    def run(self) -> None:
         """
         Startet den Empfangsthread und die Eingabeaufforderung zum Senden von Nachrichten.
+
+        :return: None
         """
         recv_thread = threading.Thread(target=self.start_receiving)
         recv_thread.daemon = True

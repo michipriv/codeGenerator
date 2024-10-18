@@ -1,0 +1,1050 @@
+<html><body>
+<p>Keine Kommandozeilen gefunden</p>
+<h1>Übersicht der gescannten Dateien</h1>
+<ul>
+<li>../codeGenerator/main.py</li>
+<li>../codeGenerator/README-CR-md.py</li>
+<li>../codeGenerator/modules/argument_parser.py</li>
+<li>../codeGenerator/modules/backup_manager.py</li>
+<li>../codeGenerator/modules/beispiel.py</li>
+<li>../codeGenerator/modules/client.py</li>
+<li>../codeGenerator/modules/code_generator.py</li>
+<li>../codeGenerator/modules/conversation_manager.py</li>
+<li>../codeGenerator/modules/file_manager.py</li>
+<li>../codeGenerator/modules/file_operations.py</li>
+<li>../codeGenerator/modules/format_code.py</li>
+<li>../codeGenerator/modules/logger.py</li>
+<li>../codeGenerator/modules/message.py</li>
+<li>../codeGenerator/modules/openai.py</li>
+<li>../codeGenerator/modules/run.py</li>
+<li>../codeGenerator/modules/server.py</li>
+<li>../codeGenerator/modules/terminal.py</li>
+</ul>
+<h2>Dokumentation der Dateien</h2>
+<h3>Datei: ../codeGenerator/main.py</h3>
+<h4>Funktion: clear_screen()</h4>
+<p>Docstring: Clears the terminal screen based on the operating system.
+
+- On Windows, it uses the 'cls' command.
+- On Unix-based systems, it uses the 'clear' command.
+
+:return: None</p>
+<h4>Funktion: load_config(file_path)</h4>
+<p>Docstring: Loads configuration settings from a JSON file.
+
+:param file_path: The path to the configuration file (default: 'etc/config.json').
+:return: A dictionary containing the configuration data.</p>
+<h4>Funktion: load_prompts(file_path)</h4>
+<p>Docstring: Loads prompts from a text file with a custom format. The text file must follow a specific structure,
+with prompts indicated by 'PROMPT:' and corresponding text between 'TEXT:' and 'END:'.
+
+:param file_path: The path to the prompts file (default: 'etc/prompt.txt').
+:return: A dictionary mapping prompt names to their corresponding prompt text.</p>
+<h4>Funktion: main()</h4>
+<p>Docstring: Main entry point of the application. This function clears the screen, loads the configuration and prompt files,
+parses command-line arguments, and starts the appropriate mode based on the arguments provided.
+
+Supported modes:
+- **OpenAI Mode**: Uses OpenAI API for AI-based interaction.
+- **Server Mode**: Starts the application in server mode.
+- **Run Mode**: Runs a client in a custom mode.
+- **File Manager Mode**: Opens the file manager for a given file.
+- **Example Mode**: Runs a sample client as an example.
+
+:return: None</p>
+<h4>Funktion: signal_handler(sig, frame)</h4>
+<p>Docstring: Handles system signals, allowing graceful shutdown when the application runs in server mode.
+
+:param sig: The signal received.
+:param frame: The current stack frame.
+:return: None</p>
+<h3>Datei: ../codeGenerator/README-CR-md.py</h3>
+<p>Keine Dokumentation</p>
+<h3>Datei: ../codeGenerator/modules/argument_parser.py</h3>
+<h4>Klasse: ArgumentParser</h4>
+<p>Docstring: Klasse zur Analyse von Befehlszeilenargumenten für das Skript.
+
+Diese Klasse analysiert die Befehlszeilenargumente und setzt die entsprechenden Attribute,
+um verschiedene Modi und Parameter des Programms zu steuern.
+
+Attributes:
+    help (bool): Gibt an, ob die Hilfe angezeigt werden soll.
+    edit_filename (str): Der Name der Datei, die bearbeitet werden soll.
+    run_mode (bool): Gibt an, ob der Run-Modus aktiviert ist.
+    ki (bool): Gibt an, ob der OpenAI-Modus aktiviert ist.
+    server_mode (bool): Gibt an, ob der Server-Modus aktiviert ist.
+    example_mode (bool): Gibt an, ob der Beispielmodus aktiviert ist.
+    client_id (str): Die ID des Clients, die an den Beispielmodus übergeben wird.
+    prompt (str): Der benutzerdefinierte Prompt, der an den KI-Modus übergeben wird.</p>
+<p>Methode: __init__(self)</p>
+<p>Docstring: Initialisiert die ArgumentParser-Klasse und analysiert die übergebenen Argumente.
+
+Die Argumente, die verarbeitet werden, umfassen:
+- '-h' oder '--help' zur Anzeige der Hilfe
+- '-d <filename>' zum Bearbeiten einer Datei
+- '-r' zum Starten des Run-Modus
+- '-s' zum Starten des Server-Modus
+- '-ki -p <prompt>' zum Starten des OpenAI-Modus mit einem Prompt
+- '-bsp <client_id>' zum Starten des Beispielmodus mit einer Client-ID</p>
+<p>Methode: parse_arguments(self)</p>
+<p>Docstring: Analysiert die Befehlszeilenargumente und setzt die entsprechenden Attribute.
+
+Die Argumente, die erkannt und verarbeitet werden, umfassen:
+- '-h' oder '--help' zur Anzeige der Hilfe
+- '-d <filename>' zum Bearbeiten einer Datei
+- '-r' zum Starten des Run-Modus
+- '-s' zum Starten des Server-Modus
+- '-ki -p <prompt>' zum Starten des OpenAI-Modus mit einem Prompt
+- '-bsp <client_id>' zum Starten des Beispielmodus mit einer Client-ID
+
+:return: None</p>
+<p>Methode: print_help(self)</p>
+<p>Docstring: Gibt die Hilfenachricht für das Skript aus.
+
+Diese Methode zeigt eine Übersicht der verfügbaren Befehlszeilenoptionen an,
+die der Benutzer verwenden kann.
+
+:return: None</p>
+<h4>Funktion: __init__(self)</h4>
+<p>Docstring: Initialisiert die ArgumentParser-Klasse und analysiert die übergebenen Argumente.
+
+Die Argumente, die verarbeitet werden, umfassen:
+- '-h' oder '--help' zur Anzeige der Hilfe
+- '-d <filename>' zum Bearbeiten einer Datei
+- '-r' zum Starten des Run-Modus
+- '-s' zum Starten des Server-Modus
+- '-ki -p <prompt>' zum Starten des OpenAI-Modus mit einem Prompt
+- '-bsp <client_id>' zum Starten des Beispielmodus mit einer Client-ID</p>
+<h4>Funktion: parse_arguments(self)</h4>
+<p>Docstring: Analysiert die Befehlszeilenargumente und setzt die entsprechenden Attribute.
+
+Die Argumente, die erkannt und verarbeitet werden, umfassen:
+- '-h' oder '--help' zur Anzeige der Hilfe
+- '-d <filename>' zum Bearbeiten einer Datei
+- '-r' zum Starten des Run-Modus
+- '-s' zum Starten des Server-Modus
+- '-ki -p <prompt>' zum Starten des OpenAI-Modus mit einem Prompt
+- '-bsp <client_id>' zum Starten des Beispielmodus mit einer Client-ID
+
+:return: None</p>
+<h4>Funktion: print_help(self)</h4>
+<p>Docstring: Gibt die Hilfenachricht für das Skript aus.
+
+Diese Methode zeigt eine Übersicht der verfügbaren Befehlszeilenoptionen an,
+die der Benutzer verwenden kann.
+
+:return: None</p>
+<h3>Datei: ../codeGenerator/modules/backup_manager.py</h3>
+<h4>Klasse: BackupManager</h4>
+<p>Docstring: Klasse zur Verwaltung von Datei-Backups.
+
+Diese Klasse erstellt und verwaltet Backups von Dateien, wobei bis zu drei Versionen
+der Backup-Datei gespeichert werden. Die älteste Backup-Version wird überschrieben,
+wenn eine neue Backup-Datei erstellt wird.
+
+Attributes:
+    backup_dir (str): Das Verzeichnis, in dem die Backup-Dateien gespeichert werden.</p>
+<p>Methode: __init__(self, backup_dir)</p>
+<p>Docstring: Initialisiert die BackupManager-Klasse und erstellt das Backup-Verzeichnis,
+falls es noch nicht existiert.
+
+:param backup_dir: Das Verzeichnis, in dem die Backups gespeichert werden sollen.
+                   Standardmäßig 'bak'.</p>
+<p>Methode: manage_backups(self, filename)</p>
+<p>Docstring: Verwalte die Backups für die angegebene Datei.
+
+Diese Methode verwaltet bis zu drei Backup-Versionen einer Datei. Das älteste Backup
+(Backup3) wird gelöscht, Backup2 wird auf Backup3 verschoben, Backup1 auf Backup2,
+und die neue Backup-Datei wird als Backup1 erstellt.
+
+:param filename: Der Pfad zur Datei, für die das Backup erstellt werden soll.
+:return: None</p>
+<h4>Funktion: __init__(self, backup_dir)</h4>
+<p>Docstring: Initialisiert die BackupManager-Klasse und erstellt das Backup-Verzeichnis,
+falls es noch nicht existiert.
+
+:param backup_dir: Das Verzeichnis, in dem die Backups gespeichert werden sollen.
+                   Standardmäßig 'bak'.</p>
+<h4>Funktion: manage_backups(self, filename)</h4>
+<p>Docstring: Verwalte die Backups für die angegebene Datei.
+
+Diese Methode verwaltet bis zu drei Backup-Versionen einer Datei. Das älteste Backup
+(Backup3) wird gelöscht, Backup2 wird auf Backup3 verschoben, Backup1 auf Backup2,
+und die neue Backup-Datei wird als Backup1 erstellt.
+
+:param filename: Der Pfad zur Datei, für die das Backup erstellt werden soll.
+:return: None</p>
+<h3>Datei: ../codeGenerator/modules/beispiel.py</h3>
+<h4>Klasse: ExampleClient</h4>
+<p>Docstring: Beispielklasse zum Senden und Empfangen von Nachrichten.
+
+Diese Klasse ermöglicht es, Nachrichten an einen Server zu senden und
+empfangene Nachrichten in einem separaten Thread zu verarbeiten.
+
+Attributes:
+    client_id (str): Die ID des Clients.
+    client (Client): Die Client-Instanz zur Kommunikation mit dem Server.
+    running (bool): Gibt an, ob der Client aktiv ist.</p>
+<p>Methode: __init__(self, host, port, client_id)</p>
+<p>Docstring: Initialisiert die ExampleClient-Klasse.
+
+:param host: Der Hostname des Servers.
+:param port: Der Port des Servers.
+:param client_id: Die eindeutige ID des Clients.</p>
+<p>Methode: start_receiving(self)</p>
+<p>Docstring: Wartet auf eingehende Nachrichten und verarbeitet diese.
+
+:return: None</p>
+<p>Methode: send_message_input(self)</p>
+<p>Docstring: Ermöglicht dem Benutzer das Senden von Nachrichten an einen Empfänger.
+
+:return: None</p>
+<p>Methode: run(self)</p>
+<p>Docstring: Startet den Empfangsthread und die Eingabeaufforderung zum Senden von Nachrichten.
+
+:return: None</p>
+<h4>Funktion: __init__(self, host, port, client_id)</h4>
+<p>Docstring: Initialisiert die ExampleClient-Klasse.
+
+:param host: Der Hostname des Servers.
+:param port: Der Port des Servers.
+:param client_id: Die eindeutige ID des Clients.</p>
+<h4>Funktion: start_receiving(self)</h4>
+<p>Docstring: Wartet auf eingehende Nachrichten und verarbeitet diese.
+
+:return: None</p>
+<h4>Funktion: send_message_input(self)</h4>
+<p>Docstring: Ermöglicht dem Benutzer das Senden von Nachrichten an einen Empfänger.
+
+:return: None</p>
+<h4>Funktion: run(self)</h4>
+<p>Docstring: Startet den Empfangsthread und die Eingabeaufforderung zum Senden von Nachrichten.
+
+:return: None</p>
+<h3>Datei: ../codeGenerator/modules/client.py</h3>
+<h4>Klasse: Client</h4>
+<p>Docstring: Klasse zur Kommunikation mit einem ZMQ-Server.
+
+Diese Klasse verwaltet die Verbindung zu einem Server, registriert den Client
+und ermöglicht das Senden und Empfangen von Nachrichten.
+
+Attributes:
+    host (str): Der Hostname des Servers.
+    port (int): Der Port des Servers.
+    client_id (str): Die eindeutige ID des Clients.
+    context: Der ZMQ-Kontext.
+    server_socket: Socket zum Senden von Nachrichten an den Server.
+    unique_port (int): Einzigartiger Port für den Client.
+    listener_socket: Socket zum Empfangen von Nachrichten.</p>
+<p>Methode: __init__(self, host, port, client_id)</p>
+<p>Docstring: Initialisiert die Client-Klasse und erstellt die ZMQ-Sockets für die
+Kommunikation mit dem Server.
+
+:param host: Der Hostname des Servers.
+:param port: Der Port des Servers.
+:param client_id: Die eindeutige ID des Clients.</p>
+<p>Methode: generate_unique_port(self)</p>
+<p>Docstring: Generiert einen einzigartigen Port für den Client, indem ein verfügbarer Port
+im Bereich von 1024 bis 65535 ausgewählt wird.
+
+:return: Ein verfügbarer Port für den Client.</p>
+<p>Methode: is_port_available(self, port)</p>
+<p>Docstring: Überprüft, ob ein gegebener Port verfügbar ist.
+
+:param port: Der zu überprüfende Port.
+:return: True, wenn der Port verfügbar ist, sonst False.</p>
+<p>Methode: register(self)</p>
+<p>Docstring: Registriert den Client beim Server, indem eine Registrierungsnachricht an den Server gesendet wird.
+Wartet auf eine Bestätigung vom Server.
+
+:return: None</p>
+<p>Methode: receive_message(self)</p>
+<p>Docstring: Empfängt eine Nachricht vom Listener-Socket.
+
+:return: Das empfangene Message-Objekt.
+:raises Exception: Wenn ein Fehler beim Empfangen der Nachricht auftritt.</p>
+<p>Methode: send_message(self, recipient, sender, message_type, content)</p>
+<p>Docstring: Sendet eine Nachricht an den Server.
+
+:param recipient: Der Empfänger der Nachricht.
+:param sender: Der Absender der Nachricht.
+:param message_type: Der Typ der Nachricht.
+:param content: Der Inhalt der Nachricht.
+:return: None</p>
+<h4>Funktion: __init__(self, host, port, client_id)</h4>
+<p>Docstring: Initialisiert die Client-Klasse und erstellt die ZMQ-Sockets für die
+Kommunikation mit dem Server.
+
+:param host: Der Hostname des Servers.
+:param port: Der Port des Servers.
+:param client_id: Die eindeutige ID des Clients.</p>
+<h4>Funktion: generate_unique_port(self)</h4>
+<p>Docstring: Generiert einen einzigartigen Port für den Client, indem ein verfügbarer Port
+im Bereich von 1024 bis 65535 ausgewählt wird.
+
+:return: Ein verfügbarer Port für den Client.</p>
+<h4>Funktion: is_port_available(self, port)</h4>
+<p>Docstring: Überprüft, ob ein gegebener Port verfügbar ist.
+
+:param port: Der zu überprüfende Port.
+:return: True, wenn der Port verfügbar ist, sonst False.</p>
+<h4>Funktion: register(self)</h4>
+<p>Docstring: Registriert den Client beim Server, indem eine Registrierungsnachricht an den Server gesendet wird.
+Wartet auf eine Bestätigung vom Server.
+
+:return: None</p>
+<h4>Funktion: receive_message(self)</h4>
+<p>Docstring: Empfängt eine Nachricht vom Listener-Socket.
+
+:return: Das empfangene Message-Objekt.
+:raises Exception: Wenn ein Fehler beim Empfangen der Nachricht auftritt.</p>
+<h4>Funktion: send_message(self, recipient, sender, message_type, content)</h4>
+<p>Docstring: Sendet eine Nachricht an den Server.
+
+:param recipient: Der Empfänger der Nachricht.
+:param sender: Der Absender der Nachricht.
+:param message_type: Der Typ der Nachricht.
+:param content: Der Inhalt der Nachricht.
+:return: None</p>
+<h3>Datei: ../codeGenerator/modules/code_generator.py</h3>
+<h4>Klasse: CodeGenerator</h4>
+<p>Docstring: Klasse zur Generierung von Code mithilfe der OpenAI API.
+
+Diese Klasse ermöglicht es, Anfragen an die OpenAI API zu stellen und
+generierten Code zurückzugeben.
+
+Attributes:
+    api_key (str): Der API-Schlüssel für die OpenAI-Integration.
+    organization (str): Die Organisation für die OpenAI-Integration.</p>
+<p>Methode: __init__(self, api_key, organization)</p>
+<p>Docstring: Initialisiert die CodeGenerator-Klasse.
+
+:param api_key: Der API-Schlüssel für die OpenAI-Integration.
+:param organization: Die Organisation für die OpenAI-Integration.</p>
+<p>Methode: generiere_code(self, messages, model, temperature, max_tokens, frequency_penalty)</p>
+<p>Docstring: Generiert Code basierend auf den übergebenen Nachrichten.
+
+:param messages: Eine Liste von Nachrichten, die als Eingabe an das Modell gesendet werden.
+:param model: Das verwendete Modell. Standardmäßig "gpt-4".
+:param temperature: Steuerung der Kreativität der Ausgabe. Standardmäßig 0.2.
+:param max_tokens: Maximale Anzahl der Tokens für die Antwort. Standardmäßig 4096.
+:param frequency_penalty: Bestrafung für die Wiederholung von Tokens. Standardmäßig 0.2.
+:return: Der generierte Code oder None, wenn ein Fehler auftritt.</p>
+<h4>Funktion: __init__(self, api_key, organization)</h4>
+<p>Docstring: Initialisiert die CodeGenerator-Klasse.
+
+:param api_key: Der API-Schlüssel für die OpenAI-Integration.
+:param organization: Die Organisation für die OpenAI-Integration.</p>
+<h4>Funktion: generiere_code(self, messages, model, temperature, max_tokens, frequency_penalty)</h4>
+<p>Docstring: Generiert Code basierend auf den übergebenen Nachrichten.
+
+:param messages: Eine Liste von Nachrichten, die als Eingabe an das Modell gesendet werden.
+:param model: Das verwendete Modell. Standardmäßig "gpt-4".
+:param temperature: Steuerung der Kreativität der Ausgabe. Standardmäßig 0.2.
+:param max_tokens: Maximale Anzahl der Tokens für die Antwort. Standardmäßig 4096.
+:param frequency_penalty: Bestrafung für die Wiederholung von Tokens. Standardmäßig 0.2.
+:return: Der generierte Code oder None, wenn ein Fehler auftritt.</p>
+<h3>Datei: ../codeGenerator/modules/conversation_manager.py</h3>
+<h4>Klasse: ConversationManager</h4>
+<p>Docstring: Klasse zur Verwaltung der Konversationshistorie und zur Extraktion von Codeblöcken.
+
+Attributes:
+    conversation_history (list): Liste der Nachrichten in der Konversation.
+    max_tokens (int): Maximale Anzahl der Tokens, die in der Historie erlaubt sind.
+    encoding: Tokenizer für das GPT-4-Modell.
+    content_list (list): Liste zum Speichern von Textinhalten und Codeblöcken.
+    log_directory (str): Verzeichnis zum Speichern von Logdateien.</p>
+<p>Methode: __init__(self, max_tokens)</p>
+<p>Docstring: Initialisiert die ConversationManager-Klasse.
+
+:param max_tokens: Maximale Anzahl der Tokens für die Konversationshistorie.</p>
+<p>Methode: add_message(self, role, content)</p>
+<p>Docstring: Füge eine Nachricht zur Unterhaltung hinzu.
+
+:param role: Rolle des Senders (z.B. "user", "system").
+:param content: Inhalt der Nachricht.
+:return: None</p>
+<p>Methode: trim_history(self)</p>
+<p>Docstring: Kürze die Historie, um die maximale Tokenanzahl zu beachten.
+
+:return: None</p>
+<p>Methode: count_tokens(self, text)</p>
+<p>Docstring: Zähle die Anzahl der Tokens in einem Text.
+
+:param text: Der Text, dessen Tokens gezählt werden sollen.
+:return: Die Anzahl der Tokens.</p>
+<p>Methode: get_history(self)</p>
+<p>Docstring: Gibt die gesamte Gesprächshistorie zurück.
+
+:return: Die Liste der Nachrichten in der Konversation.</p>
+<p>Methode: extract_code_blocks(self, text)</p>
+<p>Docstring: Extrahiere Codeblöcke aus dem gegebenen Text.
+
+:param text: Der Text, aus dem Codeblöcke extrahiert werden sollen.
+:return: Eine Liste von Codeblöcken und der verbleibende Text.</p>
+<p>Methode: log_ki_antwort(self, generierter_code)</p>
+<p>Docstring: Logge die Antwort der KI in eine Datei.
+
+:param generierter_code: Die von der KI generierte Antwort, die geloggt werden soll.
+:return: None</p>
+<p>Methode: save_content(self, text, code_blocks)</p>
+<p>Docstring: Speichere den Text und die Codeblöcke.
+
+:param text: Der Text, der gespeichert werden soll.
+:param code_blocks: Eine Liste von Codeblöcken, die gespeichert werden sollen.
+:return: None</p>
+<p>Methode: remove_empty_codeblocks(self, text)</p>
+<p>Docstring: Entferne leere Codeblöcke aus dem Text.
+
+:param text: Der Text, aus dem leere Codeblöcke entfernt werden sollen.
+:return: Der bereinigte Text ohne leere Codeblöcke.</p>
+<h4>Funktion: __init__(self, max_tokens)</h4>
+<p>Docstring: Initialisiert die ConversationManager-Klasse.
+
+:param max_tokens: Maximale Anzahl der Tokens für die Konversationshistorie.</p>
+<h4>Funktion: add_message(self, role, content)</h4>
+<p>Docstring: Füge eine Nachricht zur Unterhaltung hinzu.
+
+:param role: Rolle des Senders (z.B. "user", "system").
+:param content: Inhalt der Nachricht.
+:return: None</p>
+<h4>Funktion: trim_history(self)</h4>
+<p>Docstring: Kürze die Historie, um die maximale Tokenanzahl zu beachten.
+
+:return: None</p>
+<h4>Funktion: count_tokens(self, text)</h4>
+<p>Docstring: Zähle die Anzahl der Tokens in einem Text.
+
+:param text: Der Text, dessen Tokens gezählt werden sollen.
+:return: Die Anzahl der Tokens.</p>
+<h4>Funktion: get_history(self)</h4>
+<p>Docstring: Gibt die gesamte Gesprächshistorie zurück.
+
+:return: Die Liste der Nachrichten in der Konversation.</p>
+<h4>Funktion: extract_code_blocks(self, text)</h4>
+<p>Docstring: Extrahiere Codeblöcke aus dem gegebenen Text.
+
+:param text: Der Text, aus dem Codeblöcke extrahiert werden sollen.
+:return: Eine Liste von Codeblöcken und der verbleibende Text.</p>
+<h4>Funktion: log_ki_antwort(self, generierter_code)</h4>
+<p>Docstring: Logge die Antwort der KI in eine Datei.
+
+:param generierter_code: Die von der KI generierte Antwort, die geloggt werden soll.
+:return: None</p>
+<h4>Funktion: save_content(self, text, code_blocks)</h4>
+<p>Docstring: Speichere den Text und die Codeblöcke.
+
+:param text: Der Text, der gespeichert werden soll.
+:param code_blocks: Eine Liste von Codeblöcken, die gespeichert werden sollen.
+:return: None</p>
+<h4>Funktion: remove_empty_codeblocks(self, text)</h4>
+<p>Docstring: Entferne leere Codeblöcke aus dem Text.
+
+:param text: Der Text, aus dem leere Codeblöcke entfernt werden sollen.
+:return: Der bereinigte Text ohne leere Codeblöcke.</p>
+<h3>Datei: ../codeGenerator/modules/file_manager.py</h3>
+<h4>Klasse: FileManager</h4>
+<p>Docstring: Klasse zur Verwaltung von Dateien und Nachrichten.
+
+Diese Klasse ermöglicht das Speichern und Verarbeiten von Code,
+das Empfangen von Nachrichten über ZMQ und das Erstellen von Backups.
+
+Attributes:
+    backup_manager (BackupManager): Die Instanz zur Verwaltung von Backups.
+    file_operations (FileOperations): Die Instanz zur Durchführung von Dateioperationen.
+    format_code_util (FormatCode): Die Instanz zur Formatierung von Code.
+    terminal (Terminal): Die Instanz zur Verwaltung der Benutzereingabe.
+    args: Argumente, die beim Starten des FileManagers übergeben wurden.
+    running (bool): Gibt an, ob der FileManager aktiv ist.
+    main_filename (str): Der Name der Hauptdatei, die verwaltet wird.
+    current_code (str): Der aktuell bearbeitete Code.
+    client (Client): Die Instanz zur Kommunikation mit dem Server.
+    message_thread (threading.Thread): Der Thread zum Empfangen von Nachrichten.</p>
+<p>Methode: __init__(self, args, host, port, main_filename, client_id)</p>
+<p>Docstring: Initialisiert die FileManager-Klasse.
+
+:param args: Argumente, die beim Starten des FileManagers übergeben werden.
+:param host: Der Hostname des Servers.
+:param port: Der Port des Servers.
+:param main_filename: Der Name der Hauptdatei, die verwaltet wird.
+:param client_id: Die eindeutige ID des Clients.</p>
+<p>Methode: run(self)</p>
+<p>Docstring: Startet den FileManager-Modus und verarbeitet Benutzereingaben.
+
+:return: None</p>
+<p>Methode: receive_messages(self)</p>
+<p>Docstring: Empfängt Nachrichten über den ZMQ-Socket und verarbeitet sie.
+
+:return: None</p>
+<p>Methode: save_received_code(self, code)</p>
+<p>Docstring: Speichert den empfangenen Code nach Formatierung.
+
+:param code: Der empfangene Code, der gespeichert werden soll.
+:return: None</p>
+<p>Methode: signal_handler(self, sig, frame)</p>
+<p>Docstring: Behandelt das Signal zum Beenden des FileManagers.
+
+:param sig: Das empfangene Signal.
+:param frame: Der aktuelle Stack-Frame.
+:return: None</p>
+<h4>Funktion: __init__(self, args, host, port, main_filename, client_id)</h4>
+<p>Docstring: Initialisiert die FileManager-Klasse.
+
+:param args: Argumente, die beim Starten des FileManagers übergeben werden.
+:param host: Der Hostname des Servers.
+:param port: Der Port des Servers.
+:param main_filename: Der Name der Hauptdatei, die verwaltet wird.
+:param client_id: Die eindeutige ID des Clients.</p>
+<h4>Funktion: run(self)</h4>
+<p>Docstring: Startet den FileManager-Modus und verarbeitet Benutzereingaben.
+
+:return: None</p>
+<h4>Funktion: receive_messages(self)</h4>
+<p>Docstring: Empfängt Nachrichten über den ZMQ-Socket und verarbeitet sie.
+
+:return: None</p>
+<h4>Funktion: save_received_code(self, code)</h4>
+<p>Docstring: Speichert den empfangenen Code nach Formatierung.
+
+:param code: Der empfangene Code, der gespeichert werden soll.
+:return: None</p>
+<h4>Funktion: signal_handler(self, sig, frame)</h4>
+<p>Docstring: Behandelt das Signal zum Beenden des FileManagers.
+
+:param sig: Das empfangene Signal.
+:param frame: Der aktuelle Stack-Frame.
+:return: None</p>
+<h3>Datei: ../codeGenerator/modules/file_operations.py</h3>
+<h4>Klasse: FileOperations</h4>
+<p>Docstring: Klasse zur Durchführung von Dateioperationen.
+
+Diese Klasse ermöglicht das Erstellen, Lesen, Schreiben, Löschen und Verwalten von Dateien und Verzeichnissen,
+sowie das Verwalten von Backups.
+
+Attributes:
+    backup_manager (BackupManager): Die Instanz zur Verwaltung von Backups.</p>
+<p>Methode: __init__(self, backup_manager)</p>
+<p>Docstring: Initialisiert die FileOperations-Klasse.
+
+:param backup_manager: Die Instanz zur Verwaltung von Backups.</p>
+<p>Methode: ensure_directory(self, filepath)</p>
+<p>Docstring: Stellt sicher, dass das Verzeichnis für den angegebenen Dateipfad existiert.
+
+:param filepath: Der Pfad zur Datei, für die das Verzeichnis überprüft wird.
+:return: None</p>
+<p>Methode: save_file(self, filename, content)</p>
+<p>Docstring: Speichert den angegebenen Inhalt in der Datei.
+
+:param filename: Der Name der Datei, in die der Inhalt geschrieben werden soll.
+:param content: Der Inhalt, der in die Datei geschrieben werden soll.
+:return: None</p>
+<p>Methode: delete_file(self, filename)</p>
+<p>Docstring: Löscht die angegebene Datei.
+
+:param filename: Der Name der Datei, die gelöscht werden soll.
+:return: None</p>
+<p>Methode: create_directory(self, directory)</p>
+<p>Docstring: Erstellt das angegebene Verzeichnis.
+
+:param directory: Der Name des Verzeichnisses, das erstellt werden soll.
+:return: None</p>
+<p>Methode: delete_directory(self, directory)</p>
+<p>Docstring: Löscht das angegebene Verzeichnis und seinen Inhalt.
+
+:param directory: Der Name des Verzeichnisses, das gelöscht werden soll.
+:return: None</p>
+<p>Methode: read_file(self, filename)</p>
+<p>Docstring: Liest den Inhalt der angegebenen Datei.
+
+:param filename: Der Name der Datei, die gelesen werden soll.
+:return: Der Inhalt der Datei oder None, wenn ein Fehler auftritt.</p>
+<p>Methode: list_directory_files(self, directory)</p>
+<p>Docstring: Listet die Dateien im angegebenen Verzeichnis auf.
+
+:param directory: Der Pfad zum Verzeichnis, dessen Dateien aufgelistet werden sollen.
+:return: Eine Liste der Dateien im Verzeichnis oder eine leere Liste, wenn das Verzeichnis nicht existiert.</p>
+<p>Methode: list_project_files(self)</p>
+<p>Docstring: Listet die Projektdateien im aktuellen Verzeichnis auf.
+
+Diese Methode sucht im Hauptverzeichnis nach der Datei main.py und
+im modules-Verzeichnis nach allen Python-Dateien.
+
+:return: None</p>
+<h4>Funktion: __init__(self, backup_manager)</h4>
+<p>Docstring: Initialisiert die FileOperations-Klasse.
+
+:param backup_manager: Die Instanz zur Verwaltung von Backups.</p>
+<h4>Funktion: ensure_directory(self, filepath)</h4>
+<p>Docstring: Stellt sicher, dass das Verzeichnis für den angegebenen Dateipfad existiert.
+
+:param filepath: Der Pfad zur Datei, für die das Verzeichnis überprüft wird.
+:return: None</p>
+<h4>Funktion: save_file(self, filename, content)</h4>
+<p>Docstring: Speichert den angegebenen Inhalt in der Datei.
+
+:param filename: Der Name der Datei, in die der Inhalt geschrieben werden soll.
+:param content: Der Inhalt, der in die Datei geschrieben werden soll.
+:return: None</p>
+<h4>Funktion: delete_file(self, filename)</h4>
+<p>Docstring: Löscht die angegebene Datei.
+
+:param filename: Der Name der Datei, die gelöscht werden soll.
+:return: None</p>
+<h4>Funktion: create_directory(self, directory)</h4>
+<p>Docstring: Erstellt das angegebene Verzeichnis.
+
+:param directory: Der Name des Verzeichnisses, das erstellt werden soll.
+:return: None</p>
+<h4>Funktion: delete_directory(self, directory)</h4>
+<p>Docstring: Löscht das angegebene Verzeichnis und seinen Inhalt.
+
+:param directory: Der Name des Verzeichnisses, das gelöscht werden soll.
+:return: None</p>
+<h4>Funktion: read_file(self, filename)</h4>
+<p>Docstring: Liest den Inhalt der angegebenen Datei.
+
+:param filename: Der Name der Datei, die gelesen werden soll.
+:return: Der Inhalt der Datei oder None, wenn ein Fehler auftritt.</p>
+<h4>Funktion: list_directory_files(self, directory)</h4>
+<p>Docstring: Listet die Dateien im angegebenen Verzeichnis auf.
+
+:param directory: Der Pfad zum Verzeichnis, dessen Dateien aufgelistet werden sollen.
+:return: Eine Liste der Dateien im Verzeichnis oder eine leere Liste, wenn das Verzeichnis nicht existiert.</p>
+<h4>Funktion: list_project_files(self)</h4>
+<p>Docstring: Listet die Projektdateien im aktuellen Verzeichnis auf.
+
+Diese Methode sucht im Hauptverzeichnis nach der Datei main.py und
+im modules-Verzeichnis nach allen Python-Dateien.
+
+:return: None</p>
+<h3>Datei: ../codeGenerator/modules/format_code.py</h3>
+<h4>Klasse: FormatCode</h4>
+<p>Docstring: Klasse zur Formatierung von Code und zur Extraktion von Dateinamen.
+
+Diese Klasse verwendet das 'black'-Modul zur Formatierung von Python-Code
+und stellt Methoden zur Verfügung, um Dateinamen aus Kommentaren im Code
+zu extrahieren.
+
+Attributes:
+    None</p>
+<p>Methode: format_code(self, code)</p>
+<p>Docstring: Formatiert den gegebenen Code mit dem 'black'-Formatter.
+
+:param code: Der zu formatierende Python-Code.
+:return: Der formatierte Code oder der ursprüngliche Code, 
+         falls das Formatieren nicht möglich war.</p>
+<p>Methode: extract_filename(self, code)</p>
+<p>Docstring: Extrahiert den Dateinamen aus dem gegebenen Code.
+
+Sucht nach einem Kommentar im Format '# Filename: <Dateiname>' oder
+'# filename: <Dateiname>' und gibt den Dateinamen zurück.
+
+:param code: Der Code, aus dem der Dateiname extrahiert werden soll.
+:return: Der extrahierte Dateiname oder None, wenn kein Dateiname gefunden wurde.</p>
+<h4>Funktion: format_code(self, code)</h4>
+<p>Docstring: Formatiert den gegebenen Code mit dem 'black'-Formatter.
+
+:param code: Der zu formatierende Python-Code.
+:return: Der formatierte Code oder der ursprüngliche Code, 
+         falls das Formatieren nicht möglich war.</p>
+<h4>Funktion: extract_filename(self, code)</h4>
+<p>Docstring: Extrahiert den Dateinamen aus dem gegebenen Code.
+
+Sucht nach einem Kommentar im Format '# Filename: <Dateiname>' oder
+'# filename: <Dateiname>' und gibt den Dateinamen zurück.
+
+:param code: Der Code, aus dem der Dateiname extrahiert werden soll.
+:return: Der extrahierte Dateiname oder None, wenn kein Dateiname gefunden wurde.</p>
+<h3>Datei: ../codeGenerator/modules/logger.py</h3>
+<h4>Klasse: Logger</h4>
+<p>Docstring: Klasse zur Protokollierung von Ereignissen in einer Anwendung.
+
+Diese Klasse konfiguriert den Logger, um Nachrichten in eine Logdatei zu schreiben
+und umgeleitete Standardausgaben zu protokollieren.
+
+Attributes:
+    logger (Logger): Die Logger-Instanz.</p>
+<p>Methode: __init__(self, log_file)</p>
+<p>Docstring: Initialisiert die Logger-Klasse.
+
+:param log_file: Der Pfad zur Logdatei. Standardmäßig 'log/app.log'.</p>
+<p>Methode: get_logger(self)</p>
+<p>Docstring: Gibt die Logger-Instanz zurück.
+
+:return: Die Logger-Instanz.</p>
+<h4>Funktion: __init__(self, log_file)</h4>
+<p>Docstring: Initialisiert die Logger-Klasse.
+
+:param log_file: Der Pfad zur Logdatei. Standardmäßig 'log/app.log'.</p>
+<h4>Klasse: StreamToLogger</h4>
+<p>Docstring: Hilfsklasse zum Umleiten von Standardausgaben an den Logger.
+
+Attributes:
+    logger (Logger): Die Logger-Instanz.
+    log_level (int): Der Log-Level für die Umleitung.
+    linebuf (str): Buffer für die Zeilen, die geschrieben werden.</p>
+<p>Methode: __init__(self, logger, log_level)</p>
+<p>Docstring: Initialisiert die StreamToLogger-Klasse.
+
+:param logger: Die Logger-Instanz.
+:param log_level: Der Log-Level für die Umleitung.</p>
+<p>Methode: write(self, buf)</p>
+<p>Docstring: Schreibt den gegebenen Puffer in den Logger.
+
+:param buf: Der Puffer mit den zu protokollierenden Nachrichten.
+:return: None</p>
+<p>Methode: flush(self)</p>
+<p>Docstring: Stellt sicher, dass alle gepufferten Ausgaben geschrieben werden.
+
+:return: None</p>
+<h4>Funktion: get_logger(self)</h4>
+<p>Docstring: Gibt die Logger-Instanz zurück.
+
+:return: Die Logger-Instanz.</p>
+<h4>Funktion: __init__(self, logger, log_level)</h4>
+<p>Docstring: Initialisiert die StreamToLogger-Klasse.
+
+:param logger: Die Logger-Instanz.
+:param log_level: Der Log-Level für die Umleitung.</p>
+<h4>Funktion: write(self, buf)</h4>
+<p>Docstring: Schreibt den gegebenen Puffer in den Logger.
+
+:param buf: Der Puffer mit den zu protokollierenden Nachrichten.
+:return: None</p>
+<h4>Funktion: flush(self)</h4>
+<p>Docstring: Stellt sicher, dass alle gepufferten Ausgaben geschrieben werden.
+
+:return: None</p>
+<h3>Datei: ../codeGenerator/modules/message.py</h3>
+<h4>Klasse: Message</h4>
+<p>Docstring: Klasse zur Darstellung einer Nachricht zwischen Clients und Servern.
+
+Diese Klasse enthält Informationen über den Empfänger, den Absender,
+den Typ der Nachricht und deren Inhalt.
+
+Attributes:
+    REGISTER (str): Nachrichtentyp für die Registrierung.
+    SEND (str): Nachrichtentyp für das Senden von Nachrichten.
+    RESPONSE (str): Nachrichtentyp für Antworten.
+    UNKNOWN (str): Nachrichtentyp für unbekannte Nachrichten.
+    recipient (str): Der Empfänger der Nachricht.
+    sender (str): Der Absender der Nachricht.
+    message_type (str): Der Typ der Nachricht.
+    content (str): Der Inhalt der Nachricht.</p>
+<p>Methode: __init__(self, recipient, sender, message_type, content)</p>
+<p>Docstring: Initialisiert die Message-Klasse.
+
+:param recipient: Der Empfänger der Nachricht.
+:param sender: Der Absender der Nachricht.
+:param message_type: Der Typ der Nachricht.
+:param content: Der Inhalt der Nachricht.</p>
+<p>Methode: to_dict(self)</p>
+<p>Docstring: Wandelt die Nachricht in ein Wörterbuch um.
+
+:return: Ein Wörterbuch mit den Attributen der Nachricht.</p>
+<p>Methode: serialize(self)</p>
+<p>Docstring: Serialisiert die Nachricht in ein Byte-Format.
+
+:return: Die serialisierte Nachricht.</p>
+<p>Methode: deserialize(serialized_message)</p>
+<p>Docstring: Deserialisiert eine Byte-Nachricht zurück in ein Message-Objekt.
+
+:param serialized_message: Die serialisierte Nachricht.
+:return: Das deserialisierte Message-Objekt.</p>
+<h4>Funktion: __init__(self, recipient, sender, message_type, content)</h4>
+<p>Docstring: Initialisiert die Message-Klasse.
+
+:param recipient: Der Empfänger der Nachricht.
+:param sender: Der Absender der Nachricht.
+:param message_type: Der Typ der Nachricht.
+:param content: Der Inhalt der Nachricht.</p>
+<h4>Funktion: to_dict(self)</h4>
+<p>Docstring: Wandelt die Nachricht in ein Wörterbuch um.
+
+:return: Ein Wörterbuch mit den Attributen der Nachricht.</p>
+<h4>Funktion: serialize(self)</h4>
+<p>Docstring: Serialisiert die Nachricht in ein Byte-Format.
+
+:return: Die serialisierte Nachricht.</p>
+<h4>Funktion: deserialize(serialized_message)</h4>
+<p>Docstring: Deserialisiert eine Byte-Nachricht zurück in ein Message-Objekt.
+
+:param serialized_message: Die serialisierte Nachricht.
+:return: Das deserialisierte Message-Objekt.</p>
+<h3>Datei: ../codeGenerator/modules/openai.py</h3>
+<h4>Klasse: OpenAIIntegration</h4>
+<p>Docstring: Klasse zur Integration mit OpenAI, die die Kommunikation mit der OpenAI-API verwaltet
+und die Verarbeitung von Benutzeranfragen sowie die Extraktion von Codeblöcken übernimmt.
+
+Attributes:
+    api_key (str): Der API-Schlüssel für die OpenAI-Integration.
+    organization (str): Die Organisation für die OpenAI-Integration.
+    prompt (str): Der Start-Prompt für die Konversation.
+    total_tokens (int): Die Gesamtanzahl der bisher verwendeten Tokens.
+    client (CodeGenerator): Der CodeGenerator zur Generierung von Code.
+    conversation_manager (ConversationManager): Verwaltet die Konversationshistorie.
+    encoding: Tokenizer für das GPT-4-Modell.
+    running (bool): Gibt an, ob die Instanz aktiv ist.
+    receiver_thread (threading.Thread): Thread zum Empfang von Nachrichten.</p>
+<p>Methode: __init__(self, args, host, port, api_key, organization, prompt, client_id)</p>
+<p>Docstring: Initialisiert die OpenAIIntegration-Klasse.
+
+:param args: Die Argumente, die beim Start der Anwendung übergeben wurden.
+:param host: Der Hostname des Servers.
+:param port: Der Port des Servers.
+:param api_key: Der API-Schlüssel für die OpenAI-Integration.
+:param organization: Die Organisation für die OpenAI-Integration.
+:param prompt: Der Start-Prompt für die Konversation.
+:param client_id: Die eindeutige ID des Clients.</p>
+<p>Methode: start_receiving(self)</p>
+<p>Docstring: Wartet auf eingehende Nachrichten über ZMQ und verarbeitet diese.
+
+:return: None</p>
+<p>Methode: process_file_content(self, file_content)</p>
+<p>Docstring: Verarbeitet den empfangenen Datei-Inhalt und generiert eine Antwort von OpenAI.
+
+:param file_content: Der Inhalt der empfangenen Datei.
+:return: None</p>
+<p>Methode: send_code_blocks(self, code_blocks)</p>
+<p>Docstring: Sendet die extrahierten Codeblöcke einzeln an den FileManager.
+
+:param code_blocks: Eine Liste von Codeblöcken, die gesendet werden sollen.
+:return: None</p>
+<p>Methode: run_interactive_mode(self)</p>
+<p>Docstring: Startet den interaktiven Modus zur Verarbeitung von Benutzeranfragen.
+
+:return: None</p>
+<p>Methode: read_multiline_input(self, prompt)</p>
+<p>Docstring: Liest mehrzeilige Benutzereingaben.
+
+:param prompt: Der Text, der als Eingabeaufforderung angezeigt wird.
+:return: Der eingegebene mehrzeilige Text.</p>
+<p>Methode: count_tokens(self, text)</p>
+<p>Docstring: Zählt die Anzahl der Tokens in einem gegebenen Text.
+
+:param text: Der Text, dessen Tokens gezählt werden sollen.
+:return: Die Anzahl der Tokens.</p>
+<h4>Funktion: __init__(self, args, host, port, api_key, organization, prompt, client_id)</h4>
+<p>Docstring: Initialisiert die OpenAIIntegration-Klasse.
+
+:param args: Die Argumente, die beim Start der Anwendung übergeben wurden.
+:param host: Der Hostname des Servers.
+:param port: Der Port des Servers.
+:param api_key: Der API-Schlüssel für die OpenAI-Integration.
+:param organization: Die Organisation für die OpenAI-Integration.
+:param prompt: Der Start-Prompt für die Konversation.
+:param client_id: Die eindeutige ID des Clients.</p>
+<h4>Funktion: start_receiving(self)</h4>
+<p>Docstring: Wartet auf eingehende Nachrichten über ZMQ und verarbeitet diese.
+
+:return: None</p>
+<h4>Funktion: process_file_content(self, file_content)</h4>
+<p>Docstring: Verarbeitet den empfangenen Datei-Inhalt und generiert eine Antwort von OpenAI.
+
+:param file_content: Der Inhalt der empfangenen Datei.
+:return: None</p>
+<h4>Funktion: send_code_blocks(self, code_blocks)</h4>
+<p>Docstring: Sendet die extrahierten Codeblöcke einzeln an den FileManager.
+
+:param code_blocks: Eine Liste von Codeblöcken, die gesendet werden sollen.
+:return: None</p>
+<h4>Funktion: run_interactive_mode(self)</h4>
+<p>Docstring: Startet den interaktiven Modus zur Verarbeitung von Benutzeranfragen.
+
+:return: None</p>
+<h4>Funktion: read_multiline_input(self, prompt)</h4>
+<p>Docstring: Liest mehrzeilige Benutzereingaben.
+
+:param prompt: Der Text, der als Eingabeaufforderung angezeigt wird.
+:return: Der eingegebene mehrzeilige Text.</p>
+<h4>Funktion: count_tokens(self, text)</h4>
+<p>Docstring: Zählt die Anzahl der Tokens in einem gegebenen Text.
+
+:param text: Der Text, dessen Tokens gezählt werden sollen.
+:return: Die Anzahl der Tokens.</p>
+<h3>Datei: ../codeGenerator/modules/run.py</h3>
+<h4>Klasse: Run</h4>
+<p>Docstring: Klasse zur Ausführung eines Clients, der mit einem Server kommuniziert.
+
+Diese Klasse ermöglicht das Empfangen von Befehlen über einen Client
+und deren Ausführung im System.
+
+Attributes:
+    server_address (tuple): Die Adresse des Servers (Host, Port).
+    running (bool): Status, ob der Client aktiv ist oder nicht.
+    client_id (str): Die ID des Clients.
+    client (Client): Die Instanz des Clients zur Kommunikation mit dem Server.
+    message_thread (threading.Thread): Der Thread zum Empfangen von Nachrichten.</p>
+<p>Methode: __init__(self, args, host, port, client_id)</p>
+<p>Docstring: Initialisiert die Run-Klasse und registriert den Client.
+
+:param args: Die übergebenen Argumente.
+:param host: Der Hostname des Servers.
+:param port: Der Port, auf dem der Server lauscht.
+:param client_id: Die ID des Clients.</p>
+<p>Methode: signal_handler(self, sig, frame)</p>
+<p>Docstring: Behandelt das Signal für Strg+C, um den Client zu beenden.
+
+:param sig: Das empfangene Signal.
+:param frame: Der aktuelle Stack-Frame.
+:return: None</p>
+<p>Methode: handle_message(self, message)</p>
+<p>Docstring: Verarbeitet die empfangene Nachricht.
+
+:param message: Die empfangene serialisierte Nachricht.
+:return: None</p>
+<p>Methode: receive_messages(self)</p>
+<p>Docstring: Wartet auf eingehende Nachrichten und verarbeitet diese.
+
+:return: None</p>
+<p>Methode: start(self)</p>
+<p>Docstring: Startet den Run-Client und wartet auf Befehle.
+
+:return: None</p>
+<h4>Funktion: __init__(self, args, host, port, client_id)</h4>
+<p>Docstring: Initialisiert die Run-Klasse und registriert den Client.
+
+:param args: Die übergebenen Argumente.
+:param host: Der Hostname des Servers.
+:param port: Der Port, auf dem der Server lauscht.
+:param client_id: Die ID des Clients.</p>
+<h4>Funktion: signal_handler(self, sig, frame)</h4>
+<p>Docstring: Behandelt das Signal für Strg+C, um den Client zu beenden.
+
+:param sig: Das empfangene Signal.
+:param frame: Der aktuelle Stack-Frame.
+:return: None</p>
+<h4>Funktion: handle_message(self, message)</h4>
+<p>Docstring: Verarbeitet die empfangene Nachricht.
+
+:param message: Die empfangene serialisierte Nachricht.
+:return: None</p>
+<h4>Funktion: receive_messages(self)</h4>
+<p>Docstring: Wartet auf eingehende Nachrichten und verarbeitet diese.
+
+:return: None</p>
+<h4>Funktion: start(self)</h4>
+<p>Docstring: Startet den Run-Client und wartet auf Befehle.
+
+:return: None</p>
+<h3>Datei: ../codeGenerator/modules/server.py</h3>
+<h4>Klasse: ServerHandler</h4>
+<p>Docstring: Klasse zur Verwaltung eines ZMQ-Servers.
+
+Diese Klasse ermöglicht das Empfangen von Nachrichten von Clients,
+die Verarbeitung dieser Nachrichten und das Senden von Antworten.
+
+Attributes:
+    host (str): Der Hostname des Servers.
+    port (int): Der Port, auf dem der Server lauscht.
+    context (zmq.Context): Der ZMQ-Kontext.
+    socket (zmq.REP): Der ZMQ-Socket, der für den Empfang von Nachrichten verwendet wird.
+    clients (dict): Ein Dictionary zur Speicherung der registrierten Clients.</p>
+<p>Methode: __init__(self, host, port)</p>
+<p>Docstring: Initialisiert die ServerHandler-Klasse.
+
+:param host: Der Hostname des Servers.
+:param port: Der Port, auf dem der Server lauscht.</p>
+<p>Methode: start_server(self)</p>
+<p>Docstring: Startet den Server und wartet auf eingehende Nachrichten.
+
+:return: None</p>
+<p>Methode: process_message(self, message)</p>
+<p>Docstring: Verarbeitet die empfangene Nachricht und gibt eine Antwort zurück.
+
+:param message: Die empfangene Nachricht.
+:return: Die Antwortnachricht.</p>
+<p>Methode: send_to_client(self, address, message)</p>
+<p>Docstring: Sendet eine Nachricht an den angegebenen Client.
+
+:param address: Die Adresse des Clients.
+:param message: Die zu sendende Nachricht.
+:return: None</p>
+<p>Methode: signal_handler(self, sig, frame)</p>
+<p>Docstring: Behandelt das Signal zum Beenden des Servers.
+
+:param sig: Das empfangene Signal.
+:param frame: Der aktuelle Stack-Frame.
+:return: None</p>
+<p>Methode: shutdown_server(self)</p>
+<p>Docstring: Schließt den Server und gibt Ressourcen frei.
+
+:return: None</p>
+<h4>Funktion: __init__(self, host, port)</h4>
+<p>Docstring: Initialisiert die ServerHandler-Klasse.
+
+:param host: Der Hostname des Servers.
+:param port: Der Port, auf dem der Server lauscht.</p>
+<h4>Funktion: start_server(self)</h4>
+<p>Docstring: Startet den Server und wartet auf eingehende Nachrichten.
+
+:return: None</p>
+<h4>Funktion: process_message(self, message)</h4>
+<p>Docstring: Verarbeitet die empfangene Nachricht und gibt eine Antwort zurück.
+
+:param message: Die empfangene Nachricht.
+:return: Die Antwortnachricht.</p>
+<h4>Funktion: send_to_client(self, address, message)</h4>
+<p>Docstring: Sendet eine Nachricht an den angegebenen Client.
+
+:param address: Die Adresse des Clients.
+:param message: Die zu sendende Nachricht.
+:return: None</p>
+<h4>Funktion: signal_handler(self, sig, frame)</h4>
+<p>Docstring: Behandelt das Signal zum Beenden des Servers.
+
+:param sig: Das empfangene Signal.
+:param frame: Der aktuelle Stack-Frame.
+:return: None</p>
+<h4>Funktion: shutdown_server(self)</h4>
+<p>Docstring: Schließt den Server und gibt Ressourcen frei.
+
+:return: None</p>
+<h3>Datei: ../codeGenerator/modules/terminal.py</h3>
+<h4>Klasse: Terminal</h4>
+<p>Docstring: Klasse zur Verwaltung der Terminal-Eingaben.
+
+Diese Klasse ermöglicht das Lesen von Benutzereingaben im Terminal
+und behandelt spezielle Steuerbefehle wie Strg+C, Strg+D, Strg+F und Strg+L.
+
+Attributes:
+    file_operations (FileOperations): Instanz der FileOperations-Klasse.
+    old_settings: Alte Terminal-Einstellungen zur Wiederherstellung.
+    running (bool): Status, ob das Terminal aktiv ist oder nicht.</p>
+<p>Methode: __init__(self, file_operations)</p>
+<p>Docstring: Initialisiert die Terminal-Klasse.
+
+:param file_operations: Instanz der FileOperations-Klasse.</p>
+<p>Methode: signal_handler(self, sig, frame)</p>
+<p>Docstring: Behandelt das Signal für Strg+C, um das Programm zu beenden.
+
+:param sig: Das empfangene Signal.
+:param frame: Der aktuelle Stack-Frame.
+:return: None</p>
+<p>Methode: reset_terminal(self)</p>
+<p>Docstring: Setzt die Terminal-Einstellungen auf die alten Werte zurück.
+
+:return: None</p>
+<p>Methode: read_input(self)</p>
+<p>Docstring: Liest Benutzereingaben im Terminal und verarbeitet Steuerbefehle.
+
+:return: Ein Tuple, das den eingegebenen Code (oder None) und die Aktion enthält.</p>
+<h4>Funktion: __init__(self, file_operations)</h4>
+<p>Docstring: Initialisiert die Terminal-Klasse.
+
+:param file_operations: Instanz der FileOperations-Klasse.</p>
+<h4>Funktion: signal_handler(self, sig, frame)</h4>
+<p>Docstring: Behandelt das Signal für Strg+C, um das Programm zu beenden.
+
+:param sig: Das empfangene Signal.
+:param frame: Der aktuelle Stack-Frame.
+:return: None</p>
+<h4>Funktion: reset_terminal(self)</h4>
+<p>Docstring: Setzt die Terminal-Einstellungen auf die alten Werte zurück.
+
+:return: None</p>
+<h4>Funktion: read_input(self)</h4>
+<p>Docstring: Liest Benutzereingaben im Terminal und verarbeitet Steuerbefehle.
+
+:return: Ein Tuple, das den eingegebenen Code (oder None) und die Aktion enthält.</p>
+</body></html>

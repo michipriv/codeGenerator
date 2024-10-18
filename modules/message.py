@@ -25,27 +25,25 @@ class Message:
     RESPONSE = "response"
     UNKNOWN = "unknown"
 
-    def __init__(self, recipient, sender, message_type, content):
+    def __init__(self, recipient: str, sender: str, message_type: str, content: str):
         """
         Initialisiert die Message-Klasse.
 
-        Parameters:
-            recipient (str): Der Empfänger der Nachricht.
-            sender (str): Der Absender der Nachricht.
-            message_type (str): Der Typ der Nachricht.
-            content (str): Der Inhalt der Nachricht.
+        :param recipient: Der Empfänger der Nachricht.
+        :param sender: Der Absender der Nachricht.
+        :param message_type: Der Typ der Nachricht.
+        :param content: Der Inhalt der Nachricht.
         """
         self.recipient = recipient
         self.sender = sender
         self.message_type = message_type
         self.content = content
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """
         Wandelt die Nachricht in ein Wörterbuch um.
 
-        Returns:
-            dict: Ein Wörterbuch mit den Attributen der Nachricht.
+        :return: Ein Wörterbuch mit den Attributen der Nachricht.
         """
         return {
             "recipient": self.recipient,
@@ -54,25 +52,21 @@ class Message:
             "content": self.content
         }
 
-    def serialize(self):
+    def serialize(self) -> bytes:
         """
         Serialisiert die Nachricht in ein Byte-Format.
 
-        Returns:
-            bytes: Die serialisierte Nachricht.
+        :return: Die serialisierte Nachricht.
         """
         return pickle.dumps(self.to_dict())
 
     @staticmethod
-    def deserialize(serialized_message):
+    def deserialize(serialized_message: bytes):
         """
         Deserialisiert eine Byte-Nachricht zurück in ein Message-Objekt.
 
-        Parameters:
-            serialized_message (bytes): Die serialisierte Nachricht.
-
-        Returns:
-            Message: Das deserialisierte Message-Objekt.
+        :param serialized_message: Die serialisierte Nachricht.
+        :return: Das deserialisierte Message-Objekt.
         """
         data = pickle.loads(serialized_message)
         return Message(data['recipient'], data['sender'], data['type'], data['content'])

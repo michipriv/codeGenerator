@@ -18,17 +18,16 @@ class FileOperations:
         """
         Initialisiert die FileOperations-Klasse.
 
-        Parameters:
-            backup_manager (BackupManager): Die Instanz zur Verwaltung von Backups.
+        :param backup_manager: Die Instanz zur Verwaltung von Backups.
         """
         self.backup_manager = backup_manager
 
-    def ensure_directory(self, filepath):
+    def ensure_directory(self, filepath: str) -> None:
         """
         Stellt sicher, dass das Verzeichnis für den angegebenen Dateipfad existiert.
 
-        Parameters:
-            filepath (str): Der Pfad zur Datei, für die das Verzeichnis überprüft wird.
+        :param filepath: Der Pfad zur Datei, für die das Verzeichnis überprüft wird.
+        :return: None
         """
         directory = os.path.dirname(filepath)
         if directory and not os.path.exists(directory):
@@ -37,13 +36,13 @@ class FileOperations:
         elif directory:
             print(f"Verzeichnis {directory} existiert bereits.")
 
-    def save_file(self, filename, content):
+    def save_file(self, filename: str, content: str) -> None:
         """
         Speichert den angegebenen Inhalt in der Datei.
 
-        Parameters:
-            filename (str): Der Name der Datei, in die der Inhalt geschrieben werden soll.
-            content (str): Der Inhalt, der in die Datei geschrieben werden soll.
+        :param filename: Der Name der Datei, in die der Inhalt geschrieben werden soll.
+        :param content: Der Inhalt, der in die Datei geschrieben werden soll.
+        :return: None
         """
         try:
             self.ensure_directory(filename)
@@ -54,12 +53,12 @@ class FileOperations:
         except Exception as e:
             print(f"Fehler beim Schreiben der Datei {filename}: {e}")
 
-    def delete_file(self, filename):
+    def delete_file(self, filename: str) -> None:
         """
         Löscht die angegebene Datei.
 
-        Parameters:
-            filename (str): Der Name der Datei, die gelöscht werden soll.
+        :param filename: Der Name der Datei, die gelöscht werden soll.
+        :return: None
         """
         try:
             if os.path.exists(filename):
@@ -70,12 +69,12 @@ class FileOperations:
         except Exception as e:
             print(f"Fehler beim Löschen der Datei {filename}: {e}")
 
-    def create_directory(self, directory):
+    def create_directory(self, directory: str) -> None:
         """
         Erstellt das angegebene Verzeichnis.
 
-        Parameters:
-            directory (str): Der Name des Verzeichnisses, das erstellt werden soll.
+        :param directory: Der Name des Verzeichnisses, das erstellt werden soll.
+        :return: None
         """
         try:
             if not os.path.exists(directory):
@@ -86,12 +85,12 @@ class FileOperations:
         except Exception as e:
             print(f"Fehler beim Erstellen des Verzeichnisses {directory}: {e}")
 
-    def delete_directory(self, directory):
+    def delete_directory(self, directory: str) -> None:
         """
         Löscht das angegebene Verzeichnis und seinen Inhalt.
 
-        Parameters:
-            directory (str): Der Name des Verzeichnisses, das gelöscht werden soll.
+        :param directory: Der Name des Verzeichnisses, das gelöscht werden soll.
+        :return: None
         """
         try:
             if os.path.exists(directory):
@@ -102,15 +101,12 @@ class FileOperations:
         except Exception as e:
             print(f"Fehler beim Löschen des Verzeichnisses {directory}: {e}")
 
-    def read_file(self, filename):
+    def read_file(self, filename: str) -> str:
         """
         Liest den Inhalt der angegebenen Datei.
 
-        Parameters:
-            filename (str): Der Name der Datei, die gelesen werden soll.
-
-        Returns:
-            str: Der Inhalt der Datei oder None, wenn ein Fehler auftritt.
+        :param filename: Der Name der Datei, die gelesen werden soll.
+        :return: Der Inhalt der Datei oder None, wenn ein Fehler auftritt.
         """
         try:
             with open(filename, 'r') as f:
@@ -121,15 +117,12 @@ class FileOperations:
             print(f"Fehler beim Lesen der Datei {filename}: {e}")
             return None
 
-    def list_directory_files(self, directory):
+    def list_directory_files(self, directory: str) -> list:
         """
         Listet die Dateien im angegebenen Verzeichnis auf.
 
-        Parameters:
-            directory (str): Der Pfad zum Verzeichnis, dessen Dateien aufgelistet werden sollen.
-
-        Returns:
-            list: Eine Liste der Dateien im Verzeichnis oder eine leere Liste, wenn das Verzeichnis nicht existiert.
+        :param directory: Der Pfad zum Verzeichnis, dessen Dateien aufgelistet werden sollen.
+        :return: Eine Liste der Dateien im Verzeichnis oder eine leere Liste, wenn das Verzeichnis nicht existiert.
         """
         try:
             if os.path.exists(directory):
@@ -143,12 +136,14 @@ class FileOperations:
             print(f"Fehler beim Auflisten der Dateien im Verzeichnis {directory}: {e}")
             return []
 
-    def list_project_files(self):
+    def list_project_files(self) -> None:
         """
         Listet die Projektdateien im aktuellen Verzeichnis auf.
 
         Diese Methode sucht im Hauptverzeichnis nach der Datei main.py und
         im modules-Verzeichnis nach allen Python-Dateien.
+
+        :return: None
         """
         current_dir = os.getcwd()
         print(f"Einlesen des aktuellen Verzeichnisses: {current_dir}")
