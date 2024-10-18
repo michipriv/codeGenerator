@@ -40,6 +40,13 @@ with prompts indicated by 'PROMPT:' and corresponding text between 'TEXT:' and '
 
 :param file_path: The path to the prompts file (default: 'etc/prompt.txt').
 :return: A dictionary mapping prompt names to their corresponding prompt text.</p>
+<h4>Funktion: load_overview_json(file_path)</h4>
+<p>Docstring: Läd die Datei overview.json aus dem Verzeichnis 'doc/overview' und gibt den Inhalt zurück.
+
+Falls die Datei nicht existiert, wird eine Fehlermeldung ausgegeben.
+
+:param file_path: Der Pfad zur overview.json-Datei (standardmäßig im Verzeichnis doc/overview).
+:return: Der Inhalt der Datei als Dictionary.</p>
 <h4>Funktion: main()</h4>
 <p>Docstring: Main entry point of the application. This function clears the screen, loads the configuration and prompt files,
 parses command-line arguments, and starts the appropriate mode based on the arguments provided.
@@ -380,6 +387,9 @@ Attributes:
 <p>Methode: extract_code_blocks(self, text)</p>
 <p>Docstring: Extrahiere Codeblöcke aus dem gegebenen Text.
 
+Diese Methode sucht nach Codeblöcken, die mit "#Filename:" beginnen und mit "#EOF" enden.
+Zusätzlich entfernt sie Markierungen wie ```python, die eventuell von der KI-Antwort mitgesendet werden.
+
 :param text: Der Text, aus dem Codeblöcke extrahiert werden sollen.
 :return: Eine Liste von Codeblöcken und der verbleibende Text.</p>
 <p>Methode: log_ki_antwort(self, generierter_code)</p>
@@ -423,6 +433,9 @@ Attributes:
 :return: Die Liste der Nachrichten in der Konversation.</p>
 <h4>Funktion: extract_code_blocks(self, text)</h4>
 <p>Docstring: Extrahiere Codeblöcke aus dem gegebenen Text.
+
+Diese Methode sucht nach Codeblöcken, die mit "#Filename:" beginnen und mit "#EOF" enden.
+Zusätzlich entfernt sie Markierungen wie ```python, die eventuell von der KI-Antwort mitgesendet werden.
 
 :param text: Der Text, aus dem Codeblöcke extrahiert werden sollen.
 :return: Eine Liste von Codeblöcken und der verbleibende Text.</p>
@@ -785,8 +798,10 @@ Attributes:
     conversation_manager (ConversationManager): Verwaltet die Konversationshistorie.
     encoding: Tokenizer für das GPT-4-Modell.
     running (bool): Gibt an, ob die Instanz aktiv ist.
-    receiver_thread (threading.Thread): Thread zum Empfang von Nachrichten.</p>
-<p>Methode: __init__(self, args, host, port, api_key, organization, prompt, client_id)</p>
+    receiver_thread (threading.Thread): Thread zum Empfang von Nachrichten.
+    overview_data (dict): Enthält Daten aus der overview.json, falls vorhanden.
+    first_prompt_sent (bool): Indikator, ob der erste Prompt bereits an die KI gesendet wurde.</p>
+<p>Methode: __init__(self, args, host, port, api_key, organization, prompt, client_id, overview_data)</p>
 <p>Docstring: Initialisiert die OpenAIIntegration-Klasse.
 
 :param args: Die Argumente, die beim Start der Anwendung übergeben wurden.
@@ -795,7 +810,8 @@ Attributes:
 :param api_key: Der API-Schlüssel für die OpenAI-Integration.
 :param organization: Die Organisation für die OpenAI-Integration.
 :param prompt: Der Start-Prompt für die Konversation.
-:param client_id: Die eindeutige ID des Clients.</p>
+:param client_id: Die eindeutige ID des Clients.
+:param overview_data: Daten aus der overview.json, falls vorhanden.</p>
 <p>Methode: start_receiving(self)</p>
 <p>Docstring: Wartet auf eingehende Nachrichten über ZMQ und verarbeitet diese.
 
@@ -805,6 +821,11 @@ Attributes:
 
 :param file_content: Der Inhalt der empfangenen Datei.
 :return: None</p>
+<p>Methode: _append_overview_to_prompt(self, file_content)</p>
+<p>Docstring: Hängt den Inhalt von overview.json an den ersten Prompt an.
+
+:param file_content: Der ursprüngliche Prompt-Inhalt.
+:return: Der erweiterte Prompt-Inhalt mit der overview.json.</p>
 <p>Methode: send_code_blocks(self, code_blocks)</p>
 <p>Docstring: Sendet die extrahierten Codeblöcke einzeln an den FileManager.
 
@@ -824,7 +845,7 @@ Attributes:
 
 :param text: Der Text, dessen Tokens gezählt werden sollen.
 :return: Die Anzahl der Tokens.</p>
-<h4>Funktion: __init__(self, args, host, port, api_key, organization, prompt, client_id)</h4>
+<h4>Funktion: __init__(self, args, host, port, api_key, organization, prompt, client_id, overview_data)</h4>
 <p>Docstring: Initialisiert die OpenAIIntegration-Klasse.
 
 :param args: Die Argumente, die beim Start der Anwendung übergeben wurden.
@@ -833,7 +854,8 @@ Attributes:
 :param api_key: Der API-Schlüssel für die OpenAI-Integration.
 :param organization: Die Organisation für die OpenAI-Integration.
 :param prompt: Der Start-Prompt für die Konversation.
-:param client_id: Die eindeutige ID des Clients.</p>
+:param client_id: Die eindeutige ID des Clients.
+:param overview_data: Daten aus der overview.json, falls vorhanden.</p>
 <h4>Funktion: start_receiving(self)</h4>
 <p>Docstring: Wartet auf eingehende Nachrichten über ZMQ und verarbeitet diese.
 
@@ -843,6 +865,11 @@ Attributes:
 
 :param file_content: Der Inhalt der empfangenen Datei.
 :return: None</p>
+<h4>Funktion: _append_overview_to_prompt(self, file_content)</h4>
+<p>Docstring: Hängt den Inhalt von overview.json an den ersten Prompt an.
+
+:param file_content: Der ursprüngliche Prompt-Inhalt.
+:return: Der erweiterte Prompt-Inhalt mit der overview.json.</p>
 <h4>Funktion: send_code_blocks(self, code_blocks)</h4>
 <p>Docstring: Sendet die extrahierten Codeblöcke einzeln an den FileManager.
 
