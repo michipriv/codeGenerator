@@ -3,6 +3,7 @@
 # Überprüfen, ob ein Verzeichnisname übergeben wurde
 if [ -z "$1" ]; then
     echo "Bitte einen Verzeichnisnamen als Argument übergeben."
+    echo "./start.sh finetuning"
     exit 1
 fi
 
